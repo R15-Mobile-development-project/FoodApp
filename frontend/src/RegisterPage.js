@@ -23,7 +23,7 @@ function RegisterPage() {
           iconName="email"
           value={email}
           onChange={text => setEmail(text)}
-          placeholder="Enter your email address"
+          placeholder={'Enter your email address'}
         />
         <Input
           label={'Username'}
@@ -37,7 +37,7 @@ function RegisterPage() {
           iconName="lock"
           value={password}
           onChange={text => setPassword(text)}
-          placeholder="Enter your password"
+          placeholder={'Enter your password'}
           password
         />
       </View>
