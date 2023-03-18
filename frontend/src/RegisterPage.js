@@ -36,7 +36,7 @@ function RegisterPage() {
           label={'Password'}
           iconName="lock"
           value={password}
-          onChange={text => setPassword(text)}
+          onChangeText={text => setPassword(text)}
           placeholder={'Enter your password'}
           password
         />
