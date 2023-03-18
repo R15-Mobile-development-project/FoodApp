@@ -29,7 +29,7 @@ function RegisterPage() {
           label={'Username'}
           iconName="account"
           value={username}
-          onChange={text => setUsername(text)}
+          onChangeText={text => setUsername(text)}
           placeholder={'Enter your username'}
         />
         <Input
