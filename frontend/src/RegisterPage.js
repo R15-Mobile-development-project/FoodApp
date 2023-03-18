@@ -22,7 +22,7 @@ function RegisterPage() {
           label={'Email'}
           iconName="email"
           value={email}
-          onChange={text => setEmail(text)}
+          onChangeText={text => setEmail(text)}
           placeholder={'Enter your email address'}
         />
         <Input
