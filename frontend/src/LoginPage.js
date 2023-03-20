@@ -6,17 +6,16 @@ import COLORS from './conts/colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 
-function RegisterPage() {
+function LoginPage() {
   const [email, setEmail] = React.useState('');
-  const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const navigation = useNavigation();
-  //TODO add post request to register user
+  //TODO add post request to Login user
 
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.textcontainer}>
-        <Text style={styles.text}>Register</Text>
+        <Text style={styles.text}>Login</Text>
       </View>
 
       <View style={styles.inputContainer}>
@@ -28,13 +27,6 @@ function RegisterPage() {
           placeholder={'Enter your email address'}
         />
         <Input
-          label={'Username'}
-          iconName="account"
-          value={username}
-          onChangeText={text => setUsername(text)}
-          placeholder={'Enter your username'}
-        />
-        <Input
           label={'Password'}
           iconName="lock"
           value={password}
@@ -44,20 +36,20 @@ function RegisterPage() {
         />
       </View>
       <View style={styles.buttonContainer}>
-        {/* //TODO add onPress to register user */}
-        <Button title="Register" />
+        {/* //TODO add onPress to Login user */}
+        <Button title="Login" />
       </View>
       <View style={{flexDirection: 'row'}}>
-        <Text>Allready have an account?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.textlink}>Login</Text>
+        <Text>Dont have an account?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Text style={styles.textlink}>Register</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 }
 
-export default RegisterPage;
+export default LoginPage;
 
 const styles = StyleSheet.create({
   container: {
