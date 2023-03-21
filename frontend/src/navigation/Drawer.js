@@ -4,6 +4,7 @@ import HomePage from '../HomePage';
 import CustomDrawer from '../components/CustomDrawer';
 import RegisterPage from '../RegisterPage';
 import LoginPage from '../LoginPage';
+import HistoryPage from '../HistoryPage';
 import {NavigationContainer} from '@react-navigation/native';
 
 const Drawer = createDrawerNavigator();
@@ -14,6 +15,7 @@ const MyDrawer = () => {
       <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
         <Drawer.Screen name="Home" component={HomePage} />
         <Drawer.Screen name="settings" component={SettingsPage} />
+        <Drawer.Screen name="Order History" component={HistoryPage} />
         <Drawer.Screen name="Register" component={RegisterPage} />
         <Drawer.Screen name="Login" component={LoginPage} />
       </Drawer.Navigator>
