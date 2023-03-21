@@ -40,7 +40,7 @@ function LoginPage() {
         <Button title="Login" />
       </View>
       <View style={{flexDirection: 'row'}}>
-        <Text>Dont have an account?</Text>
+        <Text style={{color: COLORS.primary}}>Dont have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.textlink}>Register</Text>
         </TouchableOpacity>
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: COLORS.quaternary,
   },
   inputContainer: {
     width: '80%',
