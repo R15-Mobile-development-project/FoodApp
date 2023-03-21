@@ -7,13 +7,26 @@ import ProfilePage from '../ProfilePage';
 import LoginPage from '../LoginPage';
 import HistoryPage from '../HistoryPage';
 import {NavigationContainer} from '@react-navigation/native';
+import COLORS from '../conts/colors';
 
 const Drawer = createDrawerNavigator();
 
 const MyDrawer = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
+      <Drawer.Navigator
+        screenOptions={{
+          drawerStyle: {backgroundColor: COLORS.quaternary, width: 240},
+
+          headerTintColor: COLORS.quaternary,
+          headerTitleStyle: {color: COLORS.quaternary},
+          headerStyle: {backgroundColor: COLORS.primary},
+          //TODO drawerActiveBackgroundColor better when there are better colors
+          drawerActiveBackgroundColor: COLORS.primary,
+          drawerActiveTintColor: COLORS.quaternary,
+          drawerInactiveTintColor: COLORS.primary,
+        }}
+        drawerContent={props => <CustomDrawer {...props} />}>
         <Drawer.Screen name="Home" component={HomePage} />
         <Drawer.Screen name="Profile" component={ProfilePage} />
         <Drawer.Screen name="settings" component={SettingsPage} />
