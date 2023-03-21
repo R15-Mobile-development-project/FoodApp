@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {View, Text, KeyboardAvoidingView, StyleSheet} from 'react-native';
-import Input from './components/Input';
+import {View, Text, KeyboardAvoidingView} from 'react-native';
+import {Input, Input2} from './components/Input';
 import Button from './components/Button';
-import COLORS from './conts/colors';
+import styles from './conts/Styles';
 
 function LoginPage() {
   const [firstName, setFirstName] = useState('');
@@ -14,25 +14,25 @@ function LoginPage() {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <View style={styles.textContainer}>
+      <View style={styles.textcontainer}>
         <Text style={styles.text}>Profile</Text>
       </View>
-
       <View style={styles.inputContainer}>
-        <Input
-          label={'First name'}
-          iconName="account"
-          value={firstName}
-          onChangeText={text => setFirstName(text)}
-          placeholder={'First name'}
-        />
-        <Input
-          label={'Last name'}
-          iconName="account"
-          value={lastName}
-          onChangeText={text => setLastName(text)}
-          placeholder={'Last name'}
-        />
+        <View style={{flexDirection: 'row', width: '50%'}}>
+          <Input2
+            label={'First Name'}
+            inconName="email"
+            value={firstName}
+            onChangeText={text => setFirstName(text)}
+            placeholder={'First name'}
+          />
+          <Input2
+            label={'Last Name'}
+            value={lastName}
+            onChangeText={text => setLastName(text)}
+            placeholder={'Last name'}
+          />
+        </View>
         <Input
           label={'Email'}
           iconName="email"
@@ -57,32 +57,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  inputContainer: {
-    width: '80%',
-    gap: 10,
-  },
-  buttonContainer: {
-    width: '20%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  textContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  text: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: COLORS.primary,
-  }
-});
