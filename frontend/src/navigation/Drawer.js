@@ -8,6 +8,7 @@ import LoginPage from '../LoginPage';
 import HistoryPage from '../HistoryPage';
 import {NavigationContainer} from '@react-navigation/native';
 import COLORS from '../conts/colors';
+import SaldoPage from '../SaldoPage';
 
 const Drawer = createDrawerNavigator();
 
@@ -33,6 +34,7 @@ const MyDrawer = () => {
         <Drawer.Screen name="Order History" component={HistoryPage} />
         <Drawer.Screen name="Register" component={RegisterPage} />
         <Drawer.Screen name="Login" component={LoginPage} />
+        <Drawer.Screen name="Wallet" component={SaldoPage}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );
