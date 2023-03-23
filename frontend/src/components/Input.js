@@ -64,6 +64,43 @@ const Input = ({
   );
 };
 
+const Input2 = ({label, error, placeholder, onFocus = () => {}, ...props}) => {
+  const [isFocused, setIsFocused] = React.useState(false);
+  return (
+    <View style={{marginBottom: 5}}>
+      <Text style={style.label}>{label}</Text>
+      <View
+        style={[
+          style.inputContainer,
+          {
+            borderColor: error
+              ? COLORS.red
+              : isFocused
+              ? COLORS.primary
+              : COLORS.quaternary,
+            alignItems: 'center',
+          },
+        ]}>
+        <TextInput
+          autoCorrect={false}
+          onFocus={() => {
+            onFocus();
+            setIsFocused(true);
+          }}
+          onBlur={() => setIsFocused(false)}
+          placeholder={placeholder}
+          placeholderTextColor={COLORS.primary}
+          style={style.input2}
+          {...props}
+        />
+      </View>
+      {error && (
+        <Text style={{marginTop: 7, color: COLORS.red, fontSize: 12}}></Text>
+      )}
+    </View>
+  );
+};
+
 const style = StyleSheet.create({
   label: {
     marginVertical: 5,
@@ -73,12 +110,21 @@ const style = StyleSheet.create({
   },
   inputContainer: {
     height: 55,
-    backgroundColor: COLORS.quaternary,
+    backgroundColor: COLORS.tertiary,
     flexDirection: 'row',
     paddingHorizontal: 15,
     borderWidth: 0.5,
     borderRadius: 10,
   },
+  input: {
+    color: COLORS.primary,
+    flex: 1,
+    width: '80%',
+  },
+  input2: {
+    color: COLORS.primary,
+    width: '100%',
+  },
 });
 
-export default Input;
+export {Input, Input2};

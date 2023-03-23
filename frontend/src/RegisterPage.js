@@ -1,14 +1,16 @@
 import React from 'react';
-import {View, Text, KeyboardAvoidingView, StyleSheet} from 'react-native';
-import Input from './components/Input';
+import {View, Text, KeyboardAvoidingView} from 'react-native';
+import {Input, Input2} from './components/Input';
 import Button from './components/Button';
+import styles from './conts/Styles';
 import COLORS from './conts/colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 
 function RegisterPage() {
   const [email, setEmail] = React.useState('');
-  const [username, setUsername] = React.useState('');
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const navigation = useNavigation();
   //TODO add post request to register user
@@ -27,13 +29,20 @@ function RegisterPage() {
           onChangeText={text => setEmail(text)}
           placeholder={'Enter your email address'}
         />
-        <Input
-          label={'Username'}
-          iconName="account"
-          value={username}
-          onChangeText={text => setUsername(text)}
-          placeholder={'Enter your username'}
-        />
+        <View style={{flexDirection: 'row', width: '50%'}}>
+          <Input2
+            label={'First Name'}
+            value={firstName}
+            onChangeText={text => setFirstName(text)}
+            placeholder={'First name'}
+          />
+          <Input2
+            label={'Last Name'}
+            value={lastName}
+            onChangeText={text => setLastName(text)}
+            placeholder={'Last name'}
+          />
+        </View>
         <Input
           label={'Password'}
           iconName="lock"
@@ -48,7 +57,7 @@ function RegisterPage() {
         <Button title="Register" />
       </View>
       <View style={{flexDirection: 'row'}}>
-        <Text>Allready have an account?</Text>
+        <Text style={{color: COLORS.primary}}>Allready have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.textlink}>Login</Text>
         </TouchableOpacity>
@@ -58,34 +67,3 @@ function RegisterPage() {
 }
 
 export default RegisterPage;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputContainer: {
-    width: '80%',
-  },
-  buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  textcontainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  text: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: COLORS.primary,
-  },
-  textlink: {
-    color: COLORS.primary,
-    textDecorationLine: 'underline',
-  },
-});

@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, KeyboardAvoidingView, StyleSheet} from 'react-native';
-import Input from './components/Input';
+import {View, Text, KeyboardAvoidingView} from 'react-native';
+import {Input} from './components/Input';
 import Button from './components/Button';
 import COLORS from './conts/colors';
+import styles from './conts/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 
@@ -40,7 +41,7 @@ function LoginPage() {
         <Button title="Login" />
       </View>
       <View style={{flexDirection: 'row'}}>
-        <Text>Dont have an account?</Text>
+        <Text style={{color: COLORS.primary}}>Dont have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.textlink}>Register</Text>
         </TouchableOpacity>
@@ -50,34 +51,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputContainer: {
-    width: '80%',
-  },
-  buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  textcontainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  text: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: COLORS.primary,
-  },
-  textlink: {
-    color: COLORS.primary,
-    textDecorationLine: 'underline',
-  },
-});
