@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import {Text} from 'react-native';
-import MyDrawer from './src/navigation/Drawer';
+import MyStack from './src/navigation/Stack';
 
 function App(): JSX.Element {
   return (
     <>
-      <MyDrawer />
+      <MyStack />
     </>
   );
 }

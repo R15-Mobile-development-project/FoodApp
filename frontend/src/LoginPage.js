@@ -38,7 +38,7 @@ function LoginPage() {
       </View>
       <View style={styles.buttonContainer}>
         {/* //TODO add onPress to Login user */}
-        <Button title="Login" />
+        <Button title="Login" onPress={() => navigation.navigate('MyDrawer')} />
       </View>
       <View style={{flexDirection: 'row'}}>
         <Text style={{color: COLORS.primary}}>Dont have an account?</Text>
