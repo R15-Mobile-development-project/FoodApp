@@ -18,20 +18,12 @@ const user = {
       callback
     );
   },
-  add: function (req, callback) {
-    bcrypt.hash(req.body.password, 10, function (err, hash) {
-      return db.query(
-        "insert into users (lname, fname, email, password, user_type) values(?, ?, ?, ?, ?)",
-        [
-          req.body.lname,
-          req.body.fname,
-          req.body.email,
-          hash,
-          req.body.user_type,
-        ],
-        callback
-      );
-    });
+  add: function (fname, lname, email, password, user_type = 0, callback) {
+    return db.query(
+      "insert into users (fname, lname, email, password, user_type) values(?, ?, ?, ?, ?)",
+      [fname, lname, email, password, user_type],
+      callback
+    );
   },
 };
 
