@@ -6,7 +6,7 @@ import styles from './conts/Styles';
 import COLORS from './conts/colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
-import axios from "axios";
+import axios from "./components/axios";
 
 function RegisterPage() {
 
@@ -31,7 +31,7 @@ function RegisterPage() {
       password: password
     }
 
-    axios.post("http://192.168.1.20:3000/user/register", payload).then(response => {
+    axios.post("/user/register", payload).then(response => {
       console.log(response.data);
 
       if(response.data && response.data.message){
@@ -51,7 +51,7 @@ function RegisterPage() {
 
   }
 
-  const ResetError = () => {
+  const ResetStatusMsg = () => {
     setStatusMsg("");
   }
 
@@ -66,20 +66,20 @@ function RegisterPage() {
           label={'Email'}
           iconName="email"
           value={email}
-          onChangeText={text => (setEmail(text), ResetError())}
+          onChangeText={text => (setEmail(text), ResetStatusMsg())}
           placeholder={'Enter your email address'}
         />
         <View style={{flexDirection: 'row', width: '50%'}}>
           <Input2
             label={'First Name'}
             value={firstName}
-            onChangeText={text => (setFirstName(text), ResetError())}
+            onChangeText={text => (setFirstName(text), ResetStatusMsg())}
             placeholder={'First name'}
           />
           <Input2
             label={'Last Name'}
             value={lastName}
-            onChangeText={text => (setLastName(text), ResetError())}
+            onChangeText={text => (setLastName(text), ResetStatusMsg())}
             placeholder={'Last name'}
           />
         </View>
@@ -87,7 +87,7 @@ function RegisterPage() {
           label={'Password'}
           iconName="lock"
           value={password}
-          onChangeText={text => (setPassword(text), ResetError())}
+          onChangeText={text => (setPassword(text), ResetStatusMsg())}
           placeholder={'Enter your password'}
           password
         />
