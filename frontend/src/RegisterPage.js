@@ -95,14 +95,14 @@ function RegisterPage() {
       <View style={styles.buttonContainer}>
         <Button title="Register" onPress={() => Register()}/>
       </View>
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{color: COLORS.primary}}>Allready have an account?</Text>
+      <View style={styles.infoContainer}>
+        <Text style={{color: COLORS.primary}}>Already have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.textlink}>Login</Text>
         </TouchableOpacity>
       </View>
 
-      <View>
+      <View style={styles.statusMsgContainer}>
         <Text style={{color: COLORS.primary}}>{statusMsg ? statusMsg : ""}</Text>
       </View>
     </KeyboardAvoidingView>

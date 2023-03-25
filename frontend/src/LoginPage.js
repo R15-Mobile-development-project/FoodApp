@@ -76,14 +76,14 @@ function LoginPage() {
         {/* //TODO add onPress to Login user */}
         <Button title="Login" onPress={() => Login()} />
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.infoContainer}>
         <Text style={{color: COLORS.primary}}>Dont have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.textlink}>Register</Text>
         </TouchableOpacity>
       </View>
 
-      <View>
+      <View style={styles.statusMsgContainer}>
         <Text style={{color: COLORS.primary}}>{statusMsg ? statusMsg : ""}</Text>
       </View>
     </KeyboardAvoidingView>

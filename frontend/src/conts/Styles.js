@@ -31,6 +31,14 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     textDecorationLine: 'underline',
   },
+  infoContainer: {
+    marginTop: 20,
+    flexDirection: 'row',
+    gap: 10
+  },
+  statusMsgContainer: {
+    marginTop: 20
+  },
 });
 
 export default styles;
