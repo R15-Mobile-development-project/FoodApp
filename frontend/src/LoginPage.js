@@ -7,6 +7,7 @@ import styles from './conts/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import axios from "./components/axios";
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -25,24 +26,32 @@ function LoginPage() {
       password: password
     }
 
-    axios.post("/user/login", payload).then(response => {
+    axios.post("/user/login", payload).then(async response => {
       console.log(response.data);
 
-      if(response.data && response.data.message){
-        setStatusMsg(response.data.message)
-
-        setTimeout(() => {
-          navigation.navigate('MyDrawer')
-        }, 500)
+      if(!response.data || (!response.data.message && !response.data.token)){
+        setStatusMsg("No data from server")
+        return
       }
-    }).catch(err => {
-      console.log(err.response.data);
 
+      const token = response.data.token
+
+      try {
+        await EncryptedStorage.setItem("token", token);
+      } catch (error) {
+        console.log("Error on saving token: ", error);
+      }
+
+      setStatusMsg(response.data.message)
+
+      setTimeout(() => {
+        navigation.navigate('MyDrawer')
+      }, 500)
+    }).catch(err => {
       if(err.response.data && err.response.data.message){
         setStatusMsg(err.response.data.message)
       }
     })
-
   }
 
   const ResetStatusMsg = () => {

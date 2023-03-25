@@ -17,7 +17,6 @@ function RegisterPage() {
   const [statusMsg, setStatusMsg] = useState('');
 
   const navigation = useNavigation();
-  //TODO add post request to register user
 
   const Register = () => {
     if(!email || !firstName || !lastName || !password){
@@ -39,7 +38,7 @@ function RegisterPage() {
 
         setTimeout(() => {
           navigation.navigate('Login')
-        }, 1000)
+        }, 500)
       }
     }).catch(err => {
       console.log(err.response.data);
