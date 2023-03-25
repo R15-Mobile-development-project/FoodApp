@@ -5,54 +5,47 @@ const jwt = require("../config/jwt");
 require("dotenv").config();
 
 const userLogin = (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  if (emailvalidator.validate(email)) {
-    user.getByEmail(email, (err, results) => {
-      if (err) {
-        return res.status(500).json({
-          message: "Error occured",
-          error: err,
-        });
-      }
-      if (results.length > 0) {
-        bcrypt.compare(
-          password,
-          results[0].password.toString(),
-          (err, result) => {
-            if (err) {
-              console.log(results[0].password);
-              res.status(500).json({
-                message: "Error occured",
-                error: err,
-              });
-            } else {
-              if (result) {
-                const token = jwt.generateToken(results[0].user_id);
-                console.log("Created token: " + token);
-                res.status(200).json({
-                  message: "Login successful",
-                  token: token,
-                });
-              } else {
-                res.status(401).json({
-                  message: "Invalid credentials",
-                });
-              }
-            }
-          }
-        );
-      } else {
-        res.status(401).json({
-          message: "Invalid credentials",
-        });
-      }
-    });
-  } else {
-    res.status(400).json({
-      message: "Invalid email",
-    });
+  const { email, password } = req.body;
+
+  if (!emailvalidator.validate(email) || !password) {
+    return res.status(401).json({ message: "Invalid credentials" });
   }
+
+  user.getByEmail(email, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occured",
+      });
+    }
+    if (results.length > 0) {
+      bcrypt.compare(
+        password,
+        results[0].password.toString(),
+        (err, result) => {
+          if (err) {
+            return res.status(500).json({
+              message: "Error occured",
+            });
+          }
+          if (result) {
+            const token = jwt.generateToken(results[0].user_id);
+            return res.status(200).json({
+              message: "Login successful",
+              token: token,
+            });
+          } else {
+            return res.status(401).json({
+              message: "Invalid credentials",
+            });
+          }
+        }
+      );
+    } else {
+      return res.status(401).json({
+        message: "Invalid credentials",
+      });
+    }
+  });
 };
 
 const userRegister = (req, res) => {
