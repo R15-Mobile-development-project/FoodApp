@@ -6,14 +6,17 @@ import COLORS from './conts/colors';
 import styles from './conts/Styles';
 import axios from "./components/axios";
 import EncryptedStorage from 'react-native-encrypted-storage';
+import {useNavigation} from '@react-navigation/native';
 
-function LoginPage() {
+function ProfilePage() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
   const [token, setToken] = useState(null);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
 
@@ -45,8 +48,11 @@ function LoginPage() {
       }
     }
 
-    FetchProfile()
-  }, [])
+    navigation.addListener("focus", () => {
+      ResetStatusMsg()
+      FetchProfile()
+    })
+  }, [navigation])
 
   const UpdateProfile = () => {
     const payload = {
@@ -118,4 +124,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default ProfilePage;
