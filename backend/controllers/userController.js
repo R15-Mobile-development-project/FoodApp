@@ -90,7 +90,23 @@ const userRegister = (req, res) => {
   });
 };
 
+const userProfile = (req, res) => {
+  user.getById(req.userId, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occured",
+      });
+    }
+
+    delete results[0].user_id;
+    delete results[0].password;
+
+    res.json(results[0])
+  })
+};
+
 module.exports = {
   userLogin,
   userRegister,
+  userProfile
 };
