@@ -111,7 +111,7 @@ const userProfile = (req, res) => {
   })
 };
 
-const updateUserProfile = (req, res) => {
+const updateUserProfile = async (req, res) => {
 
   const { fname, lname, email, password } = req.body;
 
@@ -121,11 +121,21 @@ const updateUserProfile = (req, res) => {
     return res.status(400).json({ message: "Password too short" });
   }
 
+  let hashedPassword;
+
+  if(password) {
+    try {
+      hashedPassword = await bcrypt.hash(password, 10)
+    } catch (error) {
+      return res.status(500);
+    }
+  }
+
   const data = {
     email: email,
     fname: fname,
     lname: lname,
-    password: password,
+    password: hashedPassword,
     userId: req.userId
   };
 
