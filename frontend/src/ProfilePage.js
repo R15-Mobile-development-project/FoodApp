@@ -1,16 +1,80 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input, Input2} from './components/Input';
 import Button from './components/Button';
+import COLORS from './conts/colors';
 import styles from './conts/Styles';
+import axios from "./components/axios";
+import EncryptedStorage from 'react-native-encrypted-storage';
+import {useNavigation} from '@react-navigation/native';
 
-function LoginPage() {
+function ProfilePage() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [statusMsg, setStatusMsg] = useState('');
+  const [token, setToken] = useState(null);
 
-  //TODO add get request to fetch profile data and display it
+  const navigation = useNavigation();
+
+  useEffect(() => {
+
+    const FetchProfile = async () => {
+
+      try {
+        const _token = await EncryptedStorage.getItem("token")
+
+        if (_token !== undefined) {
+
+          setToken(_token)
+
+          const headers = { headers: {"Authorization" : `Bearer ${_token}`} };
+
+          axios.get("/user", headers).then(response => {
+
+            setFirstName(response.data.fname)
+            setLastName(response.data.lname)
+            setEmail(response.data.email)
+
+          }).catch(err => {
+            console.log(err)
+          })
+        }else{
+          console.log("No jwt found")
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    navigation.addListener("focus", () => {
+      ResetStatusMsg()
+      FetchProfile()
+    })
+  }, [navigation])
+
+  const UpdateProfile = () => {
+    const payload = {
+      fname: firstName,
+      lname: lastName,
+      email: email,
+      password: password
+    }
+
+    axios.put("/user", payload, { headers: {"Authorization" : `Bearer ${token}`} }).then(response => {
+
+      setStatusMsg(response.data.message)
+
+    }).catch(err => {
+      console.log(err)
+      setStatusMsg(err.response.data.message)
+    })
+  }
+
+  const ResetStatusMsg = () => {
+    setStatusMsg("");
+  }
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -50,10 +114,14 @@ function LoginPage() {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Save" />
+        <Button title="Save" onPress={() => UpdateProfile()}/>
+      </View>
+
+      <View style={styles.statusMsgContainer}>
+        <Text style={{color: COLORS.primary}}>{statusMsg ? statusMsg : ""}</Text>
       </View>
     </KeyboardAvoidingView>
   );
 }
 
-export default LoginPage;
+export default ProfilePage;
