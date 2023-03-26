@@ -98,6 +98,12 @@ const userProfile = (req, res) => {
       });
     }
 
+    if(results.length === 0) {
+      return res.status(400).json({
+        message: "No user data was found for that user id",
+      });
+    }
+
     delete results[0].user_id;
     delete results[0].password;
 
