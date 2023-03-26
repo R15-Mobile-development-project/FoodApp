@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input} from './components/Input';
 import Button from './components/Button';
@@ -6,12 +6,57 @@ import COLORS from './conts/colors';
 import styles from './conts/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
+import axios from "./components/axios";
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 function LoginPage() {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [statusMsg, setStatusMsg] = useState('');
+
   const navigation = useNavigation();
-  //TODO add post request to Login user
+
+  const Login = () => {
+    if(!email || !password){
+      return
+    }
+
+    const payload = {
+      email: email,
+      password: password
+    }
+
+    axios.post("/user/login", payload).then(async response => {
+      console.log(response.data);
+
+      if(!response.data || (!response.data.message && !response.data.token)){
+        setStatusMsg("No data from server")
+        return
+      }
+
+      const token = response.data.token
+
+      try {
+        await EncryptedStorage.setItem("token", token);
+      } catch (error) {
+        console.log("Error on saving token: ", error);
+      }
+
+      setStatusMsg(response.data.message)
+
+      setTimeout(() => {
+        navigation.navigate('MyDrawer')
+      }, 500)
+    }).catch(err => {
+      if(err.response.data && err.response.data.message){
+        setStatusMsg(err.response.data.message)
+      }
+    })
+  }
+
+  const ResetStatusMsg = () => {
+    setStatusMsg("");
+  }
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -24,27 +69,31 @@ function LoginPage() {
           label={'Email'}
           iconName="email"
           value={email}
-          onChangeText={text => setEmail(text)}
+          onChangeText={text => (setEmail(text), ResetStatusMsg())}
           placeholder={'Enter your email address'}
         />
         <Input
           label={'Password'}
           iconName="lock"
           value={password}
-          onChangeText={text => setPassword(text)}
+          onChangeText={text => (setPassword(text), ResetStatusMsg())}
           placeholder={'Enter your password'}
           password
         />
       </View>
       <View style={styles.buttonContainer}>
         {/* //TODO add onPress to Login user */}
-        <Button title="Login" onPress={() => navigation.navigate('MyDrawer')} />
+        <Button title="Login" onPress={() => Login()} />
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.infoContainer}>
         <Text style={{color: COLORS.primary}}>Dont have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.textlink}>Register</Text>
         </TouchableOpacity>
+      </View>
+
+      <View style={styles.statusMsgContainer}>
+        <Text style={{color: COLORS.primary}}>{statusMsg ? statusMsg : ""}</Text>
       </View>
     </KeyboardAvoidingView>
   );
