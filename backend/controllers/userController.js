@@ -111,8 +111,51 @@ const userProfile = (req, res) => {
   })
 };
 
+const updateUserProfile = (req, res) => {
+
+  const { fname, lname, email, password } = req.body;
+
+  if (email && !emailvalidator.validate(email)) {
+    return res.status(400).json({ message: "Invalid email" });
+  } else if (password && password.length < 8) {
+    return res.status(400).json({ message: "Password too short" });
+  }
+
+  const data = {
+    email: email,
+    fname: fname,
+    lname: lname,
+    password: password,
+    userId: req.userId
+  };
+
+  user.updateUserById(data, (err, results) => {
+    if (err) {
+      if(err.errno === 1062) {
+        return res.status(500).json({
+          message: "Email address is already in use",
+        });
+      }
+      return res.status(500).json({
+        message: "Error occured",
+      });
+    }
+
+    if(results.changedRows === 1){
+      return res.json({message: "Profile updated"})
+    }else if(results.changedRows === 0 && results.affectedRows === 1) {
+      return res.json({message: "Everything up to date"})
+    }else{
+      res.status(400).json({
+        message: "Unable to update profile"
+      });
+    }
+  })
+};
+
 module.exports = {
   userLogin,
   userRegister,
-  userProfile
+  userProfile,
+  updateUserProfile
 };
