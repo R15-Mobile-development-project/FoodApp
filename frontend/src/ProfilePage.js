@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input, Input2} from './components/Input';
 import Button from './components/Button';
 import COLORS from './conts/colors';
 import styles from './conts/Styles';
-import axios from "./components/axios";
+import axios from './components/axios';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {useNavigation} from '@react-navigation/native';
 
@@ -19,62 +19,61 @@ function ProfilePage() {
   const navigation = useNavigation();
 
   useEffect(() => {
-
     const FetchProfile = async () => {
-
       try {
-        const _token = await EncryptedStorage.getItem("token")
+        const _token = await EncryptedStorage.getItem('token');
 
         if (_token !== undefined) {
+          setToken(_token);
 
-          setToken(_token)
+          const headers = {headers: {Authorization: `Bearer ${_token}`}};
 
-          const headers = { headers: {"Authorization" : `Bearer ${_token}`} };
-
-          axios.get("/user", headers).then(response => {
-
-            setFirstName(response.data.fname)
-            setLastName(response.data.lname)
-            setEmail(response.data.email)
-
-          }).catch(err => {
-            console.log(err)
-          })
-        }else{
-          console.log("No jwt found")
+          axios
+            .get('/user', headers)
+            .then(response => {
+              setFirstName(response.data.fname);
+              setLastName(response.data.lname);
+              setEmail(response.data.email);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          console.log('No jwt found');
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
 
-    navigation.addListener("focus", () => {
-      ResetStatusMsg()
-      FetchProfile()
-    })
-  }, [navigation])
+    navigation.addListener('focus', () => {
+      ResetStatusMsg();
+      FetchProfile();
+    });
+  }, [navigation]);
 
   const UpdateProfile = () => {
     const payload = {
       fname: firstName,
       lname: lastName,
       email: email,
-      password: password
-    }
+      password: password,
+    };
 
-    axios.put("/user", payload, { headers: {"Authorization" : `Bearer ${token}`} }).then(response => {
-
-      setStatusMsg(response.data.message)
-
-    }).catch(err => {
-      console.log(err)
-      setStatusMsg(err.response.data.message)
-    })
-  }
+    axios
+      .put('/user', payload, {headers: {Authorization: `Bearer ${token}`}})
+      .then(response => {
+        setStatusMsg(response.data.message);
+      })
+      .catch(err => {
+        console.log(err);
+        setStatusMsg(err.response.data.message);
+      });
+  };
 
   const ResetStatusMsg = () => {
-    setStatusMsg("");
-  }
+    setStatusMsg('');
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -103,6 +102,7 @@ function ProfilePage() {
           value={email}
           onChangeText={text => setEmail(text)}
           placeholder={'Email'}
+          keyboardType={'email-address'}
         />
         <Input
           label={'Password'}
@@ -114,11 +114,13 @@ function ProfilePage() {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Save" onPress={() => UpdateProfile()}/>
+        <Button title="Save" onPress={() => UpdateProfile()} />
       </View>
 
       <View style={styles.statusMsgContainer}>
-        <Text style={{color: COLORS.primary}}>{statusMsg ? statusMsg : ""}</Text>
+        <Text style={{color: COLORS.primary}}>
+          {statusMsg ? statusMsg : ''}
+        </Text>
       </View>
     </KeyboardAvoidingView>
   );

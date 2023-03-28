@@ -9,6 +9,7 @@ const Input = ({
   error,
   password,
   placeholder,
+  keyboardType,
   onFocus = () => {},
   ...props
 }) => {
@@ -43,6 +44,7 @@ const Input = ({
           secureTextEntry={hidePassword}
           placeholder={placeholder}
           placeholderTextColor={COLORS.primary}
+          keyboardType={keyboardType}
           style={{
             color: COLORS.primary,
             flex: 1,

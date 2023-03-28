@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input, Input2} from './components/Input';
 import Button from './components/Button';
@@ -6,10 +6,9 @@ import styles from './conts/Styles';
 import COLORS from './conts/colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
-import axios from "./components/axios";
+import axios from './components/axios';
 
 function RegisterPage() {
-
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -19,40 +18,42 @@ function RegisterPage() {
   const navigation = useNavigation();
 
   const Register = () => {
-    if(!email || !firstName || !lastName || !password){
-      return
+    if (!email || !firstName || !lastName || !password) {
+      return;
     }
 
     const payload = {
       email: email,
       fname: firstName,
       lname: lastName,
-      password: password
-    }
+      password: password,
+    };
 
-    axios.post("/user/register", payload).then(response => {
-      console.log(response.data);
+    axios
+      .post('/user/register', payload)
+      .then(response => {
+        console.log(response.data);
 
-      if(response.data && response.data.message){
-        setStatusMsg(response.data.message)
+        if (response.data && response.data.message) {
+          setStatusMsg(response.data.message);
 
-        setTimeout(() => {
-          navigation.navigate('Login')
-        }, 500)
-      }
-    }).catch(err => {
-      console.log(err.response.data);
+          setTimeout(() => {
+            navigation.navigate('Login');
+          }, 500);
+        }
+      })
+      .catch(err => {
+        console.log(err.response.data);
 
-      if(err.response.data && err.response.data.message){
-        setStatusMsg(err.response.data.message)
-      }
-    })
-
-  }
+        if (err.response.data && err.response.data.message) {
+          setStatusMsg(err.response.data.message);
+        }
+      });
+  };
 
   const ResetStatusMsg = () => {
-    setStatusMsg("");
-  }
+    setStatusMsg('');
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -67,6 +68,7 @@ function RegisterPage() {
           value={email}
           onChangeText={text => (setEmail(text), ResetStatusMsg())}
           placeholder={'Enter your email address'}
+          keyboardType={'email-address'}
         />
         <View style={{flexDirection: 'row', width: '50%'}}>
           <Input2
@@ -92,7 +94,7 @@ function RegisterPage() {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Register" onPress={() => Register()}/>
+        <Button title="Register" onPress={() => Register()} />
       </View>
       <View style={styles.infoContainer}>
         <Text style={{color: COLORS.primary}}>Already have an account?</Text>
@@ -102,7 +104,9 @@ function RegisterPage() {
       </View>
 
       <View style={styles.statusMsgContainer}>
-        <Text style={{color: COLORS.primary}}>{statusMsg ? statusMsg : ""}</Text>
+        <Text style={{color: COLORS.primary}}>
+          {statusMsg ? statusMsg : ''}
+        </Text>
       </View>
     </KeyboardAvoidingView>
   );
