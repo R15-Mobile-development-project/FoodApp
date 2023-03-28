@@ -1,17 +1,17 @@
 import {View, Text} from 'react-native';
-import COLORS from './conts/colors';
+import styles from './conts/Styles';
+import Button from './components/Button';
+import {KeyboardAvoidingView} from 'react-native';
 
 function SettingsPage() {
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: COLORS.quaternary,
-      }}>
-      <Text style={{color: COLORS.primary}}>SettingsPage</Text>
-    </View>
+    <KeyboardAvoidingView style={styles.container}>
+      <View style={styles.buttonContainer}>
+        <Button title="Dark/Lihgtmode" />
+        <Button title="delete user" />
+        <Button title="jaa" />
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 export default SettingsPage;
