@@ -55,7 +55,7 @@ const userRegister = (req, res) => {
     return res.status(400).json({ message: "Please fill in all fields" });
   } else if (!emailvalidator.validate(email)) {
     return res.status(400).json({ message: "Invalid email" });
-  } else if (password.length < 2) {
+  } else if (password.length < 1) {
     return res.status(400).json({ message: "Password too short" });
   }
 
@@ -116,7 +116,7 @@ const updateUserProfile = async (req, res) => {
 
   if (email && !emailvalidator.validate(email)) {
     return res.status(400).json({ message: "Invalid email" });
-  } else if (password && password.length < 8) {
+  } else if (password && password.length < 1) {
     return res.status(400).json({ message: "Password too short" });
   }
 
