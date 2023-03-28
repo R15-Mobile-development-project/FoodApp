@@ -55,7 +55,7 @@ const userRegister = (req, res) => {
     return res.status(400).json({ message: "Please fill in all fields" });
   } else if (!emailvalidator.validate(email)) {
     return res.status(400).json({ message: "Invalid email" });
-  } else if (password.length < 8) {
+  } else if (password.length < 2) {
     return res.status(400).json({ message: "Password too short" });
   }
 
@@ -98,7 +98,7 @@ const userProfile = (req, res) => {
       });
     }
 
-    if(results.length === 0) {
+    if (results.length === 0) {
       return res.status(400).json({
         message: "No user data was found for that user id",
       });
@@ -107,12 +107,11 @@ const userProfile = (req, res) => {
     delete results[0].user_id;
     delete results[0].password;
 
-    res.json(results[0])
-  })
+    res.json(results[0]);
+  });
 };
 
 const updateUserProfile = async (req, res) => {
-
   const { fname, lname, email, password } = req.body;
 
   if (email && !emailvalidator.validate(email)) {
@@ -123,9 +122,9 @@ const updateUserProfile = async (req, res) => {
 
   let hashedPassword;
 
-  if(password) {
+  if (password) {
     try {
-      hashedPassword = await bcrypt.hash(password, 10)
+      hashedPassword = await bcrypt.hash(password, 10);
     } catch (error) {
       return res.status(500);
     }
@@ -136,12 +135,12 @@ const updateUserProfile = async (req, res) => {
     fname: fname,
     lname: lname,
     password: hashedPassword,
-    userId: req.userId
+    userId: req.userId,
   };
 
   user.updateUserById(data, (err, results) => {
     if (err) {
-      if(err.errno === 1062) {
+      if (err.errno === 1062) {
         return res.status(500).json({
           message: "Email address is already in use",
         });
@@ -151,16 +150,16 @@ const updateUserProfile = async (req, res) => {
       });
     }
 
-    if(results.changedRows === 1){
-      return res.json({message: "Profile updated"})
-    }else if(results.changedRows === 0 && results.affectedRows === 1) {
-      return res.json({message: "Everything up to date"})
-    }else{
+    if (results.changedRows === 1) {
+      return res.json({ message: "Profile updated" });
+    } else if (results.changedRows === 0 && results.affectedRows === 1) {
+      return res.json({ message: "Everything up to date" });
+    } else {
       res.status(400).json({
-        message: "Unable to update profile"
+        message: "Unable to update profile",
       });
     }
-  })
+  });
 };
 
 const deleteProfile = (req, res) => {
