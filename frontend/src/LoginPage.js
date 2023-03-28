@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input} from './components/Input';
 import Button from './components/Button';
-import COLORS from './conts/colors';
 import styles from './conts/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
@@ -89,16 +88,14 @@ function LoginPage() {
         <Button title="Login" onPress={() => Login()} />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={{color: COLORS.primary}}>Dont have an account?</Text>
+        <Text style={styles.primary}>Dont have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.textlink}>Register</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.statusMsgContainer}>
-        <Text style={{color: COLORS.primary}}>
-          {statusMsg ? statusMsg : ''}
-        </Text>
+        <Text style={styles.primary}>{statusMsg ? statusMsg : ''}</Text>
       </View>
     </KeyboardAvoidingView>
   );

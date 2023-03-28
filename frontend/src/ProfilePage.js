@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input, Input2} from './components/Input';
 import Button from './components/Button';
-import COLORS from './conts/colors';
 import styles from './conts/Styles';
 import axios from './components/axios';
 import {useNavigation} from '@react-navigation/native';
@@ -117,9 +116,7 @@ function ProfilePage() {
       </View>
 
       <View style={styles.statusMsgContainer}>
-        <Text style={{color: COLORS.primary}}>
-          {statusMsg ? statusMsg : ''}
-        </Text>
+        <Text style={styles.primary}>{statusMsg ? statusMsg : ''}</Text>
       </View>
     </KeyboardAvoidingView>
   );

@@ -4,7 +4,6 @@ import Button from './components/Button';
 import {KeyboardAvoidingView} from 'react-native';
 import {GetToken, DeleteToken} from './components/Token';
 import {useEffect, useState} from 'react';
-import COLORS from './conts/colors';
 import axios from './components/axios';
 import {useNavigation} from '@react-navigation/native';
 
@@ -41,9 +40,7 @@ function SettingsPage() {
       </View>
 
       <View style={styles.statusMsgContainer}>
-        <Text style={{color: COLORS.primary}}>
-          {statusMsg ? statusMsg : ''}
-        </Text>
+        <Text style={styles.primary}>{statusMsg ? statusMsg : ''}</Text>
       </View>
     </KeyboardAvoidingView>
   );

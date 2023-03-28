@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../conts/colors';
+import styles from '../conts/Styles';
 
 const Input = ({
   label,
@@ -17,10 +18,10 @@ const Input = ({
   const [isFocused, setIsFocused] = React.useState(false);
   return (
     <View style={{marginBottom: 5}}>
-      <Text style={style.label}>{label}</Text>
+      <Text style={styles.label}>{label}</Text>
       <View
         style={[
-          style.inputContainer,
+          styles.inputContainer2,
           {
             borderColor: error
               ? COLORS.red
@@ -30,10 +31,7 @@ const Input = ({
             alignItems: 'center',
           },
         ]}>
-        <Icon
-          name={iconName}
-          style={{color: COLORS.primary, fontSize: 22, marginRight: 10}}
-        />
+        <Icon name={iconName} style={styles.inputIcon} />
         <TextInput
           autoCorrect={false}
           onFocus={() => {
@@ -43,25 +41,21 @@ const Input = ({
           onBlur={() => setIsFocused(false)}
           secureTextEntry={hidePassword}
           placeholder={placeholder}
+          //Fix this color
           placeholderTextColor={COLORS.primary}
           keyboardType={keyboardType}
-          style={{
-            color: COLORS.primary,
-            flex: 1,
-          }}
+          style={styles.input}
           {...props}
         />
         {password && (
           <Icon
             onPress={() => setHidePassword(!hidePassword)}
             name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
-            style={{color: COLORS.primary, fontSize: 22}}
+            style={styles.inputPassIcon}
           />
         )}
       </View>
-      {error && (
-        <Text style={{marginTop: 7, color: COLORS.red, fontSize: 12}}></Text>
-      )}
+      {error && <Text style={styles.errortext}></Text>}
     </View>
   );
 };
@@ -70,10 +64,10 @@ const Input2 = ({label, error, placeholder, onFocus = () => {}, ...props}) => {
   const [isFocused, setIsFocused] = React.useState(false);
   return (
     <View style={{marginBottom: 5}}>
-      <Text style={style.label}>{label}</Text>
+      <Text style={styles.label}>{label}</Text>
       <View
         style={[
-          style.inputContainer,
+          styles.inputContainer2,
           {
             borderColor: error
               ? COLORS.red
@@ -91,42 +85,15 @@ const Input2 = ({label, error, placeholder, onFocus = () => {}, ...props}) => {
           }}
           onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
+          //Fix this color
           placeholderTextColor={COLORS.primary}
-          style={style.input2}
+          style={styles.input2}
           {...props}
         />
       </View>
-      {error && (
-        <Text style={{marginTop: 7, color: COLORS.red, fontSize: 12}}></Text>
-      )}
+      {error && <Text style={styles.errortext}></Text>}
     </View>
   );
 };
-
-const style = StyleSheet.create({
-  label: {
-    marginVertical: 5,
-    fontSize: 14,
-    color: COLORS.primary,
-    borderRadius: 10,
-  },
-  inputContainer: {
-    height: 55,
-    backgroundColor: COLORS.tertiary,
-    flexDirection: 'row',
-    paddingHorizontal: 15,
-    borderWidth: 0.5,
-    borderRadius: 10,
-  },
-  input: {
-    color: COLORS.primary,
-    flex: 1,
-    width: '80%',
-  },
-  input2: {
-    color: COLORS.primary,
-    width: '100%',
-  },
-});
 
 export {Input, Input2};

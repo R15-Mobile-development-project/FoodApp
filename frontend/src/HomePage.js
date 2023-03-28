@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import COLORS from './conts/colors';
+import styles from './conts/Styles';
 
 function HomePage() {
   return (
@@ -9,9 +9,9 @@ function HomePage() {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: COLORS.quaternary,
+        backgroundColor: 'white',
       }}>
-      <Text style={{color: COLORS.primary}}>Home</Text>
+      <Text style={styles.primary}>Home</Text>
     </View>
   );
 }

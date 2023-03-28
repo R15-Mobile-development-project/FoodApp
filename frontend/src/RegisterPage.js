@@ -3,7 +3,6 @@ import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input, Input2} from './components/Input';
 import Button from './components/Button';
 import styles from './conts/Styles';
-import COLORS from './conts/colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import axios from './components/axios';
@@ -97,16 +96,14 @@ function RegisterPage() {
         <Button title="Register" onPress={() => Register()} />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={{color: COLORS.primary}}>Already have an account?</Text>
+        <Text style={styles.primary}>Already have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.textlink}>Login</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.statusMsgContainer}>
-        <Text style={{color: COLORS.primary}}>
-          {statusMsg ? statusMsg : ''}
-        </Text>
+        <Text style={styles.primary}>{statusMsg ? statusMsg : ''}</Text>
       </View>
     </KeyboardAvoidingView>
   );
