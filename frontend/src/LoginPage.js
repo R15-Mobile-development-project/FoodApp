@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input} from './components/Input';
 import Button from './components/Button';
@@ -6,7 +6,7 @@ import COLORS from './conts/colors';
 import styles from './conts/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
-import axios from "./components/axios";
+import axios from './components/axios';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 function LoginPage() {
@@ -17,46 +17,52 @@ function LoginPage() {
   const navigation = useNavigation();
 
   const Login = () => {
-    if(!email || !password){
-      return
+    if (!email || !password) {
+      return;
     }
 
     const payload = {
       email: email,
-      password: password
-    }
+      password: password,
+    };
 
-    axios.post("/user/login", payload).then(async response => {
-      console.log(response.data);
+    axios
+      .post('/user/login', payload)
+      .then(async response => {
+        console.log(response.data);
 
-      if(!response.data || (!response.data.message && !response.data.token)){
-        setStatusMsg("No data from server")
-        return
-      }
+        if (
+          !response.data ||
+          (!response.data.message && !response.data.token)
+        ) {
+          setStatusMsg('No data from server');
+          return;
+        }
 
-      const token = response.data.token
+        const token = response.data.token;
 
-      try {
-        await EncryptedStorage.setItem("token", token);
-      } catch (error) {
-        console.log("Error on saving token: ", error);
-      }
+        try {
+          await EncryptedStorage.setItem('token', token);
+        } catch (error) {
+          console.log('Error on saving token: ', error);
+        }
 
-      setStatusMsg(response.data.message)
+        setStatusMsg(response.data.message);
 
-      setTimeout(() => {
-        navigation.navigate('MyDrawer')
-      }, 500)
-    }).catch(err => {
-      if(err.response.data && err.response.data.message){
-        setStatusMsg(err.response.data.message)
-      }
-    })
-  }
+        setTimeout(() => {
+          navigation.navigate('MyDrawer');
+        }, 500);
+      })
+      .catch(err => {
+        if (err.response.data && err.response.data.message) {
+          setStatusMsg(err.response.data.message);
+        }
+      });
+  };
 
   const ResetStatusMsg = () => {
-    setStatusMsg("");
-  }
+    setStatusMsg('');
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -71,6 +77,7 @@ function LoginPage() {
           value={email}
           onChangeText={text => (setEmail(text), ResetStatusMsg())}
           placeholder={'Enter your email address'}
+          keyboardType={'email-address'}
         />
         <Input
           label={'Password'}
@@ -93,7 +100,9 @@ function LoginPage() {
       </View>
 
       <View style={styles.statusMsgContainer}>
-        <Text style={{color: COLORS.primary}}>{statusMsg ? statusMsg : ""}</Text>
+        <Text style={{color: COLORS.primary}}>
+          {statusMsg ? statusMsg : ''}
+        </Text>
       </View>
     </KeyboardAvoidingView>
   );
