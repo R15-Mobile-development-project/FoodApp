@@ -8,7 +8,7 @@ import LoginPage from '../LoginPage';
 import HistoryPage from '../HistoryPage';
 import {NavigationContainer} from '@react-navigation/native';
 import COLORS from '../conts/colors';
-import SaldoPage from '../SaldoPage';
+import WalletPage from '../WalletPage';
 
 const Drawer = createDrawerNavigator();
 

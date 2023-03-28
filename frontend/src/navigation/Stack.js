@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import LoginPage from '../LoginPage';
 import RegisterPage from '../RegisterPage';
 import MyDrawer from './Drawer';
-import SaldoPage from '../SaldoPage';
+import WalletPage from '../WalletPage';
 
 const Stack = createStackNavigator();
 
@@ -14,7 +14,7 @@ const MyStack = () => {
         <Stack.Screen name="Register" component={RegisterPage} />
         <Stack.Screen name="Login" component={LoginPage} />
         <Stack.Screen name="MyDrawer" component={MyDrawer} />
-        <Stack.Screen name="Wallet" component={SaldoPage} />
+        <Stack.Screen name="Wallet" component={WalletPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

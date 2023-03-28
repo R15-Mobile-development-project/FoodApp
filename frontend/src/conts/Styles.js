@@ -39,6 +39,12 @@ const styles = StyleSheet.create({
   statusMsgContainer: {
     marginTop: 20
   },
+  walletContainer: {
+    width: '40%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+  },
 });
 
 export default styles;
