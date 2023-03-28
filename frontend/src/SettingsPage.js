@@ -9,28 +9,15 @@ import axios from './components/axios';
 import {useNavigation} from '@react-navigation/native';
 
 function SettingsPage() {
-  const [jwtToken, setJwtToken] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const FetchTokenFromStorage = async () => {
-      const token = await GetToken();
+  const DeleteProfile = async () => {
+    const token = await GetToken();
 
-      if (token !== null) {
-        setJwtToken(token);
-      } else {
-        console.log('Error on fetching jwt');
-      }
-    };
-
-    FetchTokenFromStorage();
-  }, []);
-
-  const DeleteProfile = () => {
     axios
-      .delete('/user', {headers: {Authorization: `Bearer ${jwtToken}`}})
+      .delete('/user', {headers: {Authorization: `Bearer ${token}`}})
       .then(async response => {
         await DeleteToken();
         setStatusMsg(response.data.message);
