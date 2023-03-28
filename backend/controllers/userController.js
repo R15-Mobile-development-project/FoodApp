@@ -163,9 +163,28 @@ const updateUserProfile = async (req, res) => {
   })
 };
 
+const deleteProfile = (req, res) => {
+  user.deleteById(req.userId, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occured",
+      });
+    }
+
+    if(results.affectedRows === 1){
+      return res.json({message: "User deleted"})
+    }else{
+      res.status(400).json({
+        message: "Unable to delete user"
+      });
+    }
+  })
+}
+
 module.exports = {
   userLogin,
   userRegister,
   userProfile,
-  updateUserProfile
+  updateUserProfile,
+  deleteProfile
 };
