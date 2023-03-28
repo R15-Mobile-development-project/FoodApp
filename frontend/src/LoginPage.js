@@ -7,7 +7,7 @@ import styles from './conts/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import axios from './components/axios';
-import EncryptedStorage from 'react-native-encrypted-storage';
+import {SaveToken} from './components/Token';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -41,11 +41,7 @@ function LoginPage() {
 
         const token = response.data.token;
 
-        try {
-          await EncryptedStorage.setItem('token', token);
-        } catch (error) {
-          console.log('Error on saving token: ', error);
-        }
+        await SaveToken(token);
 
         setStatusMsg(response.data.message);
 

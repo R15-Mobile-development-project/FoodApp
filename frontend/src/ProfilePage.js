@@ -5,8 +5,8 @@ import Button from './components/Button';
 import COLORS from './conts/colors';
 import styles from './conts/Styles';
 import axios from './components/axios';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import {useNavigation} from '@react-navigation/native';
+import {GetToken} from './components/Token';
 
 function ProfilePage() {
   const [firstName, setFirstName] = useState('');
@@ -14,19 +14,16 @@ function ProfilePage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
-  const [token, setToken] = useState(null);
 
   const navigation = useNavigation();
 
   useEffect(() => {
     const FetchProfile = async () => {
       try {
-        const _token = await EncryptedStorage.getItem('token');
+        const token = await GetToken();
 
-        if (_token !== undefined) {
-          setToken(_token);
-
-          const headers = {headers: {Authorization: `Bearer ${_token}`}};
+        if (token !== undefined) {
+          const headers = {headers: {Authorization: `Bearer ${token}`}};
 
           axios
             .get('/user', headers)
@@ -52,7 +49,9 @@ function ProfilePage() {
     });
   }, [navigation]);
 
-  const UpdateProfile = () => {
+  const UpdateProfile = async () => {
+    const token = await GetToken();
+
     const payload = {
       fname: firstName,
       lname: lastName,
