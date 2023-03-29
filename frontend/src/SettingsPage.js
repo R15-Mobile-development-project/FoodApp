@@ -8,6 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {COLORS} from './conts/colors';
 import {ThemeContext} from './components/ThemeContext';
 import {SaveMode} from './components/Token';
+import styles from './conts/Styles';
 
 function SettingsPage() {
   const [statusMsg, setStatusMsg] = useState('');
@@ -41,28 +42,14 @@ function SettingsPage() {
 
   return (
     <KeyboardAvoidingView
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: COLORS[theme].quaternary,
-      }}>
-      <View
-        style={{
-          width: '60%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 40,
-        }}>
+      style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
+      <View style={styles.buttonContainer}>
         <Button title="Dark/Light mode" onPress={handleToggleTheme} />
         <Button title="Delete user" onPress={() => DeleteProfile()} />
         <Button title="jaa" />
       </View>
 
-      <View
-        style={{
-          marginTop: 20,
-        }}>
+      <View style={styles.statusMsgContainer}>
         <Text
           style={{
             color: COLORS[theme].primary,

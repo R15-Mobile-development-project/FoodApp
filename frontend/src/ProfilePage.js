@@ -8,6 +8,7 @@ import {GetToken} from './components/Token';
 import {COLORS} from './conts/colors';
 import {ThemeContext} from './components/ThemeContext';
 import {useContext} from 'react';
+import styles from './conts/Styles';
 
 function ProfilePage() {
   const [firstName, setFirstName] = useState('');
@@ -78,31 +79,13 @@ function ProfilePage() {
 
   return (
     <KeyboardAvoidingView
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: COLORS[theme].quaternary,
-      }}>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginBottom: 20,
-        }}>
-        <Text
-          style={{
-            fontSize: 30,
-            fontWeight: 'bold',
-            color: COLORS[theme].primary,
-          }}>
+      style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
+      <View style={styles.textcontainer}>
+        <Text style={[styles.text, {color: COLORS[theme].primary}]}>
           Profile
         </Text>
       </View>
-      <View
-        style={{
-          width: '80%',
-        }}>
+      <View style={styles.inputContainer}>
         <View style={{flexDirection: 'row', width: '50%'}}>
           <Input2
             label={'First Name'}
@@ -135,20 +118,11 @@ function ProfilePage() {
           password
         />
       </View>
-      <View
-        style={{
-          width: '60%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 40,
-        }}>
+      <View style={styles.buttonContainer}>
         <Button title="Save" onPress={() => UpdateProfile()} />
       </View>
 
-      <View
-        style={{
-          marginTop: 20,
-        }}>
+      <View style={styles.statusMsgContainer}>
         <Text
           style={{
             color: COLORS[theme].primary,

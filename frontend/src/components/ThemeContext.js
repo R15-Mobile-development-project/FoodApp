@@ -1,6 +1,5 @@
 import React, {createContext, useState, useEffect} from 'react';
 import {GetMode} from './Token';
-import {COLORS} from './conts/colors';
 
 export const ThemeContext = createContext({});
 

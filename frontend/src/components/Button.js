@@ -1,8 +1,9 @@
 import React from 'react';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text} from 'react-native';
 import {COLORS} from '../conts/colors';
 import {ThemeContext} from './ThemeContext';
 import {useContext} from 'react';
+import styles from '../conts/Styles';
 
 const Button = ({title, onPress = () => {}}) => {
   const {theme} = useContext(ThemeContext);
@@ -12,26 +13,15 @@ const Button = ({title, onPress = () => {}}) => {
       onPress={onPress}
       activeOpacity={0.7}
       style={[
-        {
-          backgroundColor: COLORS[theme].primary,
-          width: '100%',
-          padding: 15,
-          borderRadius: 10,
-          alignItems: 'center',
-        },
+        styles.buttonOne,
+        {backgroundColor: COLORS[theme].primary},
+        styles.buttonOneOutline,
         {
           backgroundColor: COLORS[theme].quaternary,
-          marginTop: 5,
           borderColor: COLORS[theme].primary,
-          borderWidth: 2,
         },
       ]}>
-      <Text
-        style={{
-          color: COLORS[theme].primary,
-          fontWeight: '700',
-          fontSize: 16,
-        }}>
+      <Text style={[styles.buttonOneText, {color: COLORS[theme].primary}]}>
         {title}
       </Text>
     </TouchableOpacity>

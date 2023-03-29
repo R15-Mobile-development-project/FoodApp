@@ -3,24 +3,14 @@ import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {COLORS} from './conts/colors';
 import {ThemeContext} from './components/ThemeContext';
 import {useContext} from 'react';
+import styles from './conts/Styles';
 
 function SaldoPage() {
   const {theme} = useContext(ThemeContext);
   return (
     <KeyboardAvoidingView
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: COLORS[theme].quaternary,
-      }}>
-      <View
-        style={{
-          width: '60%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 40,
-        }}>
+      style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
+      <View style={styles.buttonContainer}>
         <Text>Add saldo</Text>
         <Button title="add 5" />
         <Button title="add 10" />

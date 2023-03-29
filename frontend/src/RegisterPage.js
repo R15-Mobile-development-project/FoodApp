@@ -8,6 +8,7 @@ import axios from './components/axios';
 import {COLORS} from './conts/colors';
 import {ThemeContext} from './components/ThemeContext';
 import {useContext} from 'react';
+import styles from './conts/Styles';
 
 function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -59,32 +60,14 @@ function RegisterPage() {
 
   return (
     <KeyboardAvoidingView
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: COLORS[theme].quaternary,
-      }}>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginBottom: 20,
-        }}>
-        <Text
-          style={{
-            fontSize: 30,
-            fontWeight: 'bold',
-            color: COLORS[theme].primary,
-          }}>
+      style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
+      <View style={styles.textcontainer}>
+        <Text style={[styles.text, {color: COLORS[theme].primary}]}>
           Register
         </Text>
       </View>
 
-      <View
-        style={{
-          width: '80%',
-        }}>
+      <View style={styles.inputContainer}>
         <Input
           label={'Email'}
           iconName="email"
@@ -93,7 +76,7 @@ function RegisterPage() {
           placeholder={'Enter your email address'}
           keyboardType={'email-address'}
         />
-        <View style={{flexDirection: 'row', width: '50%'}}>
+        <View style={styles.inputView}>
           <Input2
             label={'First Name'}
             value={firstName}
@@ -116,21 +99,10 @@ function RegisterPage() {
           password
         />
       </View>
-      <View
-        style={{
-          width: '60%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 40,
-        }}>
+      <View style={styles.buttonContainer}>
         <Button title="Register" onPress={() => Register()} />
       </View>
-      <View
-        style={{
-          marginTop: 20,
-          flexDirection: 'row',
-          gap: 10,
-        }}>
+      <View style={styles.infoContainer}>
         <Text
           style={{
             color: COLORS[theme].primary,
@@ -138,20 +110,13 @@ function RegisterPage() {
           Already have an account?
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text
-            style={{
-              color: COLORS[theme].primary,
-              textDecorationLine: 'underline',
-            }}>
+          <Text style={[styles.textlink, {color: COLORS[theme].primary}]}>
             Login
           </Text>
         </TouchableOpacity>
       </View>
 
-      <View
-        style={{
-          marginTop: 20,
-        }}>
+      <View style={styles.statusMsgContainer}>
         <Text
           style={{
             color: COLORS[theme].primary,
