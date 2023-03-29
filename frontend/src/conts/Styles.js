@@ -1,6 +1,6 @@
 import {DrawerView} from '@react-navigation/drawer';
 import {StyleSheet} from 'react-native';
-import COLORS from './colors';
+import {COLORS} from './colors';
 
 const styles = StyleSheet.create({
   //Containers
@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
     headerTintColor: COLORS.quaternary,
     headerTitleStyle: {color: COLORS.quaternary},
     headerStyle: {backgroundColor: COLORS.primary},
-    //TODO drawerActiveBackgroundColor better when there are better colors
     drawerActiveBackgroundColor: COLORS.primary,
     drawerActiveTintColor: COLORS.quaternary,
     drawerInactiveTintColor: COLORS.primary,

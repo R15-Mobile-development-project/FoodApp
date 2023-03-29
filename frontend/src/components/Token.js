@@ -39,8 +39,38 @@ const SaveToken = async token => {
   }
 };
 
+const SaveMode = async mode => {
+  try {
+    console.log('Saving mode');
+    await EncryptedStorage.setItem('mode', mode);
+  } catch (error) {
+    console.log('Error on saving mode');
+    console.log(error);
+    return null;
+  }
+};
+
+const GetMode = async () => {
+  try {
+    const mode = await EncryptedStorage.getItem('mode');
+
+    if (mode !== undefined) {
+      return mode;
+    } else {
+      console.log('No mode found');
+      return null;
+    }
+  } catch (error) {
+    console.log('Error on fetchin mode from storage');
+    console.log(error);
+    return null;
+  }
+};
+
 module.exports = {
   GetToken,
   DeleteToken,
   SaveToken,
+  SaveMode,
+  GetMode,
 };

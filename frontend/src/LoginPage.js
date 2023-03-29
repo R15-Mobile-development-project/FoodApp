@@ -2,16 +2,19 @@ import React, {useState} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input} from './components/Input';
 import Button from './components/Button';
-import styles from './conts/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import axios from './components/axios';
 import {SaveToken} from './components/Token';
+import {COLORS} from './conts/colors';
+import {ThemeContext} from './components/ThemeContext';
+import {useContext} from 'react';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
+  const {theme} = useContext(ThemeContext);
 
   const navigation = useNavigation();
 
@@ -60,12 +63,33 @@ function LoginPage() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <View style={styles.textcontainer}>
-        <Text style={styles.text}>Login</Text>
+    <KeyboardAvoidingView
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS[theme].quaternary,
+      }}>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: 20,
+        }}>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: 'bold',
+            color: COLORS[theme].primary,
+          }}>
+          Login
+        </Text>
       </View>
 
-      <View style={styles.inputContainer}>
+      <View
+        style={{
+          width: '80%',
+        }}>
         <Input
           label={'Email'}
           iconName="email"
@@ -83,19 +107,49 @@ function LoginPage() {
           password
         />
       </View>
-      <View style={styles.buttonContainer}>
+      <View
+        style={{
+          width: '60%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 40,
+        }}>
         {/* //TODO add onPress to Login user */}
         <Button title="Login" onPress={() => Login()} />
       </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.primary}>Dont have an account?</Text>
+      <View
+        style={{
+          marginTop: 20,
+          flexDirection: 'row',
+          gap: 10,
+        }}>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
+          Dont have an account?
+        </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.textlink}>Register</Text>
+          <Text
+            style={{
+              color: COLORS[theme].primary,
+              textDecorationLine: 'underline',
+            }}>
+            Register
+          </Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.statusMsgContainer}>
-        <Text style={styles.primary}>{statusMsg ? statusMsg : ''}</Text>
+      <View
+        style={{
+          marginTop: 20,
+        }}>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
+          {statusMsg ? statusMsg : ''}
+        </Text>
       </View>
     </KeyboardAvoidingView>
   );

@@ -2,10 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input, Input2} from './components/Input';
 import Button from './components/Button';
-import styles from './conts/Styles';
 import axios from './components/axios';
 import {useNavigation} from '@react-navigation/native';
 import {GetToken} from './components/Token';
+import {COLORS} from './conts/colors';
+import {ThemeContext} from './components/ThemeContext';
+import {useContext} from 'react';
 
 function ProfilePage() {
   const [firstName, setFirstName] = useState('');
@@ -13,6 +15,7 @@ function ProfilePage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
+  const {theme} = useContext(ThemeContext);
 
   const navigation = useNavigation();
 
@@ -74,11 +77,32 @@ function ProfilePage() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <View style={styles.textcontainer}>
-        <Text style={styles.text}>Profile</Text>
+    <KeyboardAvoidingView
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS[theme].quaternary,
+      }}>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: 20,
+        }}>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: 'bold',
+            color: COLORS[theme].primary,
+          }}>
+          Profile
+        </Text>
       </View>
-      <View style={styles.inputContainer}>
+      <View
+        style={{
+          width: '80%',
+        }}>
         <View style={{flexDirection: 'row', width: '50%'}}>
           <Input2
             label={'First Name'}
@@ -111,12 +135,26 @@ function ProfilePage() {
           password
         />
       </View>
-      <View style={styles.buttonContainer}>
+      <View
+        style={{
+          width: '60%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 40,
+        }}>
         <Button title="Save" onPress={() => UpdateProfile()} />
       </View>
 
-      <View style={styles.statusMsgContainer}>
-        <Text style={styles.primary}>{statusMsg ? statusMsg : ''}</Text>
+      <View
+        style={{
+          marginTop: 20,
+        }}>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
+          {statusMsg ? statusMsg : ''}
+        </Text>
       </View>
     </KeyboardAvoidingView>
   );

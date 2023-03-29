@@ -2,10 +2,12 @@ import React, {useState} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input, Input2} from './components/Input';
 import Button from './components/Button';
-import styles from './conts/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import axios from './components/axios';
+import {COLORS} from './conts/colors';
+import {ThemeContext} from './components/ThemeContext';
+import {useContext} from 'react';
 
 function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -13,6 +15,7 @@ function RegisterPage() {
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
+  const {theme} = useContext(ThemeContext);
 
   const navigation = useNavigation();
 
@@ -55,12 +58,33 @@ function RegisterPage() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <View style={styles.textcontainer}>
-        <Text style={styles.text}>Register</Text>
+    <KeyboardAvoidingView
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS[theme].quaternary,
+      }}>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: 20,
+        }}>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: 'bold',
+            color: COLORS[theme].primary,
+          }}>
+          Register
+        </Text>
       </View>
 
-      <View style={styles.inputContainer}>
+      <View
+        style={{
+          width: '80%',
+        }}>
         <Input
           label={'Email'}
           iconName="email"
@@ -92,18 +116,48 @@ function RegisterPage() {
           password
         />
       </View>
-      <View style={styles.buttonContainer}>
+      <View
+        style={{
+          width: '60%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 40,
+        }}>
         <Button title="Register" onPress={() => Register()} />
       </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.primary}>Already have an account?</Text>
+      <View
+        style={{
+          marginTop: 20,
+          flexDirection: 'row',
+          gap: 10,
+        }}>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
+          Already have an account?
+        </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.textlink}>Login</Text>
+          <Text
+            style={{
+              color: COLORS[theme].primary,
+              textDecorationLine: 'underline',
+            }}>
+            Login
+          </Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.statusMsgContainer}>
-        <Text style={styles.primary}>{statusMsg ? statusMsg : ''}</Text>
+      <View
+        style={{
+          marginTop: 20,
+        }}>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
+          {statusMsg ? statusMsg : ''}
+        </Text>
       </View>
     </KeyboardAvoidingView>
   );

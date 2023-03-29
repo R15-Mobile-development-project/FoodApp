@@ -1,14 +1,17 @@
 import {View, Text} from 'react-native';
-import styles from './conts/Styles';
 import Button from './components/Button';
 import {KeyboardAvoidingView} from 'react-native';
 import {GetToken, DeleteToken} from './components/Token';
-import {useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import axios from './components/axios';
 import {useNavigation} from '@react-navigation/native';
+import {COLORS} from './conts/colors';
+import {ThemeContext} from './components/ThemeContext';
+import {SaveMode} from './components/Token';
 
 function SettingsPage() {
   const [statusMsg, setStatusMsg] = useState('');
+  const {theme, toggleTheme} = useContext(ThemeContext);
 
   const navigation = useNavigation();
 
@@ -31,18 +34,44 @@ function SettingsPage() {
       });
   };
 
+  const handleToggleTheme = () => {
+    toggleTheme();
+    SaveMode(theme === 'light' ? 'dark' : 'light');
+  };
+
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <View style={styles.buttonContainer}>
-        <Button title="Dark/Lihgtmode" />
+    <KeyboardAvoidingView
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS[theme].quaternary,
+      }}>
+      <View
+        style={{
+          width: '60%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 40,
+        }}>
+        <Button title="Dark/Light mode" onPress={handleToggleTheme} />
         <Button title="Delete user" onPress={() => DeleteProfile()} />
         <Button title="jaa" />
       </View>
 
-      <View style={styles.statusMsgContainer}>
-        <Text style={styles.primary}>{statusMsg ? statusMsg : ''}</Text>
+      <View
+        style={{
+          marginTop: 20,
+        }}>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
+          {statusMsg ? statusMsg : ''}
+        </Text>
       </View>
     </KeyboardAvoidingView>
   );
 }
+
 export default SettingsPage;

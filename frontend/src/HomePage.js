@@ -1,17 +1,24 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import styles from './conts/Styles';
-
+import {COLORS} from './conts/colors';
+import {ThemeContext} from './components/ThemeContext';
+import {useContext} from 'react';
 function HomePage() {
+  const {theme} = useContext(ThemeContext);
   return (
     <View
       style={{
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: COLORS[theme].quaternary,
       }}>
-      <Text style={styles.primary}>Home</Text>
+      <Text
+        style={{
+          color: COLORS[theme].primary,
+        }}>
+        Home
+      </Text>
     </View>
   );
 }
