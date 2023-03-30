@@ -2,7 +2,7 @@ import {View, Text} from 'react-native';
 import Button from './components/Button';
 import {KeyboardAvoidingView} from 'react-native';
 import {GetToken, DeleteToken} from './components/Token';
-import {useContext, useState} from 'react';
+import {useContext, useState, useEffect} from 'react';
 import axios from './components/axios';
 import {useNavigation} from '@react-navigation/native';
 import {COLORS} from './conts/colors';
@@ -44,7 +44,10 @@ function SettingsPage() {
     <KeyboardAvoidingView
       style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
       <View style={styles.buttonContainer}>
-        <Button title="Dark/Light mode" onPress={handleToggleTheme} />
+        <Button
+          title={theme === 'light' ? 'Dark mode' : 'Light mode'}
+          onPress={handleToggleTheme}
+        />
         <Button title="Delete user" onPress={() => DeleteProfile()} />
         <Button title="jaa" />
       </View>
