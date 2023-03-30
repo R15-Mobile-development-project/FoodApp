@@ -7,7 +7,7 @@ import axios from './components/axios';
 import {useNavigation} from '@react-navigation/native';
 import {COLORS} from './conts/colors';
 import {ThemeContext} from './components/ThemeContext';
-import {SaveMode} from './components/Token';
+import {SaveMode, DeleteMode} from './components/Token';
 import styles from './conts/Styles';
 
 function SettingsPage() {
@@ -23,9 +23,11 @@ function SettingsPage() {
       .delete('/user', {headers: {Authorization: `Bearer ${token}`}})
       .then(async response => {
         await DeleteToken();
+        await DeleteMode();
         setStatusMsg(response.data.message);
 
         setTimeout(() => {
+          toggleTheme();
           navigation.push('Login');
         }, 500);
       })

@@ -67,10 +67,22 @@ const GetMode = async () => {
   }
 };
 
+const DeleteMode = async () => {
+  try {
+    await EncryptedStorage.removeItem('mode');
+    console.log('Mode deleted');
+  } catch (error) {
+    console.log('Error on deleting mode');
+    console.log(error);
+    return null;
+  }
+};
+
 module.exports = {
   GetToken,
   DeleteToken,
   SaveToken,
   SaveMode,
   GetMode,
+  DeleteMode,
 };
