@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input, Input2} from './components/Input';
 import Button from './components/Button';
-import COLORS from './conts/colors';
-import styles from './conts/Styles';
 import axios from './components/axios';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import {useNavigation} from '@react-navigation/native';
+import {GetToken} from './components/Token';
+import {COLORS} from './conts/colors';
+import {ThemeContext} from './components/ThemeContext';
+import {useContext} from 'react';
+import styles from './conts/Styles';
 
 function ProfilePage() {
   const [firstName, setFirstName] = useState('');
@@ -14,19 +16,17 @@ function ProfilePage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
-  const [token, setToken] = useState(null);
+  const {theme} = useContext(ThemeContext);
 
   const navigation = useNavigation();
 
   useEffect(() => {
     const FetchProfile = async () => {
       try {
-        const _token = await EncryptedStorage.getItem('token');
+        const token = await GetToken();
 
-        if (_token !== undefined) {
-          setToken(_token);
-
-          const headers = {headers: {Authorization: `Bearer ${_token}`}};
+        if (token !== undefined) {
+          const headers = {headers: {Authorization: `Bearer ${token}`}};
 
           axios
             .get('/user', headers)
@@ -52,7 +52,9 @@ function ProfilePage() {
     });
   }, [navigation]);
 
-  const UpdateProfile = () => {
+  const UpdateProfile = async () => {
+    const token = await GetToken();
+
     const payload = {
       fname: firstName,
       lname: lastName,
@@ -76,9 +78,12 @@ function ProfilePage() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView
+      style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
       <View style={styles.textcontainer}>
-        <Text style={styles.text}>Profile</Text>
+        <Text style={[styles.text, {color: COLORS[theme].primary}]}>
+          Profile
+        </Text>
       </View>
       <View style={styles.inputContainer}>
         <View style={{flexDirection: 'row', width: '50%'}}>
@@ -118,7 +123,10 @@ function ProfilePage() {
       </View>
 
       <View style={styles.statusMsgContainer}>
-        <Text style={{color: COLORS.primary}}>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
           {statusMsg ? statusMsg : ''}
         </Text>
       </View>

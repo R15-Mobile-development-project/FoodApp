@@ -1,41 +1,31 @@
 import React from 'react';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
-import COLORS from '../conts/colors';
+import {TouchableOpacity, Text} from 'react-native';
+import {COLORS} from '../conts/colors';
+import {ThemeContext} from './ThemeContext';
+import {useContext} from 'react';
+import styles from '../conts/Styles';
+
 const Button = ({title, onPress = () => {}}) => {
+  const {theme} = useContext(ThemeContext);
+
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      style={[styles.button, styles.buttonOutline]}>
-      <Text style={styles.buttonOutlineText}>{title}</Text>
+      style={[
+        styles.buttonOne,
+        {backgroundColor: COLORS[theme].primary},
+        styles.buttonOneOutline,
+        {
+          backgroundColor: COLORS[theme].quaternary,
+          borderColor: COLORS[theme].primary,
+        },
+      ]}>
+      <Text style={[styles.buttonOneText, {color: COLORS[theme].primary}]}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
 
 export default Button;
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: COLORS.primary,
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  buttonOutline: {
-    backgroundColor: COLORS.quaternary,
-    marginTop: 5,
-    borderColor: COLORS.primary,
-    borderWidth: 2,
-  },
-  buttonText: {
-    color: COLORS.quaternary,
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: COLORS.primary,
-    fontWeight: '700',
-    fontSize: 16,
-  },
-});

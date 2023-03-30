@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input, Input2} from './components/Input';
 import Button from './components/Button';
-import styles from './conts/Styles';
-import COLORS from './conts/colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import axios from './components/axios';
+import {COLORS} from './conts/colors';
+import {ThemeContext} from './components/ThemeContext';
+import {useContext} from 'react';
+import styles from './conts/Styles';
 
 function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -14,6 +16,7 @@ function RegisterPage() {
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
+  const {theme} = useContext(ThemeContext);
 
   const navigation = useNavigation();
 
@@ -56,9 +59,12 @@ function RegisterPage() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView
+      style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
       <View style={styles.textcontainer}>
-        <Text style={styles.text}>Register</Text>
+        <Text style={[styles.text, {color: COLORS[theme].primary}]}>
+          Register
+        </Text>
       </View>
 
       <View style={styles.inputContainer}>
@@ -70,7 +76,7 @@ function RegisterPage() {
           placeholder={'Enter your email address'}
           keyboardType={'email-address'}
         />
-        <View style={{flexDirection: 'row', width: '50%'}}>
+        <View style={styles.inputView}>
           <Input2
             label={'First Name'}
             value={firstName}
@@ -97,14 +103,24 @@ function RegisterPage() {
         <Button title="Register" onPress={() => Register()} />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={{color: COLORS.primary}}>Already have an account?</Text>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
+          Already have an account?
+        </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.textlink}>Login</Text>
+          <Text style={[styles.textlink, {color: COLORS[theme].primary}]}>
+            Login
+          </Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.statusMsgContainer}>
-        <Text style={{color: COLORS.primary}}>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
           {statusMsg ? statusMsg : ''}
         </Text>
       </View>
