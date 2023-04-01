@@ -7,6 +7,7 @@ import HistoryPage from '../HistoryPage';
 import {COLORS} from '../conts/colors';
 import {ThemeContext} from '../components/ThemeContext';
 import {useContext} from 'react';
+import AddRestaurantPage from '../Addrestaurant';
 
 const Drawer = createDrawerNavigator();
 
@@ -28,6 +29,7 @@ const MyDrawer = () => {
       <Drawer.Screen name="Profile" component={ProfilePage} />
       <Drawer.Screen name="settings" component={SettingsPage} />
       <Drawer.Screen name="Order History" component={HistoryPage} />
+      <Drawer.Screen name="Add restaurant" component={AddRestaurantPage} />
     </Drawer.Navigator>
   );
 };
