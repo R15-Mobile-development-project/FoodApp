@@ -108,6 +108,7 @@ function AddRestaurant() {
                     newFoodItems[index] = {...newFoodItems[index], price: text};
                     setFoodItems(newFoodItems);
                   }}
+                  keyboardType={'numeric'}
                   placeholder={'Price'}
                 />
               </View>

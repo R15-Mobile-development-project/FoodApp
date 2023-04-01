@@ -111,7 +111,13 @@ const Input2 = ({label, error, placeholder, onFocus = () => {}, ...props}) => {
     </View>
   );
 };
-const Input3 = ({error, placeholder, onFocus = () => {}, ...props}) => {
+const Input3 = ({
+  error,
+  placeholder,
+  keyboardType,
+  onFocus = () => {},
+  ...props
+}) => {
   const {theme} = useContext(ThemeContext);
   const [isFocused, setIsFocused] = React.useState(false);
   return (
@@ -137,7 +143,7 @@ const Input3 = ({error, placeholder, onFocus = () => {}, ...props}) => {
           }}
           onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
-          //Fix this color
+          keyboardType={keyboardType}
           placeholderTextColor={COLORS[theme].primary}
           style={[{color: COLORS[theme].primary}]}
           {...props}
