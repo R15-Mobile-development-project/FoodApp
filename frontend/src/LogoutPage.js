@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {DeleteToken} from './components/Token';
-import {useNavigation, CommonActions} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 function LogoutPage() {
   const navigation = useNavigation();
@@ -8,7 +8,7 @@ function LogoutPage() {
   useEffect(() => {
     const DeleteSession = async () => {
       await DeleteToken();
-      navigation.popToTop();
+      navigation.pop();
     };
     DeleteSession();
   }, []);
