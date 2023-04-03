@@ -55,7 +55,7 @@ const userRegister = (req, res) => {
     return res.status(400).json({ message: "Please fill in all fields" });
   } else if (!emailvalidator.validate(email)) {
     return res.status(400).json({ message: "Invalid email" });
-  } else if (password.length < 2) {
+  } else if (password.length < 1) {
     return res.status(400).json({ message: "Password too short" });
   }
 
@@ -111,12 +111,30 @@ const userProfile = (req, res) => {
   });
 };
 
+const deleteProfile = (req, res) => {
+  user.deleteById(req.userId, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occured",
+      });
+    }
+
+    if (results.affectedRows === 1) {
+      return res.json({ message: "User deleted" });
+    } else {
+      res.status(400).json({
+        message: "Unable to delete user",
+      });
+    }
+  });
+};
+
 const updateUserProfile = async (req, res) => {
   const { fname, lname, email, password } = req.body;
 
   if (email && !emailvalidator.validate(email)) {
     return res.status(400).json({ message: "Invalid email" });
-  } else if (password && password.length < 8) {
+  } else if (password && password.length < 1) {
     return res.status(400).json({ message: "Password too short" });
   }
 
@@ -164,7 +182,7 @@ const updateUserProfile = async (req, res) => {
 const updateBalance = (req, res) => {
   const { balance } = req.body;
 
- if (typeof balance !="number") {
+  if (typeof balance != "number") {
     return res.status(400).json({ message: "Not a number" });
   }
 
@@ -174,7 +192,7 @@ const updateBalance = (req, res) => {
   };
   user.updateBalanceById(data, (err, results) => {
     if (err) {
-      console.log (err)
+      console.log(err);
       return res.status(500).json({
         message: "Error occured",
       });
@@ -190,11 +208,13 @@ const updateBalance = (req, res) => {
       });
     }
   });
-}
+};
+
 module.exports = {
   userLogin,
   userRegister,
   userProfile,
   updateUserProfile,
   updateBalance,
+  deleteProfile,
 };

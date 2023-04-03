@@ -2,17 +2,20 @@ import React, {useState} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input} from './components/Input';
 import Button from './components/Button';
-import COLORS from './conts/colors';
-import styles from './conts/Styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import axios from './components/axios';
-import EncryptedStorage from 'react-native-encrypted-storage';
+import {SaveToken} from './components/Token';
+import {COLORS} from './conts/colors';
+import {ThemeContext} from './components/ThemeContext';
+import {useContext} from 'react';
+import styles from './conts/Styles';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
+  const {theme} = useContext(ThemeContext);
 
   const navigation = useNavigation();
 
@@ -41,11 +44,7 @@ function LoginPage() {
 
         const token = response.data.token;
 
-        try {
-          await EncryptedStorage.setItem('token', token);
-        } catch (error) {
-          console.log('Error on saving token: ', error);
-        }
+        await SaveToken(token);
 
         setStatusMsg(response.data.message);
 
@@ -65,9 +64,10 @@ function LoginPage() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView
+      style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
       <View style={styles.textcontainer}>
-        <Text style={styles.text}>Login</Text>
+        <Text style={[styles.text, {color: COLORS[theme].primary}]}>Login</Text>
       </View>
 
       <View style={styles.inputContainer}>
@@ -89,18 +89,27 @@ function LoginPage() {
         />
       </View>
       <View style={styles.buttonContainer}>
-        {/* //TODO add onPress to Login user */}
         <Button title="Login" onPress={() => Login()} />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={{color: COLORS.primary}}>Dont have an account?</Text>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
+          Dont have an account?
+        </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.textlink}>Register</Text>
+          <Text style={[styles.textlink, {color: COLORS[theme].primary}]}>
+            Register
+          </Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.statusMsgContainer}>
-        <Text style={{color: COLORS.primary}}>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
           {statusMsg ? statusMsg : ''}
         </Text>
       </View>

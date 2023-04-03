@@ -4,14 +4,18 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import COLORS from '../conts/colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import {COLORS} from '../conts/colors';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Entypo';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import axios from './axios';
+import {ThemeContext} from './ThemeContext';
+import {useContext} from 'react';
+import styles from '../conts/Styles';
 
 const CustomDrawer = props => {
+  const {theme} = useContext(ThemeContext);
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -19,7 +23,7 @@ const CustomDrawer = props => {
   const [statusMsg, setStatusMsg] = useState('');
   const [token, setToken] = useState(null);
 
-  useEffect (() => {
+  useEffect(() => {
     const FetchProfile = async () => {
       try {
         const _token = await EncryptedStorage.getItem('token');
@@ -32,7 +36,7 @@ const CustomDrawer = props => {
           axios
             .get('/user', headers)
             .then(response => {
-              console.log(response)
+              console.log(response);
               setFirstName(response.data.fname);
               setLastName(response.data.lname);
               setBalance(response.data.balance);
@@ -61,36 +65,34 @@ const CustomDrawer = props => {
   return (
     <DrawerContentScrollView
       {...props}
-      contentContainerStyle={{backgroundColor: COLORS.primary}}>
-      <View style={{padding: 20}}>
-        <Text
-          style={{
-            fontSize: 18,
-            marginBottom: 5,
-            color: COLORS.quaternary,
-          }}>
-        {firstName} {lastName}
+      contentContainerStyle={{
+        backgroundColor: COLORS[theme].primary,
+      }}>
+      <View style={styles.drawerView2}>
+        <Text style={[styles.drawerText1, {color: COLORS[theme].quaternary}]}>
+          {firstName} {lastName}
         </Text>
-        <View style={[{flexDirection:'row', alignItems:'center'}]}>
-          <View style={[{flex:1,flexDirection:'row'}]}>
-          <Text
-            style={{
-              fontSize: 15,
-              textAlign: 'left',
-              color: COLORS.quaternary,
-            }}>
-            {balance}€
-          </Text>
+        <View style={styles.drawerView3}>
+          <View style={[{flex: 1, flexDirection: 'row'}]}>
+            {' '}
+            {/** muuta tämä vielä' */}
+            <Text
+              style={[styles.drawerText2, {color: COLORS[theme].quaternary}]}>
+              {balance}€
+            </Text>
           </View>
-          <View style={[{justifyContent:'space-evenly', marginVertical:10}]}>
-          <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-            <Icon name="wallet" size={30} color={COLORS.quaternary} />
-          </TouchableOpacity>
+          <View style={[{justifyContent: 'space-evenly', marginVertical: 10}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
+              <Icon name="wallet" size={30} color={COLORS[theme].quaternary} />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
       <View
-        style={{flex: 1, backgroundColor: COLORS.quaternary, paddingTop: 10}}>
+        style={[
+          styles.drawerView,
+          {backgroundColor: COLORS[theme].quaternary},
+        ]}>
         <DrawerItemList {...props} />
       </View>
     </DrawerContentScrollView>
