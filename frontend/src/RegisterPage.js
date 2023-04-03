@@ -77,18 +77,22 @@ function RegisterPage() {
           keyboardType={'email-address'}
         />
         <View style={styles.inputView}>
-          <Input2
-            label={'First Name'}
-            value={firstName}
-            onChangeText={text => (setFirstName(text), ResetStatusMsg())}
-            placeholder={'First name'}
-          />
-          <Input2
-            label={'Last Name'}
-            value={lastName}
-            onChangeText={text => (setLastName(text), ResetStatusMsg())}
-            placeholder={'Last name'}
-          />
+          <View style={{width: '40%'}}>
+            <Input2
+              label={'First Name'}
+              value={firstName}
+              onChangeText={text => (setFirstName(text), ResetStatusMsg())}
+              placeholder={'First name'}
+            />
+          </View>
+          <View style={{width: '60%'}}>
+            <Input2
+              label={'Last Name'}
+              value={lastName}
+              onChangeText={text => (setLastName(text), ResetStatusMsg())}
+              placeholder={'Last name'}
+            />
+          </View>
         </View>
         <Input
           label={'Password'}

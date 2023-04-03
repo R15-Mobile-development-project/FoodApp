@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  containerRestaurant: {
+    flex: 1,
+    alignItems: 'center',
+  },
   inputContainer: {
     width: '80%',
   },
@@ -43,7 +47,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
   },
+  buttonTwo: {
+    width: '100%',
+    padding: 15,
+    borderRadius: 50,
+    alignItems: 'center',
+  },
   buttonOneOutline: {
+    marginTop: 5,
+    borderWidth: 2,
+  },
+  buttonTwoOutline: {
     marginTop: 5,
     borderWidth: 2,
   },
@@ -68,15 +82,24 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 10,
   },
+  inputContainerRestaurant: {
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    borderWidth: 0.5,
+    borderRadius: 10,
+  },
+  inputContainerRestaurant2: {
+    height: 100,
+    borderRadius: 10,
+    borderWidth: 1,
+    flexDirection: 'column',
+  },
   input: {
     flex: 1,
   },
-  input2: {
-    width: '100%',
-  },
   inputView: {
     flexDirection: 'row',
-    width: '50%',
+    width: '100%',
   },
   inputIcon: {
     fontSize: 22,

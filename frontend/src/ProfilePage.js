@@ -86,20 +86,24 @@ function ProfilePage() {
         </Text>
       </View>
       <View style={styles.inputContainer}>
-        <View style={{flexDirection: 'row', width: '50%'}}>
-          <Input2
-            label={'First Name'}
-            inconName="email"
-            value={firstName}
-            onChangeText={text => setFirstName(text)}
-            placeholder={'First name'}
-          />
-          <Input2
-            label={'Last Name'}
-            value={lastName}
-            onChangeText={text => setLastName(text)}
-            placeholder={'Last name'}
-          />
+        <View style={{flexDirection: 'row'}}>
+          <View style={{width: '40%'}}>
+            <Input2
+              label={'First Name'}
+              inconName="email"
+              value={firstName}
+              onChangeText={text => setFirstName(text)}
+              placeholder={'First name'}
+            />
+          </View>
+          <View style={{width: '60%'}}>
+            <Input2
+              label={'Last Name'}
+              value={lastName}
+              onChangeText={text => setLastName(text)}
+              placeholder={'Last name'}
+            />
+          </View>
         </View>
         <Input
           label={'Email'}

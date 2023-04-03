@@ -28,4 +28,27 @@ const Button = ({title, onPress = () => {}}) => {
   );
 };
 
+export const Button2 = ({title, onPress = () => {}}) => {
+  const {theme} = useContext(ThemeContext);
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.7}
+      style={[
+        styles.buttonTwo,
+        {backgroundColor: COLORS[theme].primary},
+        styles.buttonTwoOutline,
+        {
+          backgroundColor: COLORS[theme].quaternary,
+          borderColor: COLORS[theme].primary,
+        },
+      ]}>
+      <Text style={[styles.buttonOneText, {color: COLORS[theme].primary}]}>
+        {title}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
 export default Button;
