@@ -73,14 +73,9 @@ const CustomDrawer = props => {
           {firstName} {lastName}
         </Text>
         <View style={styles.drawerView3}>
-          <View style={[{flex: 1, flexDirection: 'row'}]}>
-            {' '}
-            {/** muuta tämä vielä' */}
-            <Text
-              style={[styles.drawerText2, {color: COLORS[theme].quaternary}]}>
-              {balance}€
-            </Text>
-          </View>
+          <Text style={[styles.drawerText2, {color: COLORS[theme].quaternary}]}>
+            {balance}€
+          </Text>
           <View style={[{justifyContent: 'space-evenly', marginVertical: 10}]}>
             <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
               <Icon name="wallet" size={30} color={COLORS[theme].quaternary} />
