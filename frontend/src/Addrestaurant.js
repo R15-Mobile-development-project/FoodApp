@@ -18,6 +18,8 @@ import {ThemeContext} from './components/ThemeContext';
 import {useContext} from 'react';
 import styles from './conts/Styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import DocumentPicker from 'react-native-document-picker';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 function AddRestaurant() {
   const [name, setName] = useState('');
@@ -47,6 +49,22 @@ function AddRestaurant() {
     console.log(restaurantDetails);
   };
 
+  const chooseImage = async () => {
+    try {
+      const result = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images],
+      });
+      console.log('result', result);
+      // Do something with the selected image
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log('User cancelled the picker');
+      } else {
+        console.log('Error', err);
+      }
+    }
+  };
+
   return (
     <ScrollView style={{backgroundColor: COLORS[theme].quaternary}}>
       <KeyboardAvoidingView
@@ -73,6 +91,9 @@ function AddRestaurant() {
             onChangeText={text => setDescription(text)}
             placeholder={'Description'}
           />
+        </View>
+        <View style={{}}>
+          <Button title="Add image " onPress={chooseImage} />
         </View>
         <View style={{width: '80%'}}>
           <View style={{flexDirection: 'row'}}>
