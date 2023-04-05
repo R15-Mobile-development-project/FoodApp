@@ -6,6 +6,7 @@ const logger = require("morgan");
 
 const userRoutes = require("./routes/userRoutes");
 const userAuthRoutes = require("./routes/userAuthRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 const verifyToken = require("./config/jwt").verifyToken;
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/user", userRoutes);
 
+app.use("/order", orderRoutes);
 app.use(verifyToken);
 
 app.use("/user", userAuthRoutes);
