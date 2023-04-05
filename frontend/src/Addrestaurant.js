@@ -92,7 +92,10 @@ function AddRestaurant() {
             placeholder={'Description'}
           />
         </View>
-        <View style={{}}>
+        <View
+          style={{
+            width: '80%',
+          }}>
           <Button title="Add image " onPress={chooseImage} />
         </View>
         <View style={{width: '80%'}}>
