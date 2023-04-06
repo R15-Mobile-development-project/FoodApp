@@ -1,8 +1,9 @@
 import {View, Text} from 'react-native';
+import styles from './conts/Styles';
 
 function HistoryPage() {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={styles.container}>
       <Text>History Page</Text>
     </View>
   );

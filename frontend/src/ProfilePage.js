@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, KeyboardAvoidingView} from 'react-native';
 import {Input, Input2} from './components/Input';
 import Button from './components/Button';
-import COLORS from './conts/colors';
-import styles from './conts/Styles';
 import axios from './components/axios';
 import {useNavigation} from '@react-navigation/native';
 import {GetToken} from './components/Token';
+import {COLORS} from './conts/colors';
+import {ThemeContext} from './components/ThemeContext';
+import {useContext} from 'react';
+import styles from './conts/Styles';
 
 function ProfilePage() {
   const [firstName, setFirstName] = useState('');
@@ -14,6 +16,7 @@ function ProfilePage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
+  const {theme} = useContext(ThemeContext);
 
   const navigation = useNavigation();
 
@@ -75,25 +78,32 @@ function ProfilePage() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView
+      style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
       <View style={styles.textcontainer}>
-        <Text style={styles.text}>Profile</Text>
+        <Text style={[styles.text, {color: COLORS[theme].primary}]}>
+          Profile
+        </Text>
       </View>
       <View style={styles.inputContainer}>
-        <View style={{flexDirection: 'row', width: '50%'}}>
-          <Input2
-            label={'First Name'}
-            inconName="email"
-            value={firstName}
-            onChangeText={text => setFirstName(text)}
-            placeholder={'First name'}
-          />
-          <Input2
-            label={'Last Name'}
-            value={lastName}
-            onChangeText={text => setLastName(text)}
-            placeholder={'Last name'}
-          />
+        <View style={{flexDirection: 'row'}}>
+          <View style={{width: '40%'}}>
+            <Input2
+              label={'First Name'}
+              inconName="email"
+              value={firstName}
+              onChangeText={text => setFirstName(text)}
+              placeholder={'First name'}
+            />
+          </View>
+          <View style={{width: '60%'}}>
+            <Input2
+              label={'Last Name'}
+              value={lastName}
+              onChangeText={text => setLastName(text)}
+              placeholder={'Last name'}
+            />
+          </View>
         </View>
         <Input
           label={'Email'}
@@ -117,7 +127,10 @@ function ProfilePage() {
       </View>
 
       <View style={styles.statusMsgContainer}>
-        <Text style={{color: COLORS.primary}}>
+        <Text
+          style={{
+            color: COLORS[theme].primary,
+          }}>
           {statusMsg ? statusMsg : ''}
         </Text>
       </View>
