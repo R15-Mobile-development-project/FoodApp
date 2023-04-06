@@ -52,19 +52,18 @@ const MyStack = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {isLoggedIn ? (
-          <>
-            <Stack.Screen name="MyDrawer" component={MyDrawer} />
-            <Stack.Screen name="Login" component={LoginPage} />
-            <Stack.Screen name="Register" component={RegisterPage} />
-          </>
+          <Stack.Screen name="MyDrawer" component={MyDrawer} />
         ) : (
-          <>
-            <Stack.Screen name="Login" component={LoginPage} />
-            <Stack.Screen name="Register" component={RegisterPage} />
-            <Stack.Screen name="MyDrawer" component={MyDrawer} />
-            <Stack.Screen name="Wallet" component={WalletPage} />
-          </>
+          <></>
         )}
+        <Stack.Screen name="Login" component={LoginPage} />
+        <Stack.Screen name="Register" component={RegisterPage} />
+        {!isLoggedIn ? (
+          <Stack.Screen name="MyDrawer" component={MyDrawer} />
+        ) : (
+          <></>
+        )}
+        <Stack.Screen name="Wallet" component={WalletPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
