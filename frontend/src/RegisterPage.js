@@ -9,6 +9,7 @@ import {COLORS} from './conts/colors';
 import {ThemeContext} from './components/ThemeContext';
 import {useContext} from 'react';
 import styles from './conts/Styles';
+import {CheckBox} from '@rneui/themed';
 
 function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ function RegisterPage() {
   const [password, setPassword] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
   const {theme} = useContext(ThemeContext);
-
+  const [userType, setUserType] = useState(0);
   const navigation = useNavigation();
 
   const Register = () => {
@@ -30,6 +31,7 @@ function RegisterPage() {
       fname: firstName,
       lname: lastName,
       password: password,
+      user_type: userType,
     };
 
     axios
@@ -101,6 +103,24 @@ function RegisterPage() {
           onChangeText={text => (setPassword(text), ResetStatusMsg())}
           placeholder={'Enter your password'}
           password
+        />
+      </View>
+      <View>
+        <CheckBox
+          containerStyle={{
+            backgroundColor: 'transparent',
+            borderWidth: 0,
+            textColo: 'center',
+          }}
+          checkedIcon="dot-circle-o"
+          uncheckedIcon="circle-o"
+          title={
+            <Text style={{color: COLORS[theme].primary}}>Restaurant Owner</Text>
+          }
+          uncheckedColor={COLORS[theme].primary}
+          checkedColor={COLORS[theme].secondary}
+          checked={userType}
+          onPress={() => setUserType(userType === 0 ? 1 : 0)}
         />
       </View>
       <View style={styles.buttonContainer}>
