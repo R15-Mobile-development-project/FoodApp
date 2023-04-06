@@ -3,10 +3,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import LoginPage from '../LoginPage';
 import RegisterPage from '../RegisterPage';
 import MyDrawer from './Drawer';
-import SaldoPage from '../SaldoPage';
 import {useEffect, useState} from 'react';
 import {GetToken} from '../components/Token';
 import axios from '../components/axios';
+import WalletPage from '../WalletPage';
 
 const Stack = createStackNavigator();
 
