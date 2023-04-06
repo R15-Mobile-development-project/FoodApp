@@ -1,7 +1,10 @@
 import React from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../conts/colors';
+import {COLORS} from '../conts/colors';
+import {ThemeContext} from './ThemeContext';
+import {useContext} from 'react';
+import styles from '../conts/Styles';
 
 const Input = ({
   label,
@@ -13,26 +16,30 @@ const Input = ({
   onFocus = () => {},
   ...props
 }) => {
+  const {theme} = useContext(ThemeContext);
   const [hidePassword, setHidePassword] = React.useState(password);
   const [isFocused, setIsFocused] = React.useState(false);
   return (
     <View style={{marginBottom: 5}}>
-      <Text style={style.label}>{label}</Text>
+      <Text style={[styles.label, {color: COLORS[theme].primary}]}>
+        {label}
+      </Text>
       <View
         style={[
-          style.inputContainer,
+          styles.inputContainer2,
+          {backgroundColor: COLORS[theme].tertiary},
           {
             borderColor: error
-              ? COLORS.red
+              ? COLORS[theme].red
               : isFocused
-              ? COLORS.primary
-              : COLORS.quaternary,
+              ? COLORS[theme].primary
+              : COLORS[theme].quaternary,
             alignItems: 'center',
           },
         ]}>
         <Icon
           name={iconName}
-          style={{color: COLORS.primary, fontSize: 22, marginRight: 10}}
+          style={[styles.inputIcon, {color: COLORS[theme].primary}]}
         />
         <TextInput
           autoCorrect={false}
@@ -43,43 +50,44 @@ const Input = ({
           onBlur={() => setIsFocused(false)}
           secureTextEntry={hidePassword}
           placeholder={placeholder}
-          placeholderTextColor={COLORS.primary}
+          placeholderTextColor={COLORS[theme].primary}
           keyboardType={keyboardType}
-          style={{
-            color: COLORS.primary,
-            flex: 1,
-          }}
+          style={[styles.input, {color: COLORS[theme].primary}]}
           {...props}
         />
         {password && (
           <Icon
             onPress={() => setHidePassword(!hidePassword)}
             name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
-            style={{color: COLORS.primary, fontSize: 22}}
+            style={[styles.inputPassIcon, {color: COLORS[theme].primary}]}
           />
         )}
       </View>
       {error && (
-        <Text style={{marginTop: 7, color: COLORS.red, fontSize: 12}}></Text>
+        <Text style={[styles.errortext, {color: COLORS[theme].red}]}></Text>
       )}
     </View>
   );
 };
 
 const Input2 = ({label, error, placeholder, onFocus = () => {}, ...props}) => {
+  const {theme} = useContext(ThemeContext);
   const [isFocused, setIsFocused] = React.useState(false);
   return (
     <View style={{marginBottom: 5}}>
-      <Text style={style.label}>{label}</Text>
+      <Text style={[styles.label, {color: COLORS[theme].primary}]}>
+        {label}
+      </Text>
       <View
         style={[
-          style.inputContainer,
+          styles.inputContainer2,
+          {backgroundColor: COLORS[theme].tertiary},
           {
             borderColor: error
-              ? COLORS.red
+              ? COLORS[theme].red
               : isFocused
-              ? COLORS.primary
-              : COLORS.quaternary,
+              ? COLORS[theme].primary
+              : COLORS[theme].quaternary,
             alignItems: 'center',
           },
         ]}>
@@ -91,42 +99,161 @@ const Input2 = ({label, error, placeholder, onFocus = () => {}, ...props}) => {
           }}
           onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
-          placeholderTextColor={COLORS.primary}
-          style={style.input2}
+          //Fix this color
+          placeholderTextColor={COLORS[theme].primary}
+          style={[{color: COLORS[theme].primary}]}
           {...props}
         />
       </View>
       {error && (
-        <Text style={{marginTop: 7, color: COLORS.red, fontSize: 12}}></Text>
+        <Text style={[styles.errortext, {color: COLORS[theme].red}]}></Text>
+      )}
+    </View>
+  );
+};
+const Input3 = ({
+  error,
+  placeholder,
+  keyboardType,
+  onFocus = () => {},
+  ...props
+}) => {
+  const {theme} = useContext(ThemeContext);
+  const [isFocused, setIsFocused] = React.useState(false);
+  return (
+    <View style={{marginBottom: 5}}>
+      <View
+        style={[
+          styles.inputContainer2,
+          {backgroundColor: COLORS[theme].tertiary},
+          {
+            borderColor: error
+              ? COLORS[theme].red
+              : isFocused
+              ? COLORS[theme].primary
+              : COLORS[theme].quaternary,
+            alignItems: 'center',
+          },
+        ]}>
+        <TextInput
+          autoCorrect={false}
+          onFocus={() => {
+            onFocus();
+            setIsFocused(true);
+          }}
+          onBlur={() => setIsFocused(false)}
+          placeholder={placeholder}
+          keyboardType={keyboardType}
+          placeholderTextColor={COLORS[theme].primary}
+          style={[{color: COLORS[theme].primary}]}
+          {...props}
+        />
+      </View>
+      {error && (
+        <Text style={[styles.errortext, {color: COLORS[theme].red}]}></Text>
       )}
     </View>
   );
 };
 
-const style = StyleSheet.create({
-  label: {
-    marginVertical: 5,
-    fontSize: 14,
-    color: COLORS.primary,
-    borderRadius: 10,
-  },
-  inputContainer: {
-    height: 55,
-    backgroundColor: COLORS.tertiary,
-    flexDirection: 'row',
-    paddingHorizontal: 15,
-    borderWidth: 0.5,
-    borderRadius: 10,
-  },
-  input: {
-    color: COLORS.primary,
-    flex: 1,
-    width: '80%',
-  },
-  input2: {
-    color: COLORS.primary,
-    width: '100%',
-  },
-});
+const InputRestaurant = ({
+  label,
+  error,
+  placeholder,
+  onFocus = () => {},
+  ...props
+}) => {
+  const {theme} = useContext(ThemeContext);
+  const [isFocused, setIsFocused] = React.useState(false);
+  return (
+    <View style={{marginBottom: 5}}>
+      <Text style={[styles.label, {color: COLORS[theme].primary}]}>
+        {label}
+      </Text>
+      <View
+        style={[
+          styles.inputContainerRestaurant,
+          {backgroundColor: COLORS[theme].tertiary},
+          {
+            borderColor: error
+              ? COLORS[theme].red
+              : isFocused
+              ? COLORS[theme].primary
+              : COLORS[theme].quaternary,
+            alignItems: 'center',
+          },
+        ]}>
+        <TextInput
+          autoCorrect={false}
+          onFocus={() => {
+            onFocus();
+            setIsFocused(true);
+          }}
+          onBlur={() => setIsFocused(false)}
+          placeholder={placeholder}
+          //Fix this color
+          placeholderTextColor={COLORS[theme].primary}
+          style={[styles.input2, {color: COLORS[theme].primary}]}
+          {...props}
+        />
+      </View>
+      {error && (
+        <Text style={[styles.errortext, {color: COLORS[theme].red}]}></Text>
+      )}
+    </View>
+  );
+};
 
-export {Input, Input2};
+const InputRestaurant2 = ({
+  label,
+  error,
+  placeholder,
+  onFocus = () => {},
+  ...props
+}) => {
+  const {theme} = useContext(ThemeContext);
+  const [isFocused, setIsFocused] = React.useState(false);
+  return (
+    <View style={{marginBottom: 5}}>
+      <Text style={[styles.label, {color: COLORS[theme].primary}]}>
+        {label}
+      </Text>
+      <View
+        style={[
+          styles.inputContainerRestaurant2,
+          {backgroundColor: COLORS[theme].tertiary},
+          {
+            borderColor: error
+              ? COLORS[theme].red
+              : isFocused
+              ? COLORS[theme].primary
+              : COLORS[theme].quaternary,
+            // alignItems: 'center',
+          },
+        ]}>
+        <TextInput
+          multiline
+          numberOfLines={10}
+          autoCorrect={false}
+          onFocus={() => {
+            onFocus();
+            setIsFocused(true);
+          }}
+          onBlur={() => setIsFocused(false)}
+          placeholder={placeholder}
+          placeholderTextColor={COLORS[theme].primary}
+          style={[
+            styles.input2,
+            {color: COLORS[theme].primary, textAlignVertical: 'top'},
+          ]}
+          {...props}
+        />
+      </View>
+      {error && (
+        <Text style={[styles.errortext, {color: COLORS[theme].red}]}></Text>
+      )}
+    </View>
+  );
+};
+
+export {Input, Input2, Input3, InputRestaurant, InputRestaurant2};
