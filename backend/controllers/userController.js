@@ -28,7 +28,10 @@ const userLogin = (req, res) => {
             });
           }
           if (result) {
-            const token = jwt.generateToken(results[0].user_id);
+            const token = jwt.generateToken(
+              results[0].user_id,
+              results[0].user_type
+            );
             return res.status(200).json({
               message: "Login successful",
               token: token,
