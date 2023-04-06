@@ -132,6 +132,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
+  walletContainer: {
+    width: '40%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+  },
 });
 
 export default styles;
