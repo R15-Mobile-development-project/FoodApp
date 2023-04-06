@@ -2,7 +2,7 @@ import {View, Text} from 'react-native';
 import Button from './components/Button';
 import {KeyboardAvoidingView} from 'react-native';
 import {GetToken, DeleteToken} from './components/Token';
-import {useContext, useState, useEffect} from 'react';
+import {useContext, useState} from 'react';
 import axios from './components/axios';
 import {useNavigation} from '@react-navigation/native';
 import {COLORS} from './conts/colors';
@@ -29,7 +29,7 @@ function SettingsPage() {
 
         setTimeout(() => {
           if (mode === 'dark') setTheme('light');
-          navigation.push('Login');
+          navigation.replace('Login');
         }, 500);
       })
       .catch(err => {

@@ -4,6 +4,7 @@ import HomePage from '../HomePage';
 import CustomDrawer from '../components/CustomDrawer';
 import ProfilePage from '../ProfilePage';
 import HistoryPage from '../HistoryPage';
+import LogoutPage from '../LogoutPage.js';
 import {COLORS} from '../conts/colors';
 import {ThemeContext} from '../components/ThemeContext';
 import {useContext} from 'react';
@@ -30,6 +31,7 @@ const MyDrawer = () => {
       <Drawer.Screen name="settings" component={SettingsPage} />
       <Drawer.Screen name="Order History" component={HistoryPage} />
       <Drawer.Screen name="Add restaurant" component={AddRestaurantPage} />
+      <Drawer.Screen name="Log out" component={LogoutPage} />
     </Drawer.Navigator>
   );
 };
