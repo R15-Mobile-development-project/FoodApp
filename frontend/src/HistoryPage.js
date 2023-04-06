@@ -1,26 +1,25 @@
-import { View, Text, KeyboardAvoidingView } from 'react-native';
+import {View, Text, KeyboardAvoidingView} from 'react-native';
 import styles from './conts/Styles';
-import { Card } from '@rneui/themed';
+import {Card} from '@rneui/themed';
 import axios from './components/axios';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { COLORS } from './conts/colors';
-import { ThemeContext } from './components/ThemeContext';
+import React, {useState, useEffect, useContext} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {COLORS} from './conts/colors';
+import {ThemeContext} from './components/ThemeContext';
 
 const users = [
   {
-    name: 'brynn'
+    name: 'brynn',
   },
-]
+];
 function HistoryPage() {
-
   const [token, setToken] = useState(null);
   const [price, setPrice] = useState();
   const [restaurant, setRestaurant] = useState('');
   const [item, setItem] = useState([]);
   const navigation = useNavigation();
-  const { theme, setTheme, toggleTheme } = useContext(ThemeContext);
+  const {theme, setTheme, toggleTheme} = useContext(ThemeContext);
 
   useEffect(() => {
     const FetchOrder = async () => {
@@ -30,11 +29,11 @@ function HistoryPage() {
         if (_token !== undefined) {
           setToken(_token);
 
-          const headers = { headers: { Authorization: `Bearer ${_token}` } };
+          const headers = {headers: {Authorization: `Bearer ${_token}`}};
 
           axios
             .get('/order', {
-              headers: { Authorization: `Bearer ${_token}` },
+              headers: {Authorization: `Bearer ${_token}`},
             })
             .then(response => {
               setPrice(response.data[0].price);
@@ -52,33 +51,32 @@ function HistoryPage() {
       }
     };
     navigation.addListener('focus', () => {
-
       FetchOrder();
     });
   }, [navigation]);
 
   return (
     <KeyboardAvoidingView
-      style={[{ flex: 1, backgroundColor: COLORS[theme].quaternary }]}>
-      <Card containerStyle={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: COLORS[theme].primary,
-        borderRadius: 5,
-        borderColor: COLORS[theme].primary
-      }}>
+      style={[{flex: 1, backgroundColor: COLORS[theme].quaternary}]}>
+      <Card
+        containerStyle={{
+          justifyContent: 'center',
+          backgroundColor: COLORS[theme].primary,
+          borderRadius: 5,
+          borderColor: COLORS[theme].primary,
+        }}>
         <Card.Title>
-          <Text style={{}}>{restaurant}</Text>
+          <Text style={{color: COLORS[theme].quaternary}}>{restaurant}</Text>
         </Card.Title>
         <Card.Divider />
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ marginLeft: 10 }}>
-            <Text>
+        <View style={{flexDirection: 'row'}}>
+          <View style={{flex: 1}}>
+            <Text style={{color: COLORS[theme].quaternary}} textAlign="left">
               {item}
             </Text>
           </View>
-          <View style={{ marginRight: 10 }}>
-            <Text>
+          <View>
+            <Text style={{color: COLORS[theme].quaternary}} textAlign="right">
               {price}€
             </Text>
           </View>
@@ -88,7 +86,9 @@ function HistoryPage() {
         <Card.Title>{restaurant}</Card.Title>
         <Card.Divider />
         <View>
-          <Text>{item}--------------{price}€</Text>
+          <Text>
+            {item}--------------{price}€
+          </Text>
         </View>
       </Card>
     </KeyboardAvoidingView>
