@@ -105,7 +105,7 @@ function RegisterPage() {
           password
         />
       </View>
-      <View style={{}}>
+      <View>
         <CheckBox
           containerStyle={{
             backgroundColor: 'transparent',
