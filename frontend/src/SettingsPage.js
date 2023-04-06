@@ -23,7 +23,7 @@ function SettingsPage() {
         setStatusMsg(response.data.message);
 
         setTimeout(() => {
-          navigation.push('Login');
+          navigation.replace('Login');
         }, 500);
       })
       .catch(err => {

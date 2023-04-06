@@ -52,7 +52,11 @@ const MyStack = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {isLoggedIn ? (
-          <Stack.Screen name="MyDrawer" component={MyDrawer} />
+          <>
+            <Stack.Screen name="MyDrawer" component={MyDrawer} />
+            <Stack.Screen name="Login" component={LoginPage} />
+            <Stack.Screen name="Register" component={RegisterPage} />
+          </>
         ) : (
           <>
             <Stack.Screen name="Login" component={LoginPage} />
