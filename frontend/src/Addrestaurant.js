@@ -1,25 +1,13 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  ScrollView,
-  VirtualizedList,
-} from 'react-native';
-import {
-  Input2,
-  Input3,
-  InputRestaurant,
-  InputRestaurant2,
-} from './components/Input';
-import Button, {Button2} from './components/Button';
+import {View, Text, KeyboardAvoidingView, ScrollView} from 'react-native';
+import {Input3, InputRestaurant, InputRestaurant2} from './components/Input';
+import Button from './components/Button';
 import {COLORS} from './conts/colors';
 import {ThemeContext} from './components/ThemeContext';
 import {useContext} from 'react';
 import styles from './conts/Styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DocumentPicker from 'react-native-document-picker';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 function AddRestaurant() {
   const [name, setName] = useState('');
