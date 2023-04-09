@@ -2,9 +2,9 @@ const restaurant = require("../models/restaurantModel");
 require("dotenv").config();
 
 const restaurantAdd = (req, res) => {
-  const { name, description, address, image, user_id, menus } = req.body;
+  const { name, description, address, image, menus } = req.body;
 
-  if (!name || !description || !address || !image || !user_id || !menus) {
+  if (!name || !description || !address || !image || !menus) {
     return res.status(400).json({ message: "Please fill in all fields" });
   } else {
     restaurant.add(
@@ -12,7 +12,7 @@ const restaurantAdd = (req, res) => {
       description,
       address,
       image,
-      user_id,
+      req.userId,
       menus,
       (err, results) => {
         if (err) {
