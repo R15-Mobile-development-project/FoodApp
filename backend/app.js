@@ -6,6 +6,7 @@ const logger = require("morgan");
 
 const userRoutes = require("./routes/userRoutes");
 const userAuthRoutes = require("./routes/userAuthRoutes");
+const restaurantRoutes = require("./routes/restaurantRoutes");
 
 const verifyToken = require("./config/jwt").verifyToken;
 
@@ -26,6 +27,7 @@ app.use("/user", userRoutes);
 app.use(verifyToken);
 
 app.use("/user", userAuthRoutes);
+app.use("/restaurant", restaurantRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
