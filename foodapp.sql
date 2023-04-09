@@ -19,6 +19,9 @@
 -- Table structure for table `menus`
 --
 
+CREATE DATABASE foodapp;
+USE foodapp;
+
 DROP TABLE IF EXISTS `menus`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
