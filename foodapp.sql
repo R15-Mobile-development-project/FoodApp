@@ -89,6 +89,7 @@ CREATE TABLE `restaurants` (
   `name` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `address` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,	
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`restaurant_id`),
   UNIQUE KEY `restaurant_id_UNIQUE` (`restaurant_id`),
