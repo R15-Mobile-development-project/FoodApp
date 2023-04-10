@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView } from 'react-native';
+import { View, Text } from 'react-native';
 import styles from './conts/Styles';
 import { Card } from '@rneui/themed';
 import axios from './components/axios';
