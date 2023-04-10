@@ -4,14 +4,29 @@ import HomePage from '../HomePage';
 import CustomDrawer from '../components/CustomDrawer';
 import ProfilePage from '../ProfilePage';
 import HistoryPage from '../HistoryPage';
+import LogoutPage from '../LogoutPage.js';
 import {COLORS} from '../conts/colors';
 import {ThemeContext} from '../components/ThemeContext';
-import {useContext} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import AddRestaurantPage from '../Addrestaurant';
+import jwt_decode from 'jwt-decode';
+import {GetToken} from '../components/Token';
 
 const Drawer = createDrawerNavigator();
 
 const MyDrawer = () => {
+  const [userType, setUserType] = useState(0);
+  useEffect(() => {
+    const CheckToken = async () => {
+      const token = await GetToken();
+      const decodedToken = jwt_decode(token);
+
+      setUserType(decodedToken['userType']);
+      console.log('User type:', decodedToken['userType']);
+    };
+    CheckToken();
+  }, []);
+
   const {theme} = useContext(ThemeContext);
   return (
     <Drawer.Navigator
@@ -29,7 +44,10 @@ const MyDrawer = () => {
       <Drawer.Screen name="Profile" component={ProfilePage} />
       <Drawer.Screen name="settings" component={SettingsPage} />
       <Drawer.Screen name="Order History" component={HistoryPage} />
-      <Drawer.Screen name="Add restaurant" component={AddRestaurantPage} />
+      {userType ? (
+        <Drawer.Screen name="Add restaurant" component={AddRestaurantPage} />
+      ) : null}
+      <Drawer.Screen name="Log out" component={LogoutPage} />
     </Drawer.Navigator>
   );
 };

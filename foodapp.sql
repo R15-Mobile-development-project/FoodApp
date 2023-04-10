@@ -27,9 +27,8 @@ DROP TABLE IF EXISTS `menus`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `menus` (
   `menu_id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `price` double NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `price` double(10,2) NOT NULL,
   `restaurant_id` int(11) NOT NULL,
   PRIMARY KEY (`menu_id`),
   UNIQUE KEY `menu_id_UNIQUE` (`menu_id`),
@@ -57,7 +56,7 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL DEFAULT current_timestamp(),
-  `price` double NOT NULL,
+  `price` double(10,2) NOT NULL,
   `restaurant_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`order_id`),
@@ -88,7 +87,9 @@ DROP TABLE IF EXISTS `restaurants`;
 CREATE TABLE `restaurants` (
   `restaurant_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `address` varchar(255) NOT NULL,
+  `image` mediumtext DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`restaurant_id`),
   UNIQUE KEY `restaurant_id_UNIQUE` (`restaurant_id`),
@@ -123,7 +124,7 @@ CREATE TABLE `users` (
   `user_type` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
+  UNIQUE KEY ` email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -145,4 +146,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-23 18:44:53
+-- Dump completed on 2023-04-09 16:08:38

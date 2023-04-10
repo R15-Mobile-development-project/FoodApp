@@ -28,7 +28,10 @@ const userLogin = (req, res) => {
             });
           }
           if (result) {
-            const token = jwt.generateToken(results[0].user_id);
+            const token = jwt.generateToken(
+              results[0].user_id,
+              results[0].user_type
+            );
             return res.status(200).json({
               message: "Login successful",
               token: token,
@@ -111,6 +114,24 @@ const userProfile = (req, res) => {
   });
 };
 
+const deleteProfile = (req, res) => {
+  user.deleteById(req.userId, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occured",
+      });
+    }
+
+    if (results.affectedRows === 1) {
+      return res.json({ message: "User deleted" });
+    } else {
+      res.status(400).json({
+        message: "Unable to delete user",
+      });
+    }
+  });
+};
+
 const updateUserProfile = async (req, res) => {
   const { fname, lname, email, password } = req.body;
 
@@ -161,29 +182,42 @@ const updateUserProfile = async (req, res) => {
     }
   });
 };
+const updateBalance = (req, res) => {
+  const { balance } = req.body;
 
-const deleteProfile = (req, res) => {
-  user.deleteById(req.userId, (err, results) => {
+  if (typeof balance != "number") {
+    return res.status(400).json({ message: "Not a number" });
+  }
+
+  const data = {
+    balance: balance,
+    userId: req.userId,
+  };
+  user.updateBalanceById(data, (err, results) => {
     if (err) {
+      console.log(err);
       return res.status(500).json({
         message: "Error occured",
       });
     }
 
-    if(results.affectedRows === 1){
-      return res.json({message: "User deleted"})
-    }else{
+    if (results.changedRows === 1) {
+      return res.json({ message: "Balance updated" });
+    } else if (results.changedRows === 0 && results.affectedRows === 1) {
+      return res.json({ message: "Everything up to date" });
+    } else {
       res.status(400).json({
-        message: "Unable to delete user"
+        message: "Unable to add balance",
       });
     }
-  })
-}
+  });
+};
 
 module.exports = {
   userLogin,
   userRegister,
   userProfile,
   updateUserProfile,
-  deleteProfile
+  updateBalance,
+  deleteProfile,
 };

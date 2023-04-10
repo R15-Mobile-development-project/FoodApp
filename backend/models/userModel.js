@@ -26,11 +26,24 @@ const user = {
     );
   },
   updateUserById: function (data, cb) {
-    return db.query("UPDATE users SET email = COALESCE(NULLIF(?, ''), email), fname = COALESCE(NULLIF(?, ''), fname), lname = COALESCE(NULLIF(?, ''), lname), password = COALESCE(NULLIF(?, ''), password) WHERE user_id = ?", [data.email, data.fname, data.lname, data.password, data.userId], cb)
+    return db.query(
+      "UPDATE users SET email = COALESCE(NULLIF(?, ''), email), fname = COALESCE(NULLIF(?, ''), fname), lname = COALESCE(NULLIF(?, ''), lname), password = COALESCE(NULLIF(?, ''), password) WHERE user_id = ?",
+      [data.email, data.fname, data.lname, data.password, data.userId],
+      cb
+    );
   },
+
+  updateBalanceById: function (data, cb) {
+    return db.query(
+      "UPDATE users SET balance=? WHERE user_id=?",
+      [data.balance, data.userId],
+      cb
+    );
+  },
+
   deleteById: function (id, cb) {
-    return db.query("DELETE FROM users WHERE user_id = ?", [id], cb)
-  }
+    return db.query("DELETE FROM users WHERE user_id = ?", [id], cb);
+  },
 };
 
 module.exports = user;
