@@ -3,10 +3,12 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const nocache = require("nocache");
 
 const userRoutes = require("./routes/userRoutes");
 const userAuthRoutes = require("./routes/userAuthRoutes");
 const restaurantRoutes = require("./routes/restaurantRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 const verifyToken = require("./config/jwt").verifyToken;
 
@@ -15,15 +17,18 @@ const app = express();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
+app.set("etag", false);
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(nocache());
 
 app.use("/user", userRoutes);
 
+app.use("/order", orderRoutes);
 app.use(verifyToken);
 
 app.use("/user", userAuthRoutes);
