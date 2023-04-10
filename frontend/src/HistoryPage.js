@@ -16,11 +16,12 @@ const users = [
 function HistoryPage() {
 
   const [token, setToken] = useState(null);
-  const [price, setPrice] = useState();
-  const [restaurant, setRestaurant] = useState('');
+  const [price, setPrice] = useState([]);
+  const [restaurant, setRestaurant] = useState([]);
   const [item, setItem] = useState([]);
   const navigation = useNavigation();
   const { theme, setTheme, toggleTheme } = useContext(ThemeContext);
+  var arrayCount = [];
 
   useEffect(() => {
     const FetchOrder = async () => {
@@ -37,9 +38,14 @@ function HistoryPage() {
               headers: { Authorization: `Bearer ${_token}` },
             })
             .then(response => {
-              setPrice(response.data[0].price);
-              setRestaurant(response.data[0].restaurant_id);
-              setItem(response.data[0].order_id);
+              console.log(response.data);
+              console.log(arrayCount, 'dasdasdasd');
+              arrayCount = response.data;
+              for (let i = 0; i < response.data.length; i++) {
+                setPrice([response.data[i].price]);
+                setRestaurant([response.data[i].restaurant_id]);
+                setItem([response.data[i].order_id]);
+              }
             })
             .catch(err => {
               console.log(err);
@@ -56,43 +62,42 @@ function HistoryPage() {
       FetchOrder();
     });
   }, [navigation]);
+  console.log(arrayCount)
 
   return (
     <KeyboardAvoidingView
       style={[{ flex: 1, backgroundColor: COLORS[theme].quaternary }]}>
-      <Card containerStyle={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: COLORS[theme].primary,
-        borderRadius: 5,
-        borderColor: COLORS[theme].primary
-      }}>
-        <Card.Title>
-          <Text style={{}}>{restaurant}</Text>
-        </Card.Title>
-        <Card.Divider />
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ marginLeft: 10 }}>
-            <Text>
-              {item}
-            </Text>
+
+      {arrayCount.map((item, index) => (
+        <Card containerStyle={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: COLORS[theme].primary,
+          borderRadius: 5,
+          borderColor: COLORS[theme].primary
+        }}>
+          <Card.Title>
+            <Text style={{}}>{index}{item.restaurant}</Text>
+          </Card.Title>
+          <Card.Divider />
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ marginLeft: 10 }}>
+              <Text>
+                {item.item}------------------
+              </Text>
+            </View>
+            <View style={{ marginRight: 10 }}>
+              <Text>
+                {item.price}€
+              </Text>
+            </View>
           </View>
-          <View style={{ marginRight: 10 }}>
-            <Text>
-              {price}€
-            </Text>
-          </View>
-        </View>
-      </Card>
-      <Card style={{}}>
-        <Card.Title>{restaurant}</Card.Title>
-        <Card.Divider />
-        <View>
-          <Text>{item}--------------{price}€</Text>
-        </View>
-      </Card>
+        </Card>
+      ))}
+
     </KeyboardAvoidingView>
   );
+
 }
 
 export default HistoryPage;
