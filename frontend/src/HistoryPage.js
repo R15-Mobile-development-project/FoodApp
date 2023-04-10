@@ -10,11 +10,10 @@ import { ThemeContext } from './components/ThemeContext';
 
 const users = [
   {
-    name: 'brynn'
+    name: 'brynn',
   },
-]
+];
 function HistoryPage() {
-
   const [token, setToken] = useState(null);
   const [price, setPrice] = useState([]);
   const [restaurant, setRestaurant] = useState([]);
@@ -58,7 +57,6 @@ function HistoryPage() {
       }
     };
     navigation.addListener('focus', () => {
-
       FetchOrder();
     });
   }, [navigation]);
@@ -95,6 +93,40 @@ function HistoryPage() {
         </Card>
       ))}
 
+      {/* style={[{flex: 1, backgroundColor: COLORS[theme].quaternary}]}>
+      <Card
+        containerStyle={{
+          justifyContent: 'center',
+          backgroundColor: COLORS[theme].primary,
+          borderRadius: 5,
+          borderColor: COLORS[theme].primary,
+        }}>
+        <Card.Title>
+          <Text style={{color: COLORS[theme].quaternary}}>{restaurant}</Text>
+        </Card.Title>
+        <Card.Divider />
+        <View style={{flexDirection: 'row'}}>
+          <View style={{flex: 1}}>
+            <Text style={{color: COLORS[theme].quaternary}} textAlign="left">
+              {item}
+            </Text>
+          </View>
+          <View>
+            <Text style={{color: COLORS[theme].quaternary}} textAlign="right">
+              {price}€
+            </Text>
+          </View>
+        </View>
+      </Card>
+      <Card style={{}}>
+        <Card.Title>{restaurant}</Card.Title>
+        <Card.Divider />
+        <View>
+          <Text>
+            {item}--------------{price}€
+          </Text>
+        </View>
+      </Card> */}
     </KeyboardAvoidingView>
   );
 
