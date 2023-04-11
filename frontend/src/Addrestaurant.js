@@ -1,31 +1,31 @@
-import React, {useState, useContext} from 'react';
-import {View, Text, KeyboardAvoidingView, ScrollView} from 'react-native';
-import {Input3, InputRestaurant, InputRestaurant2} from './components/Input';
-import Button from './components/Button';
-import {COLORS} from './conts/colors';
-import {ThemeContext} from './components/ThemeContext';
-import styles from './conts/Styles';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {GetToken} from './components/Token';
-import axios from './components/axios';
+import React, {useState, useContext} from "react";
+import {View, Text, KeyboardAvoidingView, ScrollView} from "react-native";
+import {Input3, InputRestaurant, InputRestaurant2} from "./components/Input";
+import Button from "./components/Button";
+import {COLORS} from "./conts/colors";
+import {ThemeContext} from "./components/ThemeContext";
+import styles from "./conts/Styles";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import {GetToken} from "./components/Token";
+import axios from "./components/axios";
 
 function AddRestaurant() {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [description, setDescription] = useState('');
-  const [foodName, setFoodName] = useState('');
-  const [price, setPrice] = useState('');
-  const [statusMsg, setStatusMsg] = useState('');
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [description, setDescription] = useState("");
+  const [foodName, setFoodName] = useState("");
+  const [price, setPrice] = useState("");
+  const [statusMsg, setStatusMsg] = useState("");
   const {theme} = useContext(ThemeContext);
   const [foodItems, setFoodItems] = useState([]);
   const [numInputs, setNumInputs] = useState(1);
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState("");
 
   const handleAddFood = () => {
     const newFoodItem = {name: foodName, price: price};
     setFoodItems([...foodItems, newFoodItem]);
-    setFoodName('');
-    setPrice('');
+    setFoodName("");
+    setPrice("");
     setNumInputs(numInputs + 1);
   };
   const handleAddRestaurant = async () => {
@@ -44,17 +44,17 @@ function AddRestaurant() {
     };
     console.log(restaurantDetails);
     axios
-      .post('/user/addr', restaurantDetails, headers)
+      .post("/restaurant/add", restaurantDetails, headers)
       .then(response => {
         console.log(response);
-        setStatusMsg('Restaurant Added Successfully');
-        setName('');
-        setAddress('');
-        setDescription('');
-        setImage('');
+        setStatusMsg("Restaurant Added Successfully");
+        setName("");
+        setAddress("");
+        setDescription("");
+        setImage("");
         setFoodItems([]);
-        setFoodName('');
-        setPrice('');
+        setFoodName("");
+        setPrice("");
         setNumInputs(1);
       })
       .catch(err => {
@@ -71,66 +71,66 @@ function AddRestaurant() {
         ]}>
         <View style={styles.inputContainer}>
           <InputRestaurant
-            label={'Restaurant Name'}
+            label={"Restaurant Name"}
             value={name}
             onChangeText={text => setName(text)}
-            placeholder={'Restaurant Name'}
+            placeholder={"Restaurant Name"}
           />
           <InputRestaurant
-            label={'Address'}
+            label={"Address"}
             value={address}
             onChangeText={text => setAddress(text)}
-            placeholder={'Address'}
+            placeholder={"Address"}
           />
           <InputRestaurant
-            label={'Image'}
+            label={"Image"}
             value={image}
             onChangeText={text => setImage(text)}
-            placeholder={'Image Link'}
+            placeholder={"Image Link"}
           />
           <InputRestaurant2
-            label={'Description'}
+            label={"Description"}
             value={description}
             onChangeText={text => setDescription(text)}
-            placeholder={'Description'}
+            placeholder={"Description"}
           />
         </View>
-        <View style={{width: '80%'}}>
-          <View style={{flexDirection: 'row'}}>
-            <View style={{width: '60%'}}>
+        <View style={{width: "80%"}}>
+          <View style={{flexDirection: "row"}}>
+            <View style={{width: "60%"}}>
               <Text style={[styles.label, {color: COLORS[theme].primary}]}>
                 Food Name
               </Text>
             </View>
-            <View style={{width: '40%'}}>
+            <View style={{width: "40%"}}>
               <Text style={[styles.label, {color: COLORS[theme].primary}]}>
                 Price
               </Text>
             </View>
           </View>
           {Array.from({length: numInputs}).map((_, index) => (
-            <View key={index} style={{flexDirection: 'row', marginVertical: 5}}>
-              <View style={{width: '60%'}}>
+            <View key={index} style={{flexDirection: "row", marginVertical: 5}}>
+              <View style={{width: "60%"}}>
                 <Input3
-                  value={foodItems[index]?.name || ''}
+                  value={foodItems[index]?.name || ""}
                   onChangeText={text => {
                     const newFoodItems = [...foodItems];
                     newFoodItems[index] = {...newFoodItems[index], name: text};
                     setFoodItems(newFoodItems);
                   }}
-                  placeholder={'Food Name'}
+                  placeholder={"Food Name"}
                 />
               </View>
-              <View style={{width: '40%'}}>
+              <View style={{width: "40%"}}>
                 <Input3
-                  value={foodItems[index]?.price || ''}
+                  value={foodItems[index]?.price || ""}
                   onChangeText={text => {
                     const newFoodItems = [...foodItems];
                     newFoodItems[index] = {...newFoodItems[index], price: text};
                     setFoodItems(newFoodItems);
                   }}
-                  keyboardType={'numeric'}
-                  placeholder={'Price'}
+                  keyboardType={"numeric"}
+                  placeholder={"Price"}
                 />
               </View>
             </View>
@@ -155,7 +155,7 @@ function AddRestaurant() {
             style={{
               color: COLORS[theme].primary,
             }}>
-            {statusMsg ? statusMsg : ''}
+            {statusMsg ? statusMsg : ""}
           </Text>
         </View>
       </KeyboardAvoidingView>
