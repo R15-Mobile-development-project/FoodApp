@@ -28,6 +28,10 @@ const restaurant = {
       }
     );
   },
+
+  getAll: function (callback) {
+    db.query("SELECT * FROM restaurants", callback);
+  },
 };
 
 module.exports = restaurant;

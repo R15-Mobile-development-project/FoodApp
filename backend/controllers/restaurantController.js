@@ -33,6 +33,18 @@ const restaurantAdd = (req, res) => {
   }
 };
 
+const restaurantList = (req, res) => {
+  restaurant.getAll((err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occurred",
+      });
+    }
+    return res.status(200).json(results);
+  });
+};
+
 module.exports = {
   restaurantAdd,
+  restaurantList,
 };
