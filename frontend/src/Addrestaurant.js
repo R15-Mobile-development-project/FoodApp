@@ -8,6 +8,7 @@ import styles from './conts/Styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {GetToken} from './components/Token';
 import axios from './components/axios';
+import {useNavigation} from '@react-navigation/native';
 
 function AddRestaurant() {
   const [name, setName] = useState('');
@@ -20,6 +21,7 @@ function AddRestaurant() {
   const [foodItems, setFoodItems] = useState([]);
   const [numInputs, setNumInputs] = useState(1);
   const [image, setImage] = useState('');
+  const navigation = useNavigation();
 
   const handleAddFood = () => {
     const newFoodItem = {name: foodName, price: price};
@@ -60,6 +62,9 @@ function AddRestaurant() {
       .catch(err => {
         console.log(err);
       });
+    setTimeout(() => {
+      navigation.navigate('Restaurant');
+    }, 500);
   };
 
   return (

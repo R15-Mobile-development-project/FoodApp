@@ -7,12 +7,17 @@ import {useEffect, useState} from 'react';
 import {GetToken} from '../components/Token';
 import axios from '../components/axios';
 import WalletPage from '../WalletPage';
+import AddRestaurantPage from '../Addrestaurant';
+import {ThemeContext} from '../components/ThemeContext';
+import {useContext} from 'react';
+import {COLORS} from '../conts/colors';
 
 const Stack = createStackNavigator();
 
 const MyStack = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const {theme} = useContext(ThemeContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -64,6 +69,16 @@ const MyStack = () => {
           <></>
         )}
         <Stack.Screen name="Wallet" component={WalletPage} />
+        <Stack.Screen
+          name="AddRestaurant"
+          component={AddRestaurantPage}
+          options={{
+            headerShown: true,
+            headerTitle: 'Add restaurant',
+            headerStyle: {backgroundColor: COLORS[theme].primary},
+            headerTintColor: COLORS[theme].quaternary,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
