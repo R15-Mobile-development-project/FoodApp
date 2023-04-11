@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, KeyboardAvoidingView, ScrollView} from 'react-native';
 import {Input3, InputRestaurant, InputRestaurant2} from './components/Input';
 import Button from './components/Button';
 import {COLORS} from './conts/colors';
 import {ThemeContext} from './components/ThemeContext';
-import {useContext} from 'react';
 import styles from './conts/Styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import DocumentPicker from 'react-native-document-picker';
+import {GetToken} from './components/Token';
+import axios from './components/axios';
 
 function AddRestaurant() {
   const [name, setName] = useState('');
@@ -19,6 +19,7 @@ function AddRestaurant() {
   const {theme} = useContext(ThemeContext);
   const [foodItems, setFoodItems] = useState([]);
   const [numInputs, setNumInputs] = useState(1);
+  const [image, setImage] = useState('');
 
   const handleAddFood = () => {
     const newFoodItem = {name: foodName, price: price};
@@ -27,30 +28,38 @@ function AddRestaurant() {
     setPrice('');
     setNumInputs(numInputs + 1);
   };
-  const handleAddRestaurant = () => {
+  const handleAddRestaurant = async () => {
+    const token = await GetToken();
+    const headers = {headers: {Authorization: `Bearer ${token}`}};
+    if (!token) {
+      return;
+    }
+
     const restaurantDetails = {
-      name,
-      address,
-      description,
-      foodItems,
+      name: name,
+      address: address,
+      description: description,
+      image: image,
+      menus: foodItems,
     };
     console.log(restaurantDetails);
-  };
-
-  const chooseImage = async () => {
-    try {
-      const result = await DocumentPicker.pick({
-        type: [DocumentPicker.types.images],
+    axios
+      .post('/user/addr', restaurantDetails, headers)
+      .then(response => {
+        console.log(response);
+        setStatusMsg('Restaurant Added Successfully');
+        setName('');
+        setAddress('');
+        setDescription('');
+        setImage('');
+        setFoodItems([]);
+        setFoodName('');
+        setPrice('');
+        setNumInputs(1);
+      })
+      .catch(err => {
+        console.log(err);
       });
-      console.log('result', result);
-      // Do something with the selected image
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log('User cancelled the picker');
-      } else {
-        console.log('Error', err);
-      }
-    }
   };
 
   return (
@@ -73,18 +82,18 @@ function AddRestaurant() {
             onChangeText={text => setAddress(text)}
             placeholder={'Address'}
           />
+          <InputRestaurant
+            label={'Image'}
+            value={image}
+            onChangeText={text => setImage(text)}
+            placeholder={'Image Link'}
+          />
           <InputRestaurant2
             label={'Description'}
             value={description}
             onChangeText={text => setDescription(text)}
             placeholder={'Description'}
           />
-        </View>
-        <View
-          style={{
-            width: '80%',
-          }}>
-          <Button title="Add image " onPress={chooseImage} />
         </View>
         <View style={{width: '80%'}}>
           <View style={{flexDirection: 'row'}}>
