@@ -27,7 +27,7 @@ function HomePage() {
 
           axios
             .get("/restaurant", {
-              headers,
+              headers: {Authorization: `Bearer ${_token}`},
             })
             .then(response => {
               setArrayCount(response.data);
@@ -46,51 +46,49 @@ function HomePage() {
   }, [navigation]);
 
   return (
-    <>
-      <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
-        {arrayCount.map((item, index) => (
-          <Card
-            containerStyle={{
-              justifyContent: "center",
-              backgroundColor: COLORS[theme].primary,
-              borderRadius: 5,
-              borderColor: COLORS[theme].primary,
-            }}>
-            <Card.Title>
-              <Text style={{color: COLORS[theme].quaternary, fontSize: 20}}>
-                {item.name}
-              </Text>
-            </Card.Title>
-            <Card.Divider
-              style={{
-                borderBottomColor: COLORS[theme].quaternary,
-                borderBottomWidth: 1,
+    <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
+      {arrayCount.map((item, index) => (
+        <Card
+          containerStyle={{
+            justifyContent: "center",
+            backgroundColor: COLORS[theme].primary,
+            borderRadius: 5,
+            borderColor: COLORS[theme].primary,
+          }}>
+          <Card.Title>
+            <Text style={{color: COLORS[theme].quaternary, fontSize: 20}}>
+              {item.name}
+            </Text>
+          </Card.Title>
+          <Card.Divider
+            style={{
+              borderBottomColor: COLORS[theme].quaternary,
+              borderBottomWidth: 1,
+            }}
+          />
+          <View style={{alignItems: "center", marginBottom: -10}}>
+            <Image
+              style={{width: "100%", height: 100, borderRadius: 5}}
+              source={{
+                uri: item.image,
               }}
             />
-            <View style={{alignItems: "center", marginBottom: -10}}>
-              <Image
-                style={{width: "100%", height: 100, borderRadius: 5}}
-                source={{
-                  uri: item.image,
-                }}
-              />
-              <Button
-                title="ORDER"
-                titleStyle={{color: COLORS[theme].primary}}
-                buttonStyle={{
-                  backgroundColor: COLORS[theme].quaternary,
-                  borderRadius: 3,
-                }}
-                containerStyle={{
-                  width: "100%",
-                  marginVertical: 10,
-                }}
-              />
-            </View>
-          </Card>
-        ))}
-      </ScrollView>
-    </>
+            <Button
+              title="ORDER"
+              titleStyle={{color: COLORS[theme].primary}}
+              buttonStyle={{
+                backgroundColor: COLORS[theme].quaternary,
+                borderRadius: 3,
+              }}
+              containerStyle={{
+                width: "100%",
+                marginVertical: 10,
+              }}
+            />
+          </View>
+        </Card>
+      ))}
+    </ScrollView>
   );
 }
 

@@ -48,43 +48,45 @@ function HistoryPage() {
   }, [navigation]);
 
   return (
-    <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
-      {arrayCount.map((item, index) => (
-        <Card
-          containerStyle={{
-            justifyContent: "center",
-            backgroundColor: COLORS[theme].primary,
-            borderRadius: 5,
-            borderColor: COLORS[theme].primary,
-          }}>
-          <Card.Title>
-            <Text style={{color: COLORS[theme].quaternary}}>
-              {item.restaurant_name}
-            </Text>
-          </Card.Title>
-          <Card.Divider
-            style={{
-              borderBottomColor: COLORS[theme].quaternary,
-              borderBottomWidth: 1,
-            }}
-          />
-          <View style={{flexDirection: "row"}}>
-            <View>
-              <Text
-                style={{color: COLORS[theme].quaternary, textAlign: "left"}}>
-                {item.order_id}
+    <>
+      <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
+        {arrayCount.map((item, index) => (
+          <Card
+            containerStyle={{
+              justifyContent: "center",
+              backgroundColor: COLORS[theme].primary,
+              borderRadius: 5,
+              borderColor: COLORS[theme].primary,
+            }}>
+            <Card.Title>
+              <Text style={{color: COLORS[theme].quaternary}}>
+                {item.restaurant_name}
               </Text>
+            </Card.Title>
+            <Card.Divider
+              style={{
+                borderBottomColor: COLORS[theme].quaternary,
+                borderBottomWidth: 1,
+              }}
+            />
+            <View style={{flexDirection: "row"}}>
+              <View>
+                <Text
+                  style={{color: COLORS[theme].quaternary, textAlign: "left"}}>
+                  {item.order_id}
+                </Text>
+              </View>
+              <View style={{flex: 1}}>
+                <Text
+                  style={{color: COLORS[theme].quaternary, textAlign: "right"}}>
+                  {item.price}€
+                </Text>
+              </View>
             </View>
-            <View style={{flex: 1}}>
-              <Text
-                style={{color: COLORS[theme].quaternary, textAlign: "right"}}>
-                {item.price}€
-              </Text>
-            </View>
-          </View>
-        </Card>
-      ))}
-    </ScrollView>
+          </Card>
+        ))}
+      </ScrollView>
+    </>
   );
 }
 
