@@ -14,16 +14,17 @@ const restaurantAdd = (req, res) => {
   } else {
     const data = { name, description, address, image, user_id: req.userId };
     restaurant.addRestaurant(data, (err, result) => {
-      if (err.errno === 1062) {
-        return res.status(400).json({
-          message: "Restaurant already exists",
-        });
-      }
       if (err) {
-        return res.status(500).json({
-          message: "Error occurred",
-          console: err,
-        });
+        if (err.errno === 1062) {
+          return res.status(400).json({
+            message: "Restaurant already exists",
+          });
+        } else {
+          return res.status(500).json({
+            message: "Error occurred",
+            console: err,
+          });
+        }
       }
 
       const lastRestaurantId = result.insertId;
