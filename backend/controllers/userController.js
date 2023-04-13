@@ -117,6 +117,7 @@ const userProfile = (req, res) => {
 const deleteProfile = (req, res) => {
   user.deleteById(req.userId, (err, results) => {
     if (err) {
+      console.log(err);
       return res.status(500).json({
         message: "Error occured",
       });
