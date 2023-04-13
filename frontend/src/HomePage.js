@@ -70,7 +70,6 @@ function HomePage() {
             <View style={{alignItems: "center", marginBottom: -10}}>
               <Image
                 style={{width: "100%", height: 100, borderRadius: 5}}
-                // resizeMode="contain"
                 source={{
                   uri: item.image,
                 }}
@@ -84,7 +83,6 @@ function HomePage() {
                 }}
                 containerStyle={{
                   width: "100%",
-                  // marginHorizontal: 50,
                   marginVertical: 10,
                 }}
               />
