@@ -29,6 +29,10 @@ const restaurant = {
     );
   },
 
+  get: function (id, callback) {
+    db.query("SELECT * FROM restaurants WHERE user_id = ?", [id], callback);
+  },
+
   getAll: function (callback) {
     db.query("SELECT * FROM restaurants", callback);
   },
