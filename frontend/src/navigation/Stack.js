@@ -3,13 +3,15 @@ import {createStackNavigator} from "@react-navigation/stack";
 import LoginPage from "../LoginPage";
 import RegisterPage from "../RegisterPage";
 import MyDrawer from "./Drawer";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import {GetToken} from "../components/Token";
 import axios from "../components/axios";
 import WalletPage from "../WalletPage";
-import {COLORS} from "../conts/colors";
+import AddRestaurantPage from "../Addrestaurant";
+import EditRestaurant from "../EditRestaurantPage";
 import {ThemeContext} from "../components/ThemeContext";
-import {useContext} from "react";
+import {COLORS} from "../conts/colors";
+
 
 const Stack = createStackNavigator();
 
@@ -17,6 +19,7 @@ const MyStack = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const {theme} = useContext(ThemeContext);
+
   useEffect(() => {
     setIsLoading(true);
     const CheckToken = async () => {
@@ -66,12 +69,32 @@ const MyStack = () => {
         ) : (
           <></>
         )}
-        <Stack.Screen
-          name="Wallet"
-          component={WalletPage}
+        <Stack.Screen 
+          name="Wallet" 
+          component={WalletPage} 
           options={{
             headerShown: true,
             headerTitle: "Wallet",
+            headerStyle: {backgroundColor: COLORS[theme].primary},
+            headerTintColor: COLORS[theme].quaternary,
+          }} 
+        />
+        <Stack.Screen
+          name="EditRestaurant"
+          component={EditRestaurant}
+          options={{
+            headerShown: true,
+            headerTitle: "Add restaurant",
+            headerStyle: {backgroundColor: COLORS[theme].primary},
+            headerTintColor: COLORS[theme].quaternary,
+          }}
+        />
+        <Stack.Screen
+          name="AddRestaurant"
+          component={AddRestaurantPage}
+          options={{
+            headerShown: true,
+            headerTitle: "Add restaurant",
             headerStyle: {backgroundColor: COLORS[theme].primary},
             headerTintColor: COLORS[theme].quaternary,
           }}
