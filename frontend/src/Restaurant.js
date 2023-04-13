@@ -1,10 +1,10 @@
-import Button from './components/Button';
-import styles from './conts/Styles';
-import {View, Text, KeyboardAvoidingView} from 'react-native';
-import React, {useContext, useState} from 'react';
-import {ThemeContext} from './components/ThemeContext';
-import {COLORS} from './conts/colors';
-import {useNavigation} from '@react-navigation/native';
+import Button from "./components/Button";
+import styles from "./conts/Styles";
+import {View, Text, KeyboardAvoidingView} from "react-native";
+import React, {useContext, useState} from "react";
+import {ThemeContext} from "./components/ThemeContext";
+import {COLORS} from "./conts/colors";
+import {useNavigation} from "@react-navigation/native";
 
 function Restaurant() {
   const {theme} = useContext(ThemeContext);
@@ -23,9 +23,12 @@ function Restaurant() {
       <View style={styles.walletContainer}>
         <Button
           title="Add Restaurant"
-          onPress={() => navigation.navigate('AddRestaurant')}
+          onPress={() => navigation.navigate("AddRestaurant")}
         />
-        <Button title="Edit Restaurant" onPress={() => setBalance()} />
+        <Button
+          title="Edit Restaurant"
+          onPress={() => navigation.navigate("EditRestaurant")}
+        />
         <Button title="Delete restaurant" onPress={() => setBalance()} />
       </View>
     </KeyboardAvoidingView>
