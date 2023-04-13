@@ -40,6 +40,10 @@ const restaurant = {
     const queryString = `DELETE FROM menus WHERE restaurant_id = ?`;
     db.query(queryString, [restaurant_id], callback);
   },
+  deleteRestaurant: function (restaurant_id, callback) {
+    const queryString = `DELETE FROM restaurants WHERE restaurant_id = ?`;
+    db.query(queryString, [restaurant_id], callback);
+  },
 };
 
 module.exports = restaurant;

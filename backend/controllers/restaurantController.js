@@ -148,8 +148,44 @@ const restaurantUpdate = (req, res) => {
   }
 };
 
+const restaurantDelete = (req, res) => {
+  restaurant.getRestaurantIdByUserId(req.userId, (err, results) => {
+    if (err || results.length === 0) {
+      return res.status(500).json({
+        message: "Error occurred",
+        console: err,
+      });
+    }
+
+    const id = results[0].restaurant_id;
+
+    restaurant.deleteMenus(id, (err, result) => {
+      if (err) {
+        return res.status(500).json({
+          message: "Error occurred",
+          console: err,
+        });
+      }
+
+      restaurant.deleteRestaurant(id, (err, result) => {
+        if (err) {
+          return res.status(500).json({
+            message: "Error occurred",
+            console: err,
+          });
+        }
+
+        return res.status(200).json({
+          message: "Restaurant deleted",
+        });
+      });
+    });
+  });
+};
+
 module.exports = {
   restaurantAdd,
   restaurantGetByUserId,
   restaurantUpdate,
+  restaurantDelete,
 };
