@@ -45,7 +45,7 @@ const MyDrawer = () => {
       <Drawer.Screen name="Settings" component={SettingsPage} />
       <Drawer.Screen name="Order History" component={HistoryPage} />
       {userType ? (
-        <Drawer.Screen name="Add restaurant" component={AddRestaurantPage} />
+        <Drawer.Screen name="Restaurant" component={Restaurant} />
       ) : null}
       <Drawer.Screen name="Log out" component={LogoutPage} />
     </Drawer.Navigator>

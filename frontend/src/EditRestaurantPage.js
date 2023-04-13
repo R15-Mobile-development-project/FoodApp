@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import {View, Text, KeyboardAvoidingView, ScrollView} from "react-native";
 import {Input3, InputRestaurant, InputRestaurant2} from "./components/Input";
 import Button from "./components/Button";
@@ -10,7 +10,7 @@ import {GetToken} from "./components/Token";
 import axios from "./components/axios";
 import {useNavigation} from "@react-navigation/native";
 
-function AddRestaurant() {
+function EditRestaurant() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
@@ -23,6 +23,45 @@ function AddRestaurant() {
   const [image, setImage] = useState("");
   const navigation = useNavigation();
 
+  useEffect(() => {
+    const FetchProfile = async () => {
+      try {
+        const token = await GetToken();
+
+        if (token !== undefined) {
+          const headers = {headers: {Authorization: `Bearer ${token}`}};
+
+          axios
+            .get("/restaurant", headers)
+            .then(response => {
+              const res = response.data.results[0];
+              const {name, description, address, image} = res;
+              const menus = res.menus;
+
+              setName(name);
+              setAddress(address);
+              setDescription(description);
+              setImage(image);
+              setNumInputs(menus.length);
+              setFoodItems(JSON.parse(JSON.stringify(menus)));
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          console.log("No jwt found");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    navigation.addListener("focus", () => {
+      ResetStatusMsg();
+      FetchProfile();
+    });
+  }, [navigation]);
+
   const handleAddFood = () => {
     const newFoodItem = {name: foodName, price: price};
     setFoodItems([...foodItems, newFoodItem]);
@@ -30,7 +69,7 @@ function AddRestaurant() {
     setPrice("");
     setNumInputs(numInputs + 1);
   };
-  const handleAddRestaurant = async () => {
+  const handleEditRestaurant = async () => {
     const token = await GetToken();
     const headers = {headers: {Authorization: `Bearer ${token}`}};
     if (!token) {
@@ -46,7 +85,7 @@ function AddRestaurant() {
     };
     console.log(restaurantDetails);
     axios
-      .post("/restaurant/add", restaurantDetails, headers)
+      .put("/restaurant/update", restaurantDetails, headers)
       .then(response => {
         console.log(response);
         setStatusMsg("Restaurant Added Successfully");
@@ -61,11 +100,13 @@ function AddRestaurant() {
       })
       .catch(err => {
         console.log(err);
-        setStatusMsg("Restaurant Wasn't Created");
       });
     setTimeout(() => {
       navigation.navigate("Restaurant");
     }, 500);
+  };
+  const ResetStatusMsg = () => {
+    setStatusMsg("");
   };
 
   return (
@@ -129,7 +170,7 @@ function AddRestaurant() {
               </View>
               <View style={{width: "40%"}}>
                 <Input3
-                  value={foodItems[index]?.price || ""}
+                  value={foodItems[index]?.price?.toString() || ""}
                   onChangeText={text => {
                     const newFoodItems = [...foodItems];
                     newFoodItems[index] = {...newFoodItems[index], price: text};
@@ -151,7 +192,7 @@ function AddRestaurant() {
               />
             </View>
             <View style={[styles.buttonContainer]}>
-              <Button title="Add" onPress={handleAddRestaurant} />
+              <Button title="Save" onPress={handleEditRestaurant} />
             </View>
           </View>
         </View>
@@ -169,4 +210,4 @@ function AddRestaurant() {
   );
 }
 
-export default AddRestaurant;
+export default EditRestaurant;
