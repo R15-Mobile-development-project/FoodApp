@@ -59,6 +59,7 @@ function AddRestaurant() {
       })
       .catch(err => {
         console.log(err);
+        setStatusMsg("Restaurant Wasn't Created");
       });
   };
 
