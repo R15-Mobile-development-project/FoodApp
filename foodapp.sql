@@ -90,11 +90,11 @@ CREATE TABLE `restaurants` (
   `description` varchar(255) DEFAULT NULL,
   `address` varchar(255) NOT NULL,
   `image` mediumtext DEFAULT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`restaurant_id`),
   UNIQUE KEY `restaurant_id_UNIQUE` (`restaurant_id`),
-  KEY `FK_users_restaurants_idx` (`user_id`),
-  CONSTRAINT `FK_users_restaurants` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`),
+  KEY `FK_users_restaurants_idx` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

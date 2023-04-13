@@ -9,6 +9,7 @@ import {COLORS} from '../conts/colors';
 import {ThemeContext} from '../components/ThemeContext';
 import {useContext, useEffect, useState} from 'react';
 import AddRestaurantPage from '../Addrestaurant';
+import Restaurant from '../Restaurant';
 import jwt_decode from 'jwt-decode';
 import {GetToken} from '../components/Token';
 
@@ -45,7 +46,7 @@ const MyDrawer = () => {
       <Drawer.Screen name="settings" component={SettingsPage} />
       <Drawer.Screen name="Order History" component={HistoryPage} />
       {userType ? (
-        <Drawer.Screen name="Add restaurant" component={AddRestaurantPage} />
+        <Drawer.Screen name="Restaurant" component={Restaurant} />
       ) : null}
       <Drawer.Screen name="Log out" component={LogoutPage} />
     </Drawer.Navigator>
