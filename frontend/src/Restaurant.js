@@ -1,6 +1,6 @@
 import Button from "./components/Button";
 import styles from "./conts/Styles";
-import {View, Text, KeyboardAvoidingView} from "react-native";
+import {View, Text, KeyboardAvoidingView, Alert} from "react-native";
 import React, {useContext, useState} from "react";
 import {ThemeContext} from "./components/ThemeContext";
 import {COLORS} from "./conts/colors";
@@ -25,6 +25,21 @@ function Restaurant() {
       .catch(err => {
         console.log(err);
       });
+  };
+  const deleteRestaurantAlert = () => {
+    Alert.alert(
+      "Delete Restaurant",
+      "Are you sure you want to delete your restaurant?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {text: "OK", onPress: () => deleteRestaurant()},
+      ],
+      {cancelable: false},
+    );
   };
 
   useFocusEffect(
@@ -79,7 +94,7 @@ function Restaurant() {
               title="Edit Restaurant"
               onPress={() => navigation.navigate("EditRestaurant")}
             />
-            <Button title="Delete restaurant" onPress={deleteRestaurant} />
+            <Button title="Delete restaurant" onPress={deleteRestaurantAlert} />
           </>
         )}
       </View>
