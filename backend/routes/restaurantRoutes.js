@@ -11,5 +11,10 @@ router.delete(
   jwt.verifyToken,
   restaurantController.restaurantDelete
 );
+router.get(
+  "/count",
+  jwt.verifyToken,
+  restaurantController.restaurantCountByUserId
+);
 
 module.exports = router;

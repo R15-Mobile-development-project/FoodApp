@@ -183,9 +183,29 @@ const restaurantDelete = (req, res) => {
   });
 };
 
+const restaurantCountByUserId = (req, res) => {
+  restaurant.restaurantCount(req.userId, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occurred",
+        console: err,
+      });
+    }
+
+    if (results.length > 0) {
+      return res.status(200).json(results[0]);
+    } else {
+      return res.status(404).json({
+        message: "No restaurants found",
+      });
+    }
+  });
+};
+
 module.exports = {
   restaurantAdd,
   restaurantGetByUserId,
   restaurantUpdate,
   restaurantDelete,
+  restaurantCountByUserId,
 };
