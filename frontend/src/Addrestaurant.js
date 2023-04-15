@@ -58,14 +58,16 @@ function AddRestaurant() {
         setFoodName("");
         setPrice("");
         setNumInputs(1);
+        if (response.status === 200) {
+          setTimeout(() => {
+            navigation.navigate("Restaurant");
+          }, 500);
+        }
       })
       .catch(err => {
         console.log(err);
-        setStatusMsg("Restaurant Wasn't Created");
+        setStatusMsg(err.response.data.message);
       });
-    setTimeout(() => {
-      navigation.navigate("Restaurant");
-    }, 500);
   };
 
   const handleDeleteFood = () => {
