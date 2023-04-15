@@ -48,6 +48,16 @@ const restaurant = {
   getAll: function (callback) {
     db.query("SELECT * FROM restaurants", callback);
   },
+
+  deleteRestaurant: function (restaurant_id, callback) {
+    const queryString = `DELETE FROM restaurants WHERE restaurant_id = ?`;
+    db.query(queryString, [restaurant_id], callback);
+  },
+
+  restaurantCount: function (user_id, callback) {
+    const queryString = `SELECT COUNT(*) as count FROM restaurants WHERE user_id = ?`;
+    db.query(queryString, [user_id], callback);
+  },
 };
 
 module.exports = restaurant;
