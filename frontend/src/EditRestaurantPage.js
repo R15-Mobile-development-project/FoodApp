@@ -157,7 +157,7 @@ function EditRestaurant() {
           </View>
           {Array.from({length: numInputs}).map((_, index) => (
             <View key={index} style={{flexDirection: "row", marginVertical: 5}}>
-              <View style={{width: "60%"}}>
+              <View style={{width: "50%"}}>
                 <Input3
                   value={foodItems[index]?.name || ""}
                   onChangeText={text => {
@@ -178,6 +178,19 @@ function EditRestaurant() {
                   }}
                   keyboardType={"numeric"}
                   placeholder={"Price"}
+                />
+              </View>
+              <View style={{width: "10%", justifyContent: "center"}}>
+                <Icon
+                  name="minus-circle-outline"
+                  size={30}
+                  onPress={() => {
+                    const newFoodItems = [...foodItems];
+                    newFoodItems.splice(index, 1);
+                    setFoodItems(newFoodItems);
+                    setNumInputs(numInputs - 1);
+                  }}
+                  style={{color: COLORS[theme].primary}}
                 />
               </View>
             </View>
