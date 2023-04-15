@@ -52,6 +52,7 @@ function HistoryPage() {
       <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
         {arrayCount.map((item, index) => (
           <Card
+            key={index}
             containerStyle={{
               justifyContent: "center",
               backgroundColor: COLORS[theme].primary,
