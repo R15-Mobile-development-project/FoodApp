@@ -68,6 +68,13 @@ function AddRestaurant() {
     }, 500);
   };
 
+  const handleDeleteFood = () => {
+    const newFoodItems = [...foodItems];
+    newFoodItems.pop();
+    setFoodItems(newFoodItems);
+    setNumInputs(numInputs - 1);
+  };
+
   return (
     <ScrollView style={{backgroundColor: COLORS[theme].quaternary}}>
       <KeyboardAvoidingView
@@ -142,11 +149,17 @@ function AddRestaurant() {
             </View>
           ))}
           <View>
-            <View style={{marginRight: 10}}>
+            <View style={{marginRight: 10, flexDirection: "row"}}>
               <Icon
                 name="plus-circle-outline"
                 size={30}
                 onPress={handleAddFood}
+                style={{color: COLORS[theme].primary}}
+              />
+              <Icon
+                name="minus-circle-outline"
+                size={30}
+                onPress={handleDeleteFood}
                 style={{color: COLORS[theme].primary}}
               />
             </View>
