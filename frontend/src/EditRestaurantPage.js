@@ -185,10 +185,14 @@ function EditRestaurant() {
                   name="minus-circle-outline"
                   size={30}
                   onPress={() => {
-                    const newFoodItems = [...foodItems];
-                    newFoodItems.splice(index, 1);
-                    setFoodItems(newFoodItems);
-                    setNumInputs(numInputs - 1);
+                    if (numInputs > 1) {
+                      const newFoodItems = [...foodItems];
+                      newFoodItems.splice(index, 1);
+                      setFoodItems(newFoodItems);
+                      setNumInputs(numInputs - 1);
+                    } else {
+                      return;
+                    }
                   }}
                   style={{color: COLORS[theme].primary}}
                 />
