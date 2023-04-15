@@ -6,5 +6,15 @@ const restaurantController = require("../controllers/restaurantController");
 router.post("/add", jwt.verifyToken, restaurantController.restaurantAdd);
 router.get("/", jwt.verifyToken, restaurantController.restaurantGetByUserId);
 router.put("/update", jwt.verifyToken, restaurantController.restaurantUpdate);
+router.delete(
+  "/delete",
+  jwt.verifyToken,
+  restaurantController.restaurantDelete
+);
+router.get(
+  "/count",
+  jwt.verifyToken,
+  restaurantController.restaurantCountByUserId
+);
 
 module.exports = router;
