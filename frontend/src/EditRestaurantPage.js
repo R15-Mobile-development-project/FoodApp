@@ -97,13 +97,16 @@ function EditRestaurant() {
         setFoodName("");
         setPrice("");
         setNumInputs(1);
+        if (response.status === 200) {
+          setTimeout(() => {
+            navigation.navigate("Restaurant");
+          }, 500);
+        }
       })
       .catch(err => {
         console.log(err);
+        setStatusMsg(err.response.data.message);
       });
-    setTimeout(() => {
-      navigation.navigate("Restaurant");
-    }, 500);
   };
   const ResetStatusMsg = () => {
     setStatusMsg("");
@@ -191,6 +194,7 @@ function EditRestaurant() {
                       setFoodItems(newFoodItems);
                       setNumInputs(numInputs - 1);
                     } else {
+                      setStatusMsg("At least one food item is required");
                       return;
                     }
                   }}
