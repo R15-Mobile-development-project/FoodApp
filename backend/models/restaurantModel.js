@@ -58,6 +58,10 @@ const restaurant = {
     const queryString = `SELECT COUNT(*) as count FROM restaurants WHERE user_id = ?`;
     db.query(queryString, [user_id], callback);
   },
+  restaurantMenu: function (restaurant_id, callback) {
+    const queryString = `SELECT * FROM menus WHERE restaurant_id = ?`;
+    db.query(queryString, [restaurant_id], callback);
+  },
 };
 
 module.exports = restaurant;

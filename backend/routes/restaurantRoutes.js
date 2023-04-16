@@ -7,15 +7,8 @@ router.post("/add", jwt.verifyToken, restaurantController.restaurantAdd);
 router.get("/", jwt.verifyToken, restaurantController.restaurantList);
 router.get("/me", jwt.verifyToken, restaurantController.restaurantGetByUserId);
 router.put("/update", jwt.verifyToken, restaurantController.restaurantUpdate);
-router.delete(
-  "/delete",
-  jwt.verifyToken,
-  restaurantController.restaurantDelete
-);
-router.get(
-  "/count",
-  jwt.verifyToken,
-  restaurantController.restaurantCountByUserId
-);
+router.delete("/delete", jwt.verifyToken, restaurantController.restaurantDelete);
+router.get("/count", jwt.verifyToken, restaurantController.restaurantCountByUserId);
+router.get("/:restaurant_id/menu", restaurantController.getRestaurantMenu);
 
 module.exports = router;

@@ -219,6 +219,35 @@ const restaurantCountByUserId = (req, res) => {
   });
 };
 
+const getRestaurantMenu = (req, res) => {
+  if (!req.params.restaurant_id) {
+    return res.status(400).json({
+      message: "Please provide a restaurant id",
+    });
+  }
+  if (Number.isInteger(parseInt(req.params.restaurant_id)) === false) {
+    return res.status(400).json({
+      message: "Please provide a valid restaurant id",
+    });
+  }
+  restaurant.restaurantMenu(req.params.restaurant_id, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occurred",
+        console: err,
+      });
+    }
+
+    if (results.length > 0) {
+      return res.status(200).json(results);
+    } else {
+      return res.status(404).json({
+        message: "No menus found",
+      });
+    }
+  });
+};
+
 module.exports = {
   restaurantAdd,
   restaurantGetByUserId,
@@ -226,4 +255,5 @@ module.exports = {
   restaurantList,
   restaurantDelete,
   restaurantCountByUserId,
+  getRestaurantMenu,
 };
