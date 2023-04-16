@@ -1,17 +1,16 @@
-import React, {useState, useEffect, useContext} from "react";
-import {View, Text, Image} from "react-native";
-import {COLORS} from "./conts/colors";
-import styles from "./conts/Styles";
-import {Card, ListItem, Button, Icon} from "@rneui/themed";
+import React, { useState, useEffect, useContext } from "react";
+import { View, Text, Image } from "react-native";
+import { COLORS } from "./conts/colors";
+import { Card, Button } from "@rneui/themed";
 import axios from "./components/axios";
 import EncryptedStorage from "react-native-encrypted-storage";
-import {ThemeContext} from "./components/ThemeContext";
-import {useNavigation} from "@react-navigation/native";
-import {ScrollView} from "react-native-gesture-handler";
+import { ThemeContext } from "./components/ThemeContext";
+import { useNavigation } from "@react-navigation/native";
+import { ScrollView } from "react-native-gesture-handler";
 
 function HomePage() {
   const navigation = useNavigation();
-  const {theme, setTheme, toggleTheme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const [token, setToken] = useState(null);
   const [arrayCount, setArrayCount] = useState([]);
 
@@ -23,11 +22,11 @@ function HomePage() {
         if (_token !== undefined) {
           setToken(_token);
 
-          const headers = {headers: {Authorization: `Bearer ${_token}`}};
+          const headers = { headers: { Authorization: `Bearer ${_token}` } };
 
           axios
             .get("/restaurant", {
-              headers: {Authorization: `Bearer ${_token}`},
+              headers: { Authorization: `Bearer ${_token}` },
             })
             .then(response => {
               setArrayCount(response.data);
@@ -46,7 +45,7 @@ function HomePage() {
   }, [navigation]);
 
   return (
-    <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
+    <ScrollView style={[{ backgroundColor: COLORS[theme].quaternary }]}>
       {arrayCount.map((item, index) => (
         <Card
           key={index}
@@ -57,7 +56,7 @@ function HomePage() {
             borderColor: COLORS[theme].primary,
           }}>
           <Card.Title>
-            <Text style={{color: COLORS[theme].quaternary, fontSize: 20}}>
+            <Text style={{ color: COLORS[theme].quaternary, fontSize: 20 }}>
               {item.name}
             </Text>
           </Card.Title>
@@ -67,16 +66,16 @@ function HomePage() {
               borderBottomWidth: 1,
             }}
           />
-          <View style={{alignItems: "center", marginBottom: -10}}>
+          <View style={{ alignItems: "center", marginBottom: -10 }}>
             <Image
-              style={{width: "100%", height: 100, borderRadius: 5}}
+              style={{ width: "100%", height: 100, borderRadius: 5 }}
               source={{
                 uri: item.image,
               }}
             />
             <Button
               title="ORDER"
-              titleStyle={{color: COLORS[theme].primary}}
+              titleStyle={{ color: COLORS[theme].primary }}
               buttonStyle={{
                 backgroundColor: COLORS[theme].quaternary,
                 borderRadius: 3,
@@ -85,6 +84,7 @@ function HomePage() {
                 width: "100%",
                 marginVertical: 10,
               }}
+              onPress={() => navigation.navigate('OrderPage', { restaurant_id: item.restaurant_id })}
             />
           </View>
         </Card>
