@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
-import {View, Text, Image} from "react-native";
+import {View, Text, Image, ActivityIndicator} from "react-native";
 import {COLORS} from "./conts/colors";
 import styles from "./conts/Styles";
 import {Card, ListItem, Button, Icon} from "@rneui/themed";
@@ -16,6 +16,7 @@ function HomePage() {
   const [arrayCount, setArrayCount] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [noMorePages, setNoMorePages] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const FetchRestaurant = async () => {
@@ -31,9 +32,11 @@ function HomePage() {
             .get("/restaurant/1", headers)
             .then(response => {
               setArrayCount(response.data);
+              setIsLoading(false);
             })
             .catch(err => {
               console.log(err);
+              setIsLoading(false);
             });
         }
       } catch (error) {
@@ -64,6 +67,7 @@ function HomePage() {
   };
 
   const fetchPage = async page => {
+    setIsLoading(true);
     const headers = {headers: {Authorization: `Bearer ${token}`}};
 
     axios
@@ -73,8 +77,10 @@ function HomePage() {
           setNoMorePages(true);
         }
         setArrayCount(arrayCount => [...arrayCount, ...response.data]);
+        setIsLoading(false);
       })
       .catch(err => {
+        setIsLoading(false);
         console.log(err);
       });
   };
@@ -127,6 +133,22 @@ function HomePage() {
           </View>
         </Card>
       ))}
+      {isLoading ? (
+        <ActivityIndicator
+          style={[styles.noDataText, {marginBottom: 40}]}
+          color={COLORS[theme].primary}
+          size="large"
+        />
+      ) : (
+        <></>
+      )}
+      {arrayCount.length === 0 && !isLoading ? (
+        <Text style={[styles.noDataText, {color: COLORS[theme].primary}]}>
+          There aren't any restaurants.
+        </Text>
+      ) : (
+        <></>
+      )}
     </ScrollView>
   );
 }
