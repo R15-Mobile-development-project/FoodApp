@@ -15,11 +15,26 @@ function OrderPage({ route }) {
     const [arrayCount, setArrayCount] = useState([]);
     const { restaurant_id } = route.params;
 
+    const CreateOrder = async () => {
+        try {
+            axios
+                .post(`/restaurant/${restaurant_id}/order`, {}, {
+                    headers: { Authorization: `Bearer ${token}` },
+                })
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    };
     useEffect(() => {
         const FetchMenu = async () => {
             try {
                 const _token = await EncryptedStorage.getItem("token");
-
 
                 if (_token !== undefined) {
                     setToken(_token);
@@ -46,8 +61,7 @@ function OrderPage({ route }) {
             FetchMenu();
         });
     }, [navigation]);
-    console.log(arrayCount + "arrayCount")
-    console.log(restaurant_id + "restaurant_id")
+
     return (
         <ScrollView style={[{ backgroundColor: COLORS[theme].quaternary }]}>
             {arrayCount.map((item, index) => (
@@ -75,14 +89,15 @@ function OrderPage({ route }) {
                                 titleStyle={{
                                     color: COLORS[theme].primary,
                                 }}
-                            />
+                                onPress={() =>
+                                    console.log(item.menu_id + "asd")
+                                } />
                         </View>
                     </View>
                 </Card>
             ))}
-
         </ScrollView>
-    )
-}
+    );
+};
 
 export default OrderPage;
