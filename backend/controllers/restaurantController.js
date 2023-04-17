@@ -219,6 +219,30 @@ const restaurantCountByUserId = (req, res) => {
   });
 };
 
+const restaurantByPage = (req, res) => {
+  const page = parseInt(req.params.page) || 1;
+
+  const offset = (page - 1) * 6;
+
+  restaurant.getByPage(offset, (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        message: "Error occurred",
+        console: err,
+      });
+    }
+
+    if (results.length > 0) {
+      return res.status(200).json(results);
+    } else {
+      res.status(400).json({
+        message: "Invalid page",
+      });
+    }
+  });
+};
+
 module.exports = {
   restaurantAdd,
   restaurantGetByUserId,
@@ -226,4 +250,5 @@ module.exports = {
   restaurantList,
   restaurantDelete,
   restaurantCountByUserId,
+  restaurantByPage,
 };
