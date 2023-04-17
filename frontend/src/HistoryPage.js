@@ -47,6 +47,20 @@ function HistoryPage() {
     });
   }, [navigation]);
 
+if(
+  arrayCount === null ||
+  arrayCount === undefined ||
+  arrayCount.length === 0 
+) {
+  return (
+    <View style={{justifyContent: 'center', alignItems: 'center', flex:1, backgroundColor: COLORS[theme].quaternary}}>
+      <Text style={{color: COLORS[theme].primary}}>No orders found
+      </Text>
+    </View>
+  )
+}
+
+
   return (
     <ScrollView
       style={[{ backgroundColor: COLORS[theme].quaternary }]}>
