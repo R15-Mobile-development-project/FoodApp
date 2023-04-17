@@ -15,6 +15,7 @@ function HomePage() {
   const [token, setToken] = useState(null);
   const [arrayCount, setArrayCount] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [noMorePages, setNoMorePages] = useState(false);
 
   useEffect(() => {
     const FetchRestaurant = async () => {
@@ -27,9 +28,7 @@ function HomePage() {
           const headers = {headers: {Authorization: `Bearer ${_token}`}};
 
           axios
-            .get("/restaurant", {
-              headers: {Authorization: `Bearer ${_token}`},
-            })
+            .get("/restaurant/1", headers)
             .then(response => {
               setArrayCount(response.data);
             })
@@ -46,16 +45,38 @@ function HomePage() {
     });
   }, [navigation]);
 
-  const handleScroll = event => {
-    const page = Math.round(
+  const handleScroll = async event => {
+    let page = Math.round(
       event.nativeEvent.contentOffset.y /
         event.nativeEvent.layoutMeasurement.height,
     );
 
-    if (page > currentPage) {
-      setCurrentPage(page);
+    if (page === 1) {
+      page = 2;
     }
-    console.log("Current page:", page);
+
+    if (page > currentPage && !noMorePages) {
+      console.log("Fetching page: ", page);
+
+      setCurrentPage(page);
+      await fetchPage(page);
+    }
+  };
+
+  const fetchPage = async page => {
+    const headers = {headers: {Authorization: `Bearer ${token}`}};
+
+    axios
+      .get("/restaurant/" + page, headers)
+      .then(response => {
+        if (response.data.length < 6) {
+          setNoMorePages(true);
+        }
+        setArrayCount(arrayCount => [...arrayCount, ...response.data]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
