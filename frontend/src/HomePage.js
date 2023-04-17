@@ -14,6 +14,7 @@ function HomePage() {
   const {theme, setTheme, toggleTheme} = useContext(ThemeContext);
   const [token, setToken] = useState(null);
   const [arrayCount, setArrayCount] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     const FetchRestaurant = async () => {
@@ -45,8 +46,24 @@ function HomePage() {
     });
   }, [navigation]);
 
+  const handleScroll = event => {
+    const page = Math.round(
+      event.nativeEvent.contentOffset.y /
+        event.nativeEvent.layoutMeasurement.height,
+    );
+
+    if (page > currentPage) {
+      setCurrentPage(page);
+    }
+    console.log("Current page:", page);
+  };
+
   return (
-    <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
+    <ScrollView
+      style={[{backgroundColor: COLORS[theme].quaternary}]}
+      disableIntervalMomentum={false}
+      onScroll={handleScroll}
+      showsVerticalScrollIndicator={false}>
       {arrayCount.map((item, index) => (
         <Card
           key={index}
