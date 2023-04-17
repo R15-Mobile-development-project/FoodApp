@@ -15,10 +15,16 @@ const restaurantAdd = (req, res) => {
     const data = { name, description, address, image, user_id: req.userId };
     restaurant.addRestaurant(data, (err, result) => {
       if (err) {
-        return res.status(500).json({
-          message: "Error occurred",
-          console: err,
-        });
+        if (err.errno === 1062) {
+          return res.status(400).json({
+            message: "Restaurant already exists",
+          });
+        } else {
+          return res.status(500).json({
+            message: "Error occurred",
+            console: err,
+          });
+        }
       }
 
       const lastRestaurantId = result.insertId;
@@ -42,6 +48,19 @@ const restaurantAdd = (req, res) => {
       });
     });
   }
+};
+
+const restaurantList = (req, res) => {
+  restaurant.getAll((err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occurred",
+        console: err,
+      });
+    } else {
+      return res.status(200).json(results);
+    }
+  });
 };
 
 const restaurantGetByUserId = (req, res) => {
@@ -80,9 +99,7 @@ const restaurantGetByUserId = (req, res) => {
     if (formattedResults.length > 0) {
       delete formattedResults[0].user_id;
       delete formattedResults[0].restaurant_id;
-      return res.status(200).json({
-        results: formattedResults,
-      });
+      return res.status(200).json(formattedResults);
     } else {
       return res.status(404).json({
         message: "No restaurants found",
@@ -206,6 +223,7 @@ module.exports = {
   restaurantAdd,
   restaurantGetByUserId,
   restaurantUpdate,
+  restaurantList,
   restaurantDelete,
   restaurantCountByUserId,
 };

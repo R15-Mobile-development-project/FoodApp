@@ -4,7 +4,8 @@ const router = express.Router();
 const restaurantController = require("../controllers/restaurantController");
 
 router.post("/add", jwt.verifyToken, restaurantController.restaurantAdd);
-router.get("/", jwt.verifyToken, restaurantController.restaurantGetByUserId);
+router.get("/", jwt.verifyToken, restaurantController.restaurantList);
+router.get("/me", jwt.verifyToken, restaurantController.restaurantGetByUserId);
 router.put("/update", jwt.verifyToken, restaurantController.restaurantUpdate);
 router.delete(
   "/delete",

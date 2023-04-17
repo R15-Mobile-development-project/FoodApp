@@ -27,12 +27,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(nocache());
 
 app.use("/user", userRoutes);
-
+app.use("/restaurant", restaurantRoutes);
 app.use("/order", orderRoutes);
 app.use(verifyToken);
 
 app.use("/user", userAuthRoutes);
-app.use("/restaurant", restaurantRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
