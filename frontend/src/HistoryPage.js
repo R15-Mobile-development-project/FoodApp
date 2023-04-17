@@ -81,6 +81,13 @@ function HistoryPage() {
             </View>
           </Card>
         ))}
+        {arrayCount.length === 0 ? (
+          <Text style={[styles.noDataText, {color: COLORS[theme].primary}]}>
+            You haven't made any orders yet.
+          </Text>
+        ) : (
+          <></>
+        )}
       </ScrollView>
     </>
   );
