@@ -99,7 +99,6 @@ function WalletPage() {
   return (
     <KeyboardAvoidingView
       style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
-      
       {/* Display balance header */}
       <View style={styles.buttonContainer}>
         <Text style={[styles.text, {color: COLORS[theme].primary}]}>
@@ -124,7 +123,7 @@ function WalletPage() {
         <Button title="Add 5€" onPress={() => UpdateBalance(5)} />
         <Button title="Add 10€" onPress={() => UpdateBalance(10)} />
         <Button title="Add 25€" onPress={() => UpdateBalance(25)} />
-        <Button title="Donate all" onPress={() => RemoveBalance()}
+        <Button title="Donate all" onPress={() => RemoveBalance()} />
       </View>
     </KeyboardAvoidingView>
   );
