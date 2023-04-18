@@ -14,25 +14,34 @@ import {ThemeContext} from "./ThemeContext";
 import {useContext} from "react";
 import styles from "../conts/Styles";
 
+// Define the CustomDrawer component
 const CustomDrawer = props => {
+  // Retrieve the current theme from the ThemeContext
   const {theme} = useContext(ThemeContext);
+  // Get the navigation object from the useNavigation hook
   const navigation = useNavigation();
+  // Initialize the firstName, lastName, and balance state variables
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [balance, setBalance] = useState("");
 
+  // Define an effect that fetches the user's profile information from the server and sets the state variables accordingly
   useEffect(() => {
     const FetchProfile = async () => {
       try {
+        // Retrieve the user's JWT token from encrypted storage
         const token = await EncryptedStorage.getItem("token");
 
         if (token !== undefined) {
+          // Set the headers object with the JWT token
           const headers = {headers: {Authorization: `Bearer ${token}`}};
 
+          // Send a GET request to the server to retrieve the user's profile information
           axios
             .get("/user", headers)
             .then(response => {
               console.log(response.data);
+              // Set the firstName, lastName, and balance state variables based on the response data
               setFirstName(response.data.fname);
               setLastName(response.data.lname);
               setBalance(response.data.balance);
@@ -48,11 +57,13 @@ const CustomDrawer = props => {
       }
     };
 
+    // Add a focus listener to the navigation object that triggers the FetchProfile function
     navigation.addListener("focus", () => {
       FetchProfile();
     });
   }, [navigation]);
 
+  // Render the CustomDrawer component
   return (
     <DrawerContentScrollView
       {...props}
