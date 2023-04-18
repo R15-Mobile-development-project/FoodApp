@@ -42,6 +42,7 @@ function AddRestaurant() {
       return;
     }
 
+    // Create restaurant object
     const restaurantDetails = {
       name: name,
       address: address,
@@ -50,6 +51,8 @@ function AddRestaurant() {
       menus: foodItems,
     };
     console.log(restaurantDetails);
+
+    // Send post request to add restaurant
     axios
       .post("/restaurant/add", restaurantDetails, headers)
       .then(response => {
@@ -63,6 +66,8 @@ function AddRestaurant() {
         setFoodName("");
         setPrice("");
         setNumInputs(1);
+
+        // Redirect to restaurant page is restaurant is added successfully
         if (response.status === 200) {
           setTimeout(() => {
             navigation.navigate("Restaurant");
