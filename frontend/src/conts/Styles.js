@@ -1,57 +1,62 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet} from "react-native";
 
 const styles = StyleSheet.create({
   //Containers
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   containerRestaurant: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
   inputContainer: {
-    width: '80%',
+    width: "80%",
   },
   buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 40,
   },
   textcontainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 20,
   },
   text: {
     fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   textlink: {
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
   infoContainer: {
     marginTop: 20,
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 10,
   },
   statusMsgContainer: {
     marginTop: 20,
   },
+  noDataText: {
+    textAlign: "center",
+    fontSize: 16,
+    marginTop: 40,
+  },
   // Buttons
   buttonOne: {
-    width: '100%',
+    width: "100%",
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonTwo: {
-    width: '100%',
+    width: "100%",
     padding: 15,
     borderRadius: 50,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonOneOutline: {
     marginTop: 5,
@@ -62,11 +67,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   buttonOneText: {
-    fontWeight: '700',
+    fontWeight: "700",
     fontSize: 16,
   },
   buttonOneOutlineText: {
-    fontWeight: '700',
+    fontWeight: "700",
     fontSize: 16,
   },
   // Inputs
@@ -77,13 +82,13 @@ const styles = StyleSheet.create({
   },
   inputContainer2: {
     height: 55,
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingHorizontal: 15,
     borderWidth: 0.5,
     borderRadius: 10,
   },
   inputContainerRestaurant: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingHorizontal: 15,
     borderWidth: 0.5,
     borderRadius: 10,
@@ -92,14 +97,14 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 10,
     borderWidth: 1,
-    flexDirection: 'column',
+    flexDirection: "column",
   },
   input: {
     flex: 1,
   },
   inputView: {
-    flexDirection: 'row',
-    width: '100%',
+    flexDirection: "row",
+    width: "100%",
   },
   inputIcon: {
     fontSize: 22,
@@ -129,13 +134,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   drawerView3: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   walletContainer: {
-    width: '40%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "40%",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 40,
   },
 });

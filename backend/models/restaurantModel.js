@@ -58,6 +58,10 @@ const restaurant = {
     const queryString = `SELECT COUNT(*) as count FROM restaurants WHERE user_id = ?`;
     db.query(queryString, [user_id], callback);
   },
+
+  getByPage: function (offset, callback) {
+    db.query("SELECT * FROM restaurants LIMIT 6 OFFSET ?", [offset], callback);
+  },
 };
 
 module.exports = restaurant;

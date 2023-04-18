@@ -10,7 +10,6 @@ import {ThemeContext} from "./components/ThemeContext";
 import {ScrollView} from "react-native-gesture-handler";
 
 function HistoryPage() {
-  const [token, setToken] = useState(null);
   const [arrayCount, setArrayCount] = useState([]);
   const navigation = useNavigation();
   const {theme, setTheme, toggleTheme} = useContext(ThemeContext);
@@ -18,17 +17,13 @@ function HistoryPage() {
   useEffect(() => {
     const FetchOrder = async () => {
       try {
-        const _token = await EncryptedStorage.getItem("token");
+        const token = await EncryptedStorage.getItem("token");
 
-        if (_token !== undefined) {
-          setToken(_token);
-
-          const headers = {headers: {Authorization: `Bearer ${_token}`}};
+        if (token !== undefined) {
+          const headers = {headers: {Authorization: `Bearer ${token}`}};
 
           axios
-            .get("/order", {
-              headers: {Authorization: `Bearer ${_token}`},
-            })
+            .get("/order", headers)
             .then(response => {
               setArrayCount(response.data);
             })
