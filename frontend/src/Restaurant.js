@@ -8,12 +8,15 @@ import {useNavigation, useFocusEffect} from "@react-navigation/native";
 import axios from "./components/axios";
 import {GetToken} from "./components/Token";
 
+// Define Restaurant component
 function Restaurant() {
+  // Initialize state variables and context
   const {theme} = useContext(ThemeContext);
   const [statusMsg, setStatusMsg] = useState("");
   const [count, setCount] = useState();
   const navigation = useNavigation();
 
+  // Function to fetch the count of restaurants
   const fetchRestaurantCount = async () => {
     const token = await GetToken();
     axios
@@ -26,6 +29,8 @@ function Restaurant() {
         console.log(err);
       });
   };
+
+  // Function to show alert for restaurant deletion
   const deleteRestaurantAlert = () => {
     Alert.alert(
       "Delete Restaurant",
@@ -42,6 +47,7 @@ function Restaurant() {
     );
   };
 
+  // Function to fetch restaurant count when the screen is focused
   useFocusEffect(
     React.useCallback(() => {
       fetchRestaurantCount();
@@ -50,6 +56,7 @@ function Restaurant() {
     }, []),
   );
 
+  // Function to delete the restaurant
   const deleteRestaurant = async () => {
     const token = await GetToken();
 
@@ -70,18 +77,23 @@ function Restaurant() {
       });
   };
 
+  // Function to reset status message
   const ResetStatusMsg = () => {
     setStatusMsg("");
   };
 
+  // Render Restaurant JSX
   return (
     <KeyboardAvoidingView
       style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
+      {/* Display the "Restaurant" title */}
       <View style={styles.buttonContainer}>
         <Text style={[styles.text, {color: COLORS[theme].primary}]}>
           Restaurant
         </Text>
       </View>
+
+      {/* Display buttons to add, edit, or delete a restaurant based on the restaurant count */}
       <View style={styles.walletContainer}>
         {count === 0 ? (
           <Button
@@ -98,6 +110,8 @@ function Restaurant() {
           </>
         )}
       </View>
+
+      {/* Render status message container */}
       <View style={styles.statusMsgContainer}>
         <Text
           style={{
