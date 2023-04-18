@@ -126,11 +126,11 @@ function ProfilePage() {
           iconName="lock"
           value={password}
           onChangeText={text => setPassword(text)}
-          placeholder={"********"}
+          placeholder={"Password"}
           password
         />
       </View>
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, {width: "20%"}]}>
         <Button title="Save" onPress={() => UpdateProfile()} />
       </View>
 

@@ -54,13 +54,12 @@ function SettingsPage() {
     <KeyboardAvoidingView
       style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
       {/* Display buttons for theme toggle, deleting user profile, and a placeholder button */}
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, {width: "40%"}]}>
         <Button
           title={theme === "light" ? "Dark mode" : "Light mode"}
           onPress={handleToggleTheme}
         />
         <Button title="Delete user" onPress={() => DeleteProfile()} />
-        <Button title="jaa" />
       </View>
 
       {/* Render status message container */}

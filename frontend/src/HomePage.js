@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
-import {View, Text, Image} from "react-native";
+import {View, Text, Image, ActivityIndicator} from "react-native";
 import {COLORS} from "./conts/colors";
 import styles from "./conts/Styles";
 import {Card, ListItem, Button, Icon} from "@rneui/themed";
@@ -14,6 +14,9 @@ function HomePage() {
   const {theme, setTheme, toggleTheme} = useContext(ThemeContext);
   const [token, setToken] = useState(null);
   const [arrayCount, setArrayCount] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [noMorePages, setNoMorePages] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const FetchRestaurant = async () => {
@@ -26,14 +29,14 @@ function HomePage() {
           const headers = {headers: {Authorization: `Bearer ${_token}`}};
 
           axios
-            .get("/restaurant", {
-              headers: {Authorization: `Bearer ${_token}`},
-            })
+            .get("/restaurant/1", headers)
             .then(response => {
               setArrayCount(response.data);
+              setIsLoading(false);
             })
             .catch(err => {
               console.log(err);
+              setIsLoading(false);
             });
         }
       } catch (error) {
@@ -45,8 +48,49 @@ function HomePage() {
     });
   }, [navigation]);
 
+  const handleScroll = async event => {
+    let page = Math.round(
+      event.nativeEvent.contentOffset.y /
+        event.nativeEvent.layoutMeasurement.height,
+    );
+
+    if (page === 1) {
+      page = 2;
+    }
+
+    if (page > currentPage && !noMorePages) {
+      console.log("Fetching page: ", page);
+
+      setCurrentPage(page);
+      await fetchPage(page);
+    }
+  };
+
+  const fetchPage = async page => {
+    setIsLoading(true);
+    const headers = {headers: {Authorization: `Bearer ${token}`}};
+
+    axios
+      .get("/restaurant/" + page, headers)
+      .then(response => {
+        if (response.data.length < 6) {
+          setNoMorePages(true);
+        }
+        setArrayCount(arrayCount => [...arrayCount, ...response.data]);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        setIsLoading(false);
+        console.log(err);
+      });
+  };
+
   return (
-    <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
+    <ScrollView
+      style={[{backgroundColor: COLORS[theme].quaternary}]}
+      disableIntervalMomentum={false}
+      onScroll={handleScroll}
+      showsVerticalScrollIndicator={false}>
       {arrayCount.map((item, index) => (
         <Card
           key={index}
@@ -89,6 +133,22 @@ function HomePage() {
           </View>
         </Card>
       ))}
+      {isLoading ? (
+        <ActivityIndicator
+          style={[styles.noDataText, {marginBottom: 40}]}
+          color={COLORS[theme].primary}
+          size="large"
+        />
+      ) : (
+        <></>
+      )}
+      {arrayCount.length === 0 && !isLoading ? (
+        <Text style={[styles.noDataText, {color: COLORS[theme].primary}]}>
+          There aren't any restaurants.
+        </Text>
+      ) : (
+        <></>
+      )}
     </ScrollView>
   );
 }
