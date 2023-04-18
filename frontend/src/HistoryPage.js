@@ -9,12 +9,15 @@ import {COLORS} from "./conts/colors";
 import {ThemeContext} from "./components/ThemeContext";
 import {ScrollView} from "react-native-gesture-handler";
 
+// Define the HistoryPage component
 function HistoryPage() {
+  // Declare the token and arrayCount variables
   const [token, setToken] = useState(null);
   const [arrayCount, setArrayCount] = useState([]);
   const navigation = useNavigation();
   const {theme, setTheme, toggleTheme} = useContext(ThemeContext);
 
+  // Fetch the order history
   useEffect(() => {
     const FetchOrder = async () => {
       try {
@@ -47,20 +50,26 @@ function HistoryPage() {
     });
   }, [navigation]);
 
-if(
-  arrayCount === null ||
-  arrayCount === undefined ||
-  arrayCount.length === 0 
-) {
-  return (
-    <View style={{justifyContent: 'center', alignItems: 'center', flex:1, backgroundColor: COLORS[theme].quaternary}}>
-      <Text style={{color: COLORS[theme].primary}}>No orders found
-      </Text>
-    </View>
-  )
-}
+  // If there are no orders, display a message
+  if (
+    arrayCount === null ||
+    arrayCount === undefined ||
+    arrayCount.length === 0
+  ) {
+    return (
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          backgroundColor: COLORS[theme].quaternary,
+        }}>
+        <Text style={{color: COLORS[theme].primary}}>No orders found</Text>
+      </View>
+    );
+  }
 
-
+  // Display the order history
   return (
     <>
       <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
