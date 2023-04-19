@@ -104,12 +104,16 @@ function OrderPage({route}) {
 
       <Button
         title="PROCEED TO CHECKOUT"
+        disabled={cart.length === 0}
         buttonStyle={{
           backgroundColor: COLORS[theme].secondary,
           justifyContent: "center",
           alignItems: "center",
           paddingTop: 20,
           paddingBottom: 20,
+        }}
+        disabledStyle={{
+          backgroundColor: COLORS[theme].quaternary,
         }}
         titleStyle={{
           color: COLORS[theme].quaternary,
