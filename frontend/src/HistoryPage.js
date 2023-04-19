@@ -1,5 +1,4 @@
 import {View, Text} from "react-native";
-import styles from "./conts/Styles";
 import {Card} from "@rneui/themed";
 import axios from "./components/axios";
 import EncryptedStorage from "react-native-encrypted-storage";
@@ -12,7 +11,7 @@ import {ScrollView} from "react-native-gesture-handler";
 function HistoryPage() {
   const [arrayCount, setArrayCount] = useState([]);
   const navigation = useNavigation();
-  const {theme, setTheme, toggleTheme} = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext);
 
   useEffect(() => {
     const FetchOrder = async () => {
@@ -42,19 +41,23 @@ function HistoryPage() {
     });
   }, [navigation]);
 
-if(
-  arrayCount === null ||
-  arrayCount === undefined ||
-  arrayCount.length === 0 
-) {
-  return (
-    <View style={{justifyContent: 'center', alignItems: 'center', flex:1, backgroundColor: COLORS[theme].quaternary}}>
-      <Text style={{color: COLORS[theme].primary}}>No orders found
-      </Text>
-    </View>
-  )
-}
-
+  if (
+    arrayCount === null ||
+    arrayCount === undefined ||
+    arrayCount.length === 0
+  ) {
+    return (
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          backgroundColor: COLORS[theme].quaternary,
+        }}>
+        <Text style={{color: COLORS[theme].primary}}>No orders found</Text>
+      </View>
+    );
+  }
 
   return (
     <>
