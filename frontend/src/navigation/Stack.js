@@ -24,7 +24,6 @@ const MyStack = () => {
   useEffect(() => {
     setIsLoading(true);
     const CheckToken = async () => {
-      console.log("Checking token");
       const token = await GetToken();
 
       if (token && token !== null) {

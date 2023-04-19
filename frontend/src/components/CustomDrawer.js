@@ -8,11 +8,11 @@ import {COLORS} from "../conts/colors";
 import {TouchableOpacity} from "react-native-gesture-handler";
 import {useNavigation} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Entypo";
-import EncryptedStorage from "react-native-encrypted-storage";
 import axios from "./axios";
 import {ThemeContext} from "./ThemeContext";
 import {useContext} from "react";
 import styles from "../conts/Styles";
+import {GetToken} from "../components/Token";
 
 const CustomDrawer = props => {
   const {theme} = useContext(ThemeContext);
@@ -23,28 +23,24 @@ const CustomDrawer = props => {
 
   useEffect(() => {
     const FetchProfile = async () => {
-      try {
-        const token = await EncryptedStorage.getItem("token");
+      const token = await GetToken();
 
-        if (token !== undefined) {
-          const headers = {headers: {Authorization: `Bearer ${token}`}};
+      if (token !== undefined) {
+        const headers = {headers: {Authorization: `Bearer ${token}`}};
 
-          axios
-            .get("/user", headers)
-            .then(response => {
-              console.log(response.data);
-              setFirstName(response.data.fname);
-              setLastName(response.data.lname);
-              setBalance(response.data.balance);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        } else {
-          console.log("No jwt found");
-        }
-      } catch (error) {
-        console.log(error);
+        axios
+          .get("/user", headers)
+          .then(response => {
+            console.log(response.data);
+            setFirstName(response.data.fname);
+            setLastName(response.data.lname);
+            setBalance(response.data.balance);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        console.log("No jwt found");
       }
     };
 

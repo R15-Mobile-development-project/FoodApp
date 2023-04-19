@@ -3,16 +3,14 @@ import {View, Text} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {ScrollView} from "react-native-gesture-handler";
 import {ThemeContext} from "./components/ThemeContext";
-import EncryptedStorage from "react-native-encrypted-storage";
 import axios from "./components/axios";
 import {Card, Button} from "@rneui/themed";
 import {COLORS} from "./conts/colors";
-import styles from "./conts/Styles";
+import {GetToken} from "./components/Token";
 
 function OrderPage({route}) {
   const navigation = useNavigation();
   const {theme} = useContext(ThemeContext);
-  const [token, setToken] = useState(null);
   const [arrayCount, setArrayCount] = useState([]);
   const [cart, setCart] = useState([]);
 
@@ -21,12 +19,10 @@ function OrderPage({route}) {
   useEffect(() => {
     const FetchMenu = async () => {
       try {
-        const _token = await EncryptedStorage.getItem("token");
+        const token = await GetToken();
 
-        if (_token !== undefined) {
-          setToken(_token);
-
-          const headers = {headers: {Authorization: `Bearer ${_token}`}};
+        if (token !== undefined) {
+          const headers = {headers: {Authorization: `Bearer ${token}`}};
 
           axios
             .get(`/restaurant/${restaurant_id}/menu`, headers)

@@ -1,12 +1,12 @@
 import {View, Text} from "react-native";
 import {Card} from "@rneui/themed";
 import axios from "./components/axios";
-import EncryptedStorage from "react-native-encrypted-storage";
 import React, {useState, useEffect, useContext} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {COLORS} from "./conts/colors";
 import {ThemeContext} from "./components/ThemeContext";
 import {ScrollView} from "react-native-gesture-handler";
+import {GetToken} from "./components/Token";
 
 function HistoryPage() {
   const [arrayCount, setArrayCount] = useState([]);
@@ -15,25 +15,21 @@ function HistoryPage() {
 
   useEffect(() => {
     const FetchOrder = async () => {
-      try {
-        const token = await EncryptedStorage.getItem("token");
+      const token = await GetToken();
 
-        if (token !== undefined) {
-          const headers = {headers: {Authorization: `Bearer ${token}`}};
+      if (token !== undefined) {
+        const headers = {headers: {Authorization: `Bearer ${token}`}};
 
-          axios
-            .get("/order", headers)
-            .then(response => {
-              setArrayCount(response.data);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        } else {
-          console.log("No token found");
-        }
-      } catch (error) {
-        console.log(error);
+        axios
+          .get("/order", headers)
+          .then(response => {
+            setArrayCount(response.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        console.log("No token found");
       }
     };
     navigation.addListener("focus", () => {

@@ -4,15 +4,14 @@ import {COLORS} from "./conts/colors";
 import styles from "./conts/Styles";
 import {Card, Button} from "@rneui/themed";
 import axios from "./components/axios";
-import EncryptedStorage from "react-native-encrypted-storage";
 import {ThemeContext} from "./components/ThemeContext";
 import {useNavigation} from "@react-navigation/native";
 import {ScrollView} from "react-native-gesture-handler";
+import {GetToken} from "./components/Token";
 
 function HomePage() {
   const navigation = useNavigation();
   const {theme} = useContext(ThemeContext);
-  const [token, setToken] = useState(null);
   const [arrayCount, setArrayCount] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [noMorePages, setNoMorePages] = useState(false);
@@ -21,12 +20,10 @@ function HomePage() {
   useEffect(() => {
     const FetchRestaurant = async () => {
       try {
-        const _token = await EncryptedStorage.getItem("token");
+        const token = await GetToken();
 
-        if (_token !== undefined) {
-          setToken(_token);
-
-          const headers = {headers: {Authorization: `Bearer ${_token}`}};
+        if (token !== undefined) {
+          const headers = {headers: {Authorization: `Bearer ${token}`}};
 
           axios
             .get("/restaurant/page/1", headers)
@@ -70,6 +67,9 @@ function HomePage() {
 
   const fetchPage = async page => {
     setIsLoading(true);
+
+    const token = await GetToken();
+
     const headers = {headers: {Authorization: `Bearer ${token}`}};
 
     axios
