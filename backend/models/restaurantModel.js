@@ -62,6 +62,14 @@ const restaurant = {
   getByPage: function (offset, callback) {
     db.query("SELECT * FROM restaurants LIMIT 6 OFFSET ?", [offset], callback);
   },
+
+  getOrders: function (user_id, callback) {
+    db.query(
+      "select o.* from restaurants r join orders o on o.restaurant_id = r.restaurant_id where r.user_id = ?;",
+      [user_id],
+      callback
+    );
+  },
 };
 
 module.exports = restaurant;

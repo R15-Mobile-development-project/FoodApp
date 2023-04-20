@@ -14,10 +14,10 @@ const restaurantAdd = (req, res) => {
   }
 
   for (const menu of menus) {
-    if(typeof menu.name !== "string" || parseFloat(menu.price) != menu.price ){
+    if (typeof menu.name !== "string" || parseFloat(menu.price) != menu.price) {
       return res.status(400).json({
-        message: "Invalid menu values"
-      })
+        message: "Invalid menu values",
+      });
     }
   }
 
@@ -128,13 +128,13 @@ const restaurantUpdate = (req, res) => {
   }
 
   for (const menu of menus) {
-    if(typeof menu.name !== "string" || parseFloat(menu.price) != menu.price ){
+    if (typeof menu.name !== "string" || parseFloat(menu.price) != menu.price) {
       return res.status(400).json({
-        message: "Invalid menu values"
-      })
+        message: "Invalid menu values",
+      });
     }
   }
-  
+
   restaurant.getRestaurantIdByUserId(req.userId, (err, results) => {
     if (err || results.length === 0) {
       console.log(err);
@@ -263,6 +263,23 @@ const restaurantByPage = (req, res) => {
   });
 };
 
+const getOrders = (req, res) => {
+  restaurant.getOrders(req.userId, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occured",
+      });
+    }
+    if (results.length === 0) {
+      return res.status(400).json({
+        message: "No order data was found for that restaurant",
+      });
+    }
+    console.log(results);
+    return res.json(results);
+  });
+};
+
 module.exports = {
   restaurantAdd,
   restaurantGetByUserId,
@@ -271,4 +288,5 @@ module.exports = {
   restaurantDelete,
   restaurantCountByUserId,
   restaurantByPage,
+  getOrders,
 };
