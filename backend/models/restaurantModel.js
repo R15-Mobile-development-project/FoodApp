@@ -66,6 +66,11 @@ const restaurant = {
   getByPage: function (offset, callback) {
     db.query("SELECT * FROM restaurants LIMIT 6 OFFSET ?", [offset], callback);
   },
+
+  addOrder: function (price, restaurant_id, user_id, callback) {
+    const QueryString = `INSERT INTO orders (price, restaurant_id, user_id) VALUES (?, ?, ?)`;
+    db.query(QueryString, [price, restaurant_id, user_id], callback);
+  },
 };
 
 module.exports = restaurant;
