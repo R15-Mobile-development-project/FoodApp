@@ -283,7 +283,8 @@ const getOrders = (req, res) => {
     }
     console.log(results);
     return res.json(results);
-}
+  });
+};
 
 const getRestaurantMenu = (req, res) => {
   if (!req.params.restaurant_id) {

@@ -68,12 +68,13 @@ const restaurant = {
       [user_id],
       callback
     );
-},
+  },
 
   restaurantMenu: function (restaurant_id, callback) {
     const queryString = `SELECT * FROM menus WHERE restaurant_id = ?`;
     db.query(queryString, [restaurant_id], callback);
   },
+
   addOrder: function (price, restaurant_id, user_id, callback) {
     const QueryString = `INSERT INTO orders (price, restaurant_id, user_id) VALUES (?, ?, ?)`;
     db.query(QueryString, [price, restaurant_id, user_id], callback);
