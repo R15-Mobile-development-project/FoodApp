@@ -1,4 +1,4 @@
-import {View, Text} from "react-native";
+import {View, Text, Alert} from "react-native";
 import {Card, Button} from "@rneui/themed";
 import axios from "./components/axios";
 import React, {useState, useEffect, useContext} from "react";
@@ -17,12 +17,15 @@ function CheckoutPage({route}) {
   const navigation = useNavigation();
 
   const [cart, setCart] = useState([]);
+  const [cartIds, setCartIds] = useState([]);
   const [total, setTotal] = useState(0);
 
   const {theme} = useContext(ThemeContext);
   const {restaurant_id, cartItems} = route.params;
 
   useEffect(() => {
+    const menuIds = cartItems.map(item => item.id);
+    setCartIds(menuIds);
     setCart(cartItems);
 
     let price = 0.0;
@@ -38,9 +41,10 @@ function CheckoutPage({route}) {
     const headers = {headers: {Authorization: `Bearer ${token}`}};
 
     axios
-      .post(`/restaurant/${restaurant_id}/order`, headers)
+      .post(`/restaurant/${restaurant_id}/order`, cartIds, headers)
       .then(response => {
-        // on success navigate somewhere and show status msg
+        navigation.navigate("Home");
+        Alert.alert("Success", "Order placed successfully");
         console.log(response.data);
       })
       .catch(err => {
