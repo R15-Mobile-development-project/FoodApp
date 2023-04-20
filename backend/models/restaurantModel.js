@@ -79,9 +79,14 @@ const restaurant = {
     db.query("SELECT * FROM restaurants LIMIT 6 OFFSET ?", [offset], callback);
   },
 
-  addOrder: function (price, restaurant_id, user_id, callback) {
-    const QueryString = `INSERT INTO orders (price, restaurant_id, user_id) VALUES (?, ?, ?)`;
-    db.query(QueryString, [price, restaurant_id, user_id], callback);
+  addOrder: function (user_id, restaurant_id, price, callback) {
+    const queryString = `INSERT INTO orders (user_id, restaurant_id, price) VALUES (?, ?, ?)`;
+    db.query(queryString, [user_id, restaurant_id, price], callback);
+  },
+
+  addOrderMenus: function (data, callback) {
+    const queryString = `INSERT INTO order_menus (order_id, menu_id) VALUES ?`;
+    db.query(queryString, [data], callback);
   },
 };
 
