@@ -62,6 +62,10 @@ const restaurant = {
     const queryString = `SELECT * FROM menus WHERE restaurant_id = ?`;
     db.query(queryString, [restaurant_id], callback);
   },
+
+  getByPage: function (offset, callback) {
+    db.query("SELECT * FROM restaurants LIMIT 6 OFFSET ?", [offset], callback);
+  },
 };
 
 module.exports = restaurant;

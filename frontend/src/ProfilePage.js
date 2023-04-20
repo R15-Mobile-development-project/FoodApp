@@ -1,21 +1,21 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, KeyboardAvoidingView} from 'react-native';
-import {Input, Input2} from './components/Input';
-import Button from './components/Button';
-import axios from './components/axios';
-import {useNavigation} from '@react-navigation/native';
-import {GetToken} from './components/Token';
-import {COLORS} from './conts/colors';
-import {ThemeContext} from './components/ThemeContext';
-import {useContext} from 'react';
-import styles from './conts/Styles';
+import React, {useState, useEffect} from "react";
+import {View, Text, KeyboardAvoidingView} from "react-native";
+import {Input, Input2} from "./components/Input";
+import Button from "./components/Button";
+import axios from "./components/axios";
+import {useNavigation} from "@react-navigation/native";
+import {GetToken} from "./components/Token";
+import {COLORS} from "./conts/colors";
+import {ThemeContext} from "./components/ThemeContext";
+import {useContext} from "react";
+import styles from "./conts/Styles";
 
 function ProfilePage() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [statusMsg, setStatusMsg] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [statusMsg, setStatusMsg] = useState("");
   const {theme} = useContext(ThemeContext);
 
   const navigation = useNavigation();
@@ -29,7 +29,7 @@ function ProfilePage() {
           const headers = {headers: {Authorization: `Bearer ${token}`}};
 
           axios
-            .get('/user', headers)
+            .get("/user", headers)
             .then(response => {
               setFirstName(response.data.fname);
               setLastName(response.data.lname);
@@ -39,14 +39,14 @@ function ProfilePage() {
               console.log(err);
             });
         } else {
-          console.log('No jwt found');
+          console.log("No jwt found");
         }
       } catch (error) {
         console.log(error);
       }
     };
 
-    navigation.addListener('focus', () => {
+    navigation.addListener("focus", () => {
       ResetStatusMsg();
       FetchProfile();
     });
@@ -63,7 +63,7 @@ function ProfilePage() {
     };
 
     axios
-      .put('/user', payload, {headers: {Authorization: `Bearer ${token}`}})
+      .put("/user", payload, {headers: {Authorization: `Bearer ${token}`}})
       .then(response => {
         setStatusMsg(response.data.message);
       })
@@ -74,7 +74,7 @@ function ProfilePage() {
   };
 
   const ResetStatusMsg = () => {
-    setStatusMsg('');
+    setStatusMsg("");
   };
 
   return (
@@ -86,43 +86,43 @@ function ProfilePage() {
         </Text>
       </View>
       <View style={styles.inputContainer}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{width: '40%'}}>
+        <View style={{flexDirection: "row"}}>
+          <View style={{width: "40%"}}>
             <Input2
-              label={'First Name'}
+              label={"First Name"}
               inconName="email"
               value={firstName}
               onChangeText={text => setFirstName(text)}
-              placeholder={'First name'}
+              placeholder={"First name"}
             />
           </View>
-          <View style={{width: '60%'}}>
+          <View style={{width: "60%"}}>
             <Input2
-              label={'Last Name'}
+              label={"Last Name"}
               value={lastName}
               onChangeText={text => setLastName(text)}
-              placeholder={'Last name'}
+              placeholder={"Last name"}
             />
           </View>
         </View>
         <Input
-          label={'Email'}
+          label={"Email"}
           iconName="email"
           value={email}
           onChangeText={text => setEmail(text)}
-          placeholder={'Email'}
-          keyboardType={'email-address'}
+          placeholder={"Email"}
+          keyboardType={"email-address"}
         />
         <Input
-          label={'Password'}
+          label={"Password"}
           iconName="lock"
           value={password}
           onChangeText={text => setPassword(text)}
-          placeholder={'********'}
+          placeholder={"Password"}
           password
         />
       </View>
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, {width: "20%"}]}>
         <Button title="Save" onPress={() => UpdateProfile()} />
       </View>
 
@@ -131,7 +131,7 @@ function ProfilePage() {
           style={{
             color: COLORS[theme].primary,
           }}>
-          {statusMsg ? statusMsg : ''}
+          {statusMsg ? statusMsg : ""}
         </Text>
       </View>
     </KeyboardAvoidingView>

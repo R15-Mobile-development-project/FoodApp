@@ -11,9 +11,33 @@ const restaurantAdd = (req, res) => {
     return res.status(400).json({
       message: `Description exceeds maximum length by ${excessLength} characters`,
     });
-  } else {
-    const data = { name, description, address, image, user_id: req.userId };
-    restaurant.addRestaurant(data, (err, result) => {
+  }
+
+  for (const menu of menus) {
+    if (typeof menu.name !== "string" || parseFloat(menu.price) != menu.price) {
+      return res.status(400).json({
+        message: "Invalid menu values",
+      });
+    }
+  }
+
+  const data = { name, description, address, image, user_id: req.userId };
+  restaurant.addRestaurant(data, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occurred",
+        console: err,
+      });
+    }
+
+    const lastRestaurantId = result.insertId;
+    const menuValues = menus.map((menu) => [
+      menu.name,
+      menu.price,
+      lastRestaurantId,
+    ]);
+
+    restaurant.addMenus(menuValues, (err, result) => {
       if (err) {
         if (err.errno === 1062) {
           return res.status(400).json({
@@ -27,27 +51,11 @@ const restaurantAdd = (req, res) => {
         }
       }
 
-      const lastRestaurantId = result.insertId;
-      const menuValues = menus.map((menu) => [
-        menu.name,
-        menu.price,
-        lastRestaurantId,
-      ]);
-
-      restaurant.addMenus(menuValues, (err, result) => {
-        if (err) {
-          return res.status(500).json({
-            message: "Error occurred",
-            console: err,
-          });
-        }
-
-        return res.status(200).json({
-          message: "Restaurant added",
-        });
+      return res.status(200).json({
+        message: "Restaurant added",
       });
     });
-  }
+  });
 };
 
 const restaurantList = (req, res) => {
@@ -117,52 +125,64 @@ const restaurantUpdate = (req, res) => {
     return res.status(400).json({
       message: `Description exceeds maximum length by ${excessLength} characters`,
     });
-  } else {
-    restaurant.getRestaurantIdByUserId(req.userId, (err, results) => {
-      if (err || results.length === 0) {
+  }
+
+  for (const menu of menus) {
+    if (typeof menu.name !== "string" || parseFloat(menu.price) != menu.price) {
+      return res.status(400).json({
+        message: "Invalid menu values",
+      });
+    }
+  }
+
+  restaurant.getRestaurantIdByUserId(req.userId, (err, results) => {
+    if (err || results.length === 0) {
+      console.log(err);
+      return res.status(500).json({
+        message: "Error occurred",
+        console: err,
+      });
+    }
+
+    const id = results[0].restaurant_id;
+    const data = { name, description, address, image };
+
+    restaurant.updateRestaurant(id, data, (err, result) => {
+      if (err) {
+        console.log(err);
         return res.status(500).json({
           message: "Error occurred",
           console: err,
         });
       }
 
-      const id = results[0].restaurant_id;
-      const data = { name, description, address, image };
-
-      restaurant.updateRestaurant(id, data, (err, result) => {
+      restaurant.deleteMenus(id, (err, result) => {
         if (err) {
+          console.log(err);
           return res.status(500).json({
             message: "Error occurred",
             console: err,
           });
         }
 
-        restaurant.deleteMenus(id, (err, result) => {
+        const menuValues = menus.map((menu) => [menu.name, menu.price, id]);
+
+        restaurant.addMenus(menuValues, (err, result) => {
           if (err) {
+            console.log(err);
             return res.status(500).json({
               message: "Error occurred",
               console: err,
             });
           }
 
-          const menuValues = menus.map((menu) => [menu.name, menu.price, id]);
-
-          restaurant.addMenus(menuValues, (err, result) => {
-            if (err) {
-              return res.status(500).json({
-                message: "Error occurred",
-                console: err,
-              });
-            }
-
-            return res.status(200).json({
-              message: "Restaurant updated",
-            });
+          return res.status(200).json({
+            message: "Restaurant updated",
           });
         });
       });
     });
-  }
+  });
 };
 
 const restaurantDelete = (req, res) => {
@@ -248,6 +268,30 @@ const getRestaurantMenu = (req, res) => {
   });
 };
 
+const restaurantByPage = (req, res) => {
+  const page = parseInt(req.params.page) || 1;
+
+  const offset = (page - 1) * 6;
+
+  restaurant.getByPage(offset, (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        message: "Error occurred",
+        console: err,
+      });
+    }
+
+    if (results.length > 0) {
+      return res.status(200).json(results);
+    } else {
+      res.status(400).json({
+        message: "Invalid page",
+      });
+    }
+  });
+};
+
 module.exports = {
   restaurantAdd,
   restaurantGetByUserId,
@@ -256,4 +300,5 @@ module.exports = {
   restaurantDelete,
   restaurantCountByUserId,
   getRestaurantMenu,
+  restaurantByPage,
 };
