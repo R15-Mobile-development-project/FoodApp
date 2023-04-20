@@ -33,7 +33,7 @@ const user = {
     );
   },
 
-  updateBalanceById: function (data, cb) {
+  updateBalance: function (data, cb) {
     return db.query(
       "UPDATE users SET balance=? WHERE user_id=?",
       [data.balance, data.userId],

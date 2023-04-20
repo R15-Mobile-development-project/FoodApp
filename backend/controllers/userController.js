@@ -194,7 +194,7 @@ const updateBalance = (req, res) => {
     balance: balance,
     userId: req.userId,
   };
-  user.updateBalanceById(data, (err, results) => {
+  user.updateBalance(data, (err, results) => {
     if (err) {
       console.log(err);
       return res.status(500).json({
