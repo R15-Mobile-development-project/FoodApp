@@ -187,7 +187,9 @@ const restaurantUpdate = (req, res) => {
 
 const restaurantDelete = (req, res) => {
   restaurant.getRestaurantIdByUserId(req.userId, (err, results) => {
+    console.log(results);
     if (err || results.length === 0) {
+      console.log(err);
       return res.status(500).json({
         message: "Error occurred",
         console: err,
@@ -198,6 +200,8 @@ const restaurantDelete = (req, res) => {
 
     restaurant.deleteMenus(id, (err, result) => {
       if (err) {
+        console.log(err);
+
         return res.status(500).json({
           message: "Error occurred",
           console: err,
@@ -206,6 +210,8 @@ const restaurantDelete = (req, res) => {
 
       restaurant.deleteRestaurant(id, (err, result) => {
         if (err) {
+          console.log(err);
+
           return res.status(500).json({
             message: "Error occurred",
             console: err,
@@ -236,6 +242,23 @@ const restaurantCountByUserId = (req, res) => {
         message: "No restaurants found",
       });
     }
+  });
+};
+
+const getOrders = (req, res) => {
+  restaurant.getOrders(req.userId, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occured",
+      });
+    }
+    if (results.length === 0) {
+      return res.status(400).json({
+        message: "No order data was found for that restaurant",
+      });
+    }
+    console.log(results);
+    return res.json(results);
   });
 };
 
@@ -285,7 +308,7 @@ const restaurantByPage = (req, res) => {
     if (results.length > 0) {
       return res.status(200).json(results);
     } else {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Invalid page",
       });
     }
@@ -301,4 +324,6 @@ module.exports = {
   restaurantCountByUserId,
   getRestaurantMenu,
   restaurantByPage,
+  getOrders,
+  getRestaurantMenu,
 };

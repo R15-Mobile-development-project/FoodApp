@@ -2,11 +2,11 @@ import Button from "./components/Button";
 import styles from "./conts/Styles";
 import {View, Text, KeyboardAvoidingView} from "react-native";
 import axios from "./components/axios";
-import EncryptedStorage from "react-native-encrypted-storage";
 import {useNavigation} from "@react-navigation/native";
 import React, {useState, useEffect, useContext} from "react";
 import {ThemeContext} from "./components/ThemeContext";
 import {COLORS} from "./conts/colors";
+import {GetToken} from "./components/Token";
 
 function WalletPage() {
   const {theme} = useContext(ThemeContext);
@@ -16,27 +16,23 @@ function WalletPage() {
   const [statusMsg, setStatusMsg] = useState("");
   useEffect(() => {
     const FetchBalance = async () => {
-      try {
-        const _token = await EncryptedStorage.getItem("token");
+      const _token = await GetToken();
 
-        if (_token !== undefined) {
-          setToken(_token);
+      if (_token !== undefined) {
+        setToken(_token);
 
-          const headers = {headers: {Authorization: `Bearer ${_token}`}};
+        const headers = {headers: {Authorization: `Bearer ${_token}`}};
 
-          axios
-            .get("/user", headers)
-            .then(response => {
-              setBalance(response.data.balance);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        } else {
-          console.log("No jwt found");
-        }
-      } catch (error) {
-        console.log(error);
+        axios
+          .get("/user", headers)
+          .then(response => {
+            setBalance(response.data.balance);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        console.log("No jwt found");
       }
     };
     navigation.addListener("focus", () => {

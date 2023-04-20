@@ -118,6 +118,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   //CustomDrawer
+  drawerText1: {
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  drawerText2: {
+    fontSize: 15,
+    marginRight: 130,
+  },
   drawerView: {
     flex: 1,
     paddingTop: 10,
@@ -129,6 +137,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
   },
+  //Wallet
   walletContainer: {
     width: "40%",
     justifyContent: "center",
