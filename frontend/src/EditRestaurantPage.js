@@ -25,34 +25,30 @@ function EditRestaurant() {
 
   useEffect(() => {
     const FetchProfile = async () => {
-      try {
-        const token = await GetToken();
+      const token = await GetToken();
 
-        if (token !== undefined) {
-          const headers = {headers: {Authorization: `Bearer ${token}`}};
+      if (token !== undefined) {
+        const headers = {headers: {Authorization: `Bearer ${token}`}};
 
-          axios
-            .get("/restaurant", headers)
-            .then(response => {
-              const res = response.data.results[0];
-              const {name, description, address, image} = res;
-              const menus = res.menus;
+        axios
+          .get("/restaurant", headers)
+          .then(response => {
+            const res = response.data.results[0];
+            const {name, description, address, image} = res;
+            const menus = res.menus;
 
-              setName(name);
-              setAddress(address);
-              setDescription(description);
-              setImage(image);
-              setNumInputs(menus.length);
-              setFoodItems(JSON.parse(JSON.stringify(menus)));
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        } else {
-          console.log("No jwt found");
-        }
-      } catch (error) {
-        console.log(error);
+            setName(name);
+            setAddress(address);
+            setDescription(description);
+            setImage(image);
+            setNumInputs(menus.length);
+            setFoodItems(JSON.parse(JSON.stringify(menus)));
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        console.log("No jwt found");
       }
     };
 

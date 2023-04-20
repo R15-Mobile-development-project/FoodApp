@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
   },
+  //Wallet
   walletContainer: {
     width: "40%",
     justifyContent: "center",

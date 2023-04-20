@@ -9,9 +9,10 @@ import axios from "../components/axios";
 import WalletPage from "../WalletPage";
 import AddRestaurantPage from "../Addrestaurant";
 import EditRestaurant from "../EditRestaurantPage";
+import OrderPage from "../OrderPage";
+import CheckoutPage from "../CheckoutPage";
 import {ThemeContext} from "../components/ThemeContext";
 import {COLORS} from "../conts/colors";
-
 
 const Stack = createStackNavigator();
 
@@ -23,7 +24,6 @@ const MyStack = () => {
   useEffect(() => {
     setIsLoading(true);
     const CheckToken = async () => {
-      console.log("Checking token");
       const token = await GetToken();
 
       if (token && token !== null) {
@@ -69,15 +69,15 @@ const MyStack = () => {
         ) : (
           <></>
         )}
-        <Stack.Screen 
-          name="Wallet" 
-          component={WalletPage} 
+        <Stack.Screen
+          name="Wallet"
+          component={WalletPage}
           options={{
             headerShown: true,
             headerTitle: "Wallet",
             headerStyle: {backgroundColor: COLORS[theme].primary},
             headerTintColor: COLORS[theme].quaternary,
-          }} 
+          }}
         />
         <Stack.Screen
           name="EditRestaurant"
@@ -95,6 +95,26 @@ const MyStack = () => {
           options={{
             headerShown: true,
             headerTitle: "Add restaurant",
+            headerStyle: {backgroundColor: COLORS[theme].primary},
+            headerTintColor: COLORS[theme].quaternary,
+          }}
+        />
+        <Stack.Screen
+          name="OrderPage"
+          component={OrderPage}
+          options={{
+            headerShown: true,
+            headerTitle: "Order Page",
+            headerStyle: {backgroundColor: COLORS[theme].primary},
+            headerTintColor: COLORS[theme].quaternary,
+          }}
+        />
+        <Stack.Screen
+          name="Checkout"
+          component={CheckoutPage}
+          options={{
+            headerShown: true,
+            headerTitle: "Checkout",
             headerStyle: {backgroundColor: COLORS[theme].primary},
             headerTintColor: COLORS[theme].quaternary,
           }}
