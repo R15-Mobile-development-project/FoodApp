@@ -269,6 +269,23 @@ const restaurantByPage = (req, res) => {
   });
 };
 
+const getOrders = (req, res) => {
+  restaurant.getOrders(req.userId, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occured",
+      });
+    }
+    if (results.length === 0) {
+      return res.status(400).json({
+        message: "No order data was found for that restaurant",
+      });
+    }
+    console.log(results);
+    return res.json(results);
+  });
+};
+
 const getRestaurantMenu = (req, res) => {
   if (!req.params.restaurant_id) {
     return res.status(400).json({
@@ -306,5 +323,6 @@ module.exports = {
   restaurantDelete,
   restaurantCountByUserId,
   restaurantByPage,
+  getOrders,
   getRestaurantMenu,
 };

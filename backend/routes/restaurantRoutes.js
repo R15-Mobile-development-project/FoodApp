@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const restaurantController = require("../controllers/restaurantController");
 
+router.get("/orders", jwt.verifyToken, restaurantController.getOrders);
 router.post("/add", jwt.verifyToken, restaurantController.restaurantAdd);
 router.get("/", jwt.verifyToken, restaurantController.restaurantList);
 router.get(
