@@ -22,27 +22,23 @@ function ProfilePage() {
 
   useEffect(() => {
     const FetchProfile = async () => {
-      try {
-        const token = await GetToken();
+      const token = await GetToken();
 
-        if (token !== undefined) {
-          const headers = {headers: {Authorization: `Bearer ${token}`}};
+      if (token !== undefined) {
+        const headers = {headers: {Authorization: `Bearer ${token}`}};
 
-          axios
-            .get("/user", headers)
-            .then(response => {
-              setFirstName(response.data.fname);
-              setLastName(response.data.lname);
-              setEmail(response.data.email);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        } else {
-          console.log("No jwt found");
-        }
-      } catch (error) {
-        console.log(error);
+        axios
+          .get("/user", headers)
+          .then(response => {
+            setFirstName(response.data.fname);
+            setLastName(response.data.lname);
+            setEmail(response.data.email);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        console.log("No jwt found");
       }
     };
 

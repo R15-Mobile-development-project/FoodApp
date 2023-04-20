@@ -187,7 +187,9 @@ const restaurantUpdate = (req, res) => {
 
 const restaurantDelete = (req, res) => {
   restaurant.getRestaurantIdByUserId(req.userId, (err, results) => {
+    console.log(results);
     if (err || results.length === 0) {
+      console.log(err);
       return res.status(500).json({
         message: "Error occurred",
         console: err,
@@ -198,6 +200,8 @@ const restaurantDelete = (req, res) => {
 
     restaurant.deleteMenus(id, (err, result) => {
       if (err) {
+        console.log(err);
+
         return res.status(500).json({
           message: "Error occurred",
           console: err,
@@ -206,6 +210,8 @@ const restaurantDelete = (req, res) => {
 
       restaurant.deleteRestaurant(id, (err, result) => {
         if (err) {
+          console.log(err);
+
           return res.status(500).json({
             message: "Error occurred",
             console: err,
@@ -277,6 +283,34 @@ const getOrders = (req, res) => {
     }
     console.log(results);
     return res.json(results);
+}
+
+const getRestaurantMenu = (req, res) => {
+  if (!req.params.restaurant_id) {
+    return res.status(400).json({
+      message: "Please provide a restaurant id",
+    });
+  }
+  if (Number.isInteger(parseInt(req.params.restaurant_id)) === false) {
+    return res.status(400).json({
+      message: "Please provide a valid restaurant id",
+    });
+  }
+  restaurant.restaurantMenu(req.params.restaurant_id, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occurred",
+        console: err,
+      });
+    }
+
+    if (results.length > 0) {
+      return res.status(200).json(results);
+    } else {
+      return res.status(404).json({
+        message: "No menus found",
+      });
+    }
   });
 };
 
@@ -289,4 +323,5 @@ module.exports = {
   restaurantCountByUserId,
   restaurantByPage,
   getOrders,
+  getRestaurantMenu,
 };

@@ -58,7 +58,6 @@ const restaurant = {
     const queryString = `SELECT COUNT(*) as count FROM restaurants WHERE user_id = ?`;
     db.query(queryString, [user_id], callback);
   },
-
   getByPage: function (offset, callback) {
     db.query("SELECT * FROM restaurants LIMIT 6 OFFSET ?", [offset], callback);
   },
@@ -69,6 +68,15 @@ const restaurant = {
       [user_id],
       callback
     );
+},
+
+  restaurantMenu: function (restaurant_id, callback) {
+    const queryString = `SELECT * FROM menus WHERE restaurant_id = ?`;
+    db.query(queryString, [restaurant_id], callback);
+  },
+  addOrder: function (price, restaurant_id, user_id, callback) {
+    const QueryString = `INSERT INTO orders (price, restaurant_id, user_id) VALUES (?, ?, ?)`;
+    db.query(QueryString, [price, restaurant_id, user_id], callback);
   },
 };
 

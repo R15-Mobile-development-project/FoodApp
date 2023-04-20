@@ -19,7 +19,7 @@ function Restaurant() {
     axios
       .get("/restaurant/count", {headers: {Authorization: `Bearer ${token}`}})
       .then(response => {
-        console.log(response.data.count);
+        console.log("Restaurant count:", response.data.count);
         setCount(response.data.count);
       })
       .catch(err => {

@@ -6,7 +6,11 @@ const restaurantController = require("../controllers/restaurantController");
 router.get("/orders", jwt.verifyToken, restaurantController.getOrders);
 router.post("/add", jwt.verifyToken, restaurantController.restaurantAdd);
 router.get("/", jwt.verifyToken, restaurantController.restaurantList);
-router.get("/:page", jwt.verifyToken, restaurantController.restaurantByPage);
+router.get(
+  "/page/:page",
+  jwt.verifyToken,
+  restaurantController.restaurantByPage
+);
 router.get("/me", jwt.verifyToken, restaurantController.restaurantGetByUserId);
 router.put("/update", jwt.verifyToken, restaurantController.restaurantUpdate);
 router.delete(
@@ -19,5 +23,6 @@ router.get(
   jwt.verifyToken,
   restaurantController.restaurantCountByUserId
 );
+router.get("/:restaurant_id/menu", restaurantController.getRestaurantMenu);
 
 module.exports = router;
