@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS `foodapp`.`orders` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `price` DOUBLE(10,2) NOT NULL,
+  `status` TINYINT(1) NOT NULL DEFAULT 0,
   `restaurant_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`order_id`),
