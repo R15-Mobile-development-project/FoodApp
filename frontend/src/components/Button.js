@@ -1,13 +1,16 @@
-import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
-import {COLORS} from '../conts/colors';
-import {ThemeContext} from './ThemeContext';
-import {useContext} from 'react';
-import styles from '../conts/Styles';
+import React from "react";
+import {TouchableOpacity, Text} from "react-native";
+import {COLORS} from "../conts/colors";
+import {ThemeContext} from "./ThemeContext";
+import {useContext} from "react";
+import styles from "../conts/Styles";
 
+// Define the Button component
 const Button = ({title, onPress = () => {}}) => {
+  // Retrieve the current theme from the ThemeContext
   const {theme} = useContext(ThemeContext);
 
+  // Render the button
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -28,9 +31,12 @@ const Button = ({title, onPress = () => {}}) => {
   );
 };
 
+// Define the Button2 component (exported separately)
 export const Button2 = ({title, onPress = () => {}}) => {
+  // Retrieve the current theme from the ThemeContext
   const {theme} = useContext(ThemeContext);
 
+  // Render the button
   return (
     <TouchableOpacity
       onPress={onPress}

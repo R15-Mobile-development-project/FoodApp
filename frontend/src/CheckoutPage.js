@@ -65,19 +65,28 @@ function CheckoutPage({route}) {
               borderRadius: 5,
               borderColor: COLORS[theme].primary,
             }}>
-            <Card.Title>
-              <Text style={{color: COLORS[theme].quaternary}}>{item.name}</Text>
-            </Card.Title>
-            <Card.Divider
-              style={{
-                borderBottomColor: COLORS[theme].quaternary,
-                borderBottomWidth: 1,
-              }}
-            />
-            <View>
-              <Text style={{color: COLORS[theme].quaternary}}>
-                {item.price}€
+            <View style={{flexDirection: "row", padding: 5}}>
+              <Text>
+                <Text
+                  style={{
+                    color: COLORS[theme].quaternary,
+                    fontSize: 20,
+                    fontWeight: "bold",
+                  }}>
+                  {item.name}
+                </Text>
               </Text>
+
+              <View
+                style={{
+                  alignItems: "flex-end",
+                  flex: 1,
+                  justifyContent: "center",
+                }}>
+                <Text style={{color: COLORS[theme].quaternary, fontSize: 20}}>
+                  {item.price}€
+                </Text>
+              </View>
             </View>
           </Card>
         ))}
@@ -95,25 +104,27 @@ function CheckoutPage({route}) {
           Total: {total.toFixed(2)} €
         </Text>
       </View>
-
-      <Button
-        title="PAY"
-        buttonStyle={{
-          backgroundColor: COLORS[theme].secondary,
-          justifyContent: "center",
-          alignItems: "center",
-          paddingTop: 20,
-          paddingBottom: 20,
-        }}
-        titleStyle={{
-          color: COLORS[theme].quaternary,
-          fontSize: 20,
-          fontWeight: "bold",
-        }}
-        onPress={() => {
-          CreateOrder();
-        }}
-      />
+      <View style={{backgroundColor: COLORS[theme].quaternary}}>
+        <Button
+          title="PAY"
+          buttonStyle={{
+            backgroundColor: COLORS[theme].primary,
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: 20,
+            paddingBottom: 20,
+            borderRadius: 5,
+          }}
+          titleStyle={{
+            color: COLORS[theme].quaternary,
+            fontSize: 20,
+            fontWeight: "bold",
+          }}
+          onPress={() => {
+            CreateOrder();
+          }}
+        />
+      </View>
     </>
   );
 }

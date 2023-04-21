@@ -1,5 +1,6 @@
 import EncryptedStorage from "react-native-encrypted-storage";
 
+// Retrieves the authentication token from storage
 const GetToken = async () => {
   try {
     const token = await EncryptedStorage.getItem("token");
@@ -17,6 +18,7 @@ const GetToken = async () => {
   }
 };
 
+// Deletes the authentication token from storage
 const DeleteToken = async () => {
   try {
     await EncryptedStorage.removeItem("token");
@@ -28,6 +30,7 @@ const DeleteToken = async () => {
   }
 };
 
+// Saves the authentication token to storage
 const SaveToken = async token => {
   try {
     console.log("Saving token");
@@ -39,6 +42,7 @@ const SaveToken = async token => {
   }
 };
 
+// Saves the user's preferred mode (e.g. light or dark mode) to storage
 const SaveMode = async mode => {
   try {
     console.log("Saving mode");
@@ -50,6 +54,7 @@ const SaveMode = async mode => {
   }
 };
 
+// Retrieves the user's preferred mode from storage
 const GetMode = async () => {
   try {
     const mode = await EncryptedStorage.getItem("mode");
@@ -67,6 +72,7 @@ const GetMode = async () => {
   }
 };
 
+// Deletes the user's preferred mode from storage
 const DeleteMode = async () => {
   try {
     await EncryptedStorage.removeItem("mode");
@@ -78,6 +84,7 @@ const DeleteMode = async () => {
   }
 };
 
+// Exports the functions so they can be used by other modules
 module.exports = {
   GetToken,
   DeleteToken,

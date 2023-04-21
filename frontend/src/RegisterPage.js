@@ -1,26 +1,29 @@
-import React, {useState} from 'react';
-import {View, Text, KeyboardAvoidingView} from 'react-native';
-import {Input, Input2} from './components/Input';
-import Button from './components/Button';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
-import axios from './components/axios';
-import {COLORS} from './conts/colors';
-import {ThemeContext} from './components/ThemeContext';
-import {useContext} from 'react';
-import styles from './conts/Styles';
-import {CheckBox} from '@rneui/themed';
+import React, {useState} from "react";
+import {View, Text, KeyboardAvoidingView} from "react-native";
+import {Input, Input2} from "./components/Input";
+import Button from "./components/Button";
+import {TouchableOpacity} from "react-native-gesture-handler";
+import {useNavigation} from "@react-navigation/native";
+import axios from "./components/axios";
+import {COLORS} from "./conts/colors";
+import {ThemeContext} from "./components/ThemeContext";
+import {useContext} from "react";
+import styles from "./conts/Styles";
+import {CheckBox} from "@rneui/themed";
 
+// Define RegisterPage component
 function RegisterPage() {
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [statusMsg, setStatusMsg] = useState('');
+  // Define state variables
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [statusMsg, setStatusMsg] = useState("");
   const {theme} = useContext(ThemeContext);
   const [userType, setUserType] = useState(0);
   const navigation = useNavigation();
 
+  // Register function
   const Register = () => {
     if (!email || !firstName || !lastName || !password) {
       return;
@@ -34,32 +37,34 @@ function RegisterPage() {
       user_type: userType,
     };
 
+    // Make API request to register
     axios
-      .post('/user/register', payload)
+      .post("/user/register", payload)
       .then(response => {
         console.log(response.data);
 
+        // Check if response contains necessary data
         if (response.data && response.data.message) {
           setStatusMsg(response.data.message);
-
           setTimeout(() => {
-            navigation.navigate('Login');
+            navigation.navigate("Login");
           }, 500);
         }
       })
       .catch(err => {
         console.log(err.response.data);
-
         if (err.response.data && err.response.data.message) {
           setStatusMsg(err.response.data.message);
         }
       });
   };
 
+  // Reset status message
   const ResetStatusMsg = () => {
-    setStatusMsg('');
+    setStatusMsg("");
   };
 
+  // Return JSX
   return (
     <KeyboardAvoidingView
       style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
@@ -68,49 +73,48 @@ function RegisterPage() {
           Register
         </Text>
       </View>
-
       <View style={styles.inputContainer}>
         <Input
-          label={'Email'}
+          label={"Email"}
           iconName="email"
           value={email}
           onChangeText={text => (setEmail(text), ResetStatusMsg())}
-          placeholder={'Enter your email address'}
-          keyboardType={'email-address'}
+          placeholder={"Enter your email address"}
+          keyboardType={"email-address"}
         />
         <View style={styles.inputView}>
-          <View style={{width: '40%'}}>
+          <View style={{width: "40%"}}>
             <Input2
-              label={'First Name'}
+              label={"First Name"}
               value={firstName}
               onChangeText={text => (setFirstName(text), ResetStatusMsg())}
-              placeholder={'First name'}
+              placeholder={"First name"}
             />
           </View>
-          <View style={{width: '60%'}}>
+          <View style={{width: "60%"}}>
             <Input2
-              label={'Last Name'}
+              label={"Last Name"}
               value={lastName}
               onChangeText={text => (setLastName(text), ResetStatusMsg())}
-              placeholder={'Last name'}
+              placeholder={"Last name"}
             />
           </View>
         </View>
         <Input
-          label={'Password'}
+          label={"Password"}
           iconName="lock"
           value={password}
           onChangeText={text => (setPassword(text), ResetStatusMsg())}
-          placeholder={'Enter your password'}
+          placeholder={"Enter your password"}
           password
         />
       </View>
       <View>
         <CheckBox
           containerStyle={{
-            backgroundColor: 'transparent',
+            backgroundColor: "transparent",
             borderWidth: 0,
-            textColo: 'center',
+            textColo: "center",
           }}
           checkedIcon="dot-circle-o"
           uncheckedIcon="circle-o"
@@ -133,7 +137,7 @@ function RegisterPage() {
           }}>
           Already have an account?
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <Text style={[styles.textlink, {color: COLORS[theme].primary}]}>
             Login
           </Text>
@@ -145,7 +149,7 @@ function RegisterPage() {
           style={{
             color: COLORS[theme].primary,
           }}>
-          {statusMsg ? statusMsg : ''}
+          {statusMsg ? statusMsg : ""}
         </Text>
       </View>
     </KeyboardAvoidingView>
