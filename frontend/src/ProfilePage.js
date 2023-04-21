@@ -10,7 +10,9 @@ import {ThemeContext} from "./components/ThemeContext";
 import {useContext} from "react";
 import styles from "./conts/Styles";
 
+// Define ProfilePage component
 function ProfilePage() {
+  // Define state variables
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,6 +22,7 @@ function ProfilePage() {
 
   const navigation = useNavigation();
 
+  // Fetch profile function
   useEffect(() => {
     const FetchProfile = async () => {
       const token = await GetToken();
@@ -27,6 +30,7 @@ function ProfilePage() {
       if (token !== undefined) {
         const headers = {headers: {Authorization: `Bearer ${token}`}};
 
+        // Make API request to fetch profile
         axios
           .get("/user", headers)
           .then(response => {
@@ -48,6 +52,7 @@ function ProfilePage() {
     });
   }, [navigation]);
 
+  // Update profile function
   const UpdateProfile = async () => {
     const token = await GetToken();
 
@@ -58,6 +63,7 @@ function ProfilePage() {
       password: password,
     };
 
+    // Make API request to update profile
     axios
       .put("/user", payload, {headers: {Authorization: `Bearer ${token}`}})
       .then(response => {
@@ -69,10 +75,12 @@ function ProfilePage() {
       });
   };
 
+  // Function to reset status message
   const ResetStatusMsg = () => {
     setStatusMsg("");
   };
 
+  // Return JSX
   return (
     <KeyboardAvoidingView
       style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>

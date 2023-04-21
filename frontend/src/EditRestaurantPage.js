@@ -10,19 +10,22 @@ import {GetToken} from "./components/Token";
 import axios from "./components/axios";
 import {useNavigation} from "@react-navigation/native";
 
+// Define EditRestaurant component
 function EditRestaurant() {
+  // Initialize state variables and context
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [foodName, setFoodName] = useState("");
   const [price, setPrice] = useState("");
   const [statusMsg, setStatusMsg] = useState("");
-  const {theme} = useContext(ThemeContext);
   const [foodItems, setFoodItems] = useState([]);
   const [numInputs, setNumInputs] = useState(1);
   const [image, setImage] = useState("");
+  const {theme} = useContext(ThemeContext);
   const navigation = useNavigation();
 
+  // Fetch the restaurant profile when the screen is focused
   useEffect(() => {
     const FetchProfile = async () => {
       const token = await GetToken();
@@ -58,6 +61,7 @@ function EditRestaurant() {
     });
   }, [navigation]);
 
+  // Function to add a new food item to the foodItems array
   const handleAddFood = () => {
     const newFoodItem = {name: foodName, price: price};
     setFoodItems([...foodItems, newFoodItem]);
@@ -65,6 +69,8 @@ function EditRestaurant() {
     setPrice("");
     setNumInputs(numInputs + 1);
   };
+
+  // Function to handle the submission of the edited restaurant details
   const handleEditRestaurant = async () => {
     const token = await GetToken();
     const headers = {headers: {Authorization: `Bearer ${token}`}};
@@ -80,6 +86,8 @@ function EditRestaurant() {
       menus: foodItems,
     };
     console.log(restaurantDetails);
+
+    // Send the edited restaurant details to the backend
     axios
       .put("/restaurant/update", restaurantDetails, headers)
       .then(response => {
@@ -93,6 +101,8 @@ function EditRestaurant() {
         setFoodName("");
         setPrice("");
         setNumInputs(1);
+
+        // Navigate to the restaurant page after 0.5 seconds if the restaurant is successfully added
         if (response.status === 200) {
           setTimeout(() => {
             navigation.navigate("Restaurant");
@@ -104,10 +114,13 @@ function EditRestaurant() {
         setStatusMsg(err.response.data.message);
       });
   };
+
+  // Function to reset status message
   const ResetStatusMsg = () => {
     setStatusMsg("");
   };
 
+  // Render EditRestaurant JSX
   return (
     <ScrollView style={{backgroundColor: COLORS[theme].quaternary}}>
       <KeyboardAvoidingView
@@ -115,6 +128,7 @@ function EditRestaurant() {
           styles.containerRestaurant,
           {backgroundColor: COLORS[theme].quaternary},
         ]}>
+        {/* Render input fields for restaurant details */}
         <View style={styles.inputContainer}>
           <InputRestaurant
             label={"Restaurant Name"}
@@ -141,6 +155,7 @@ function EditRestaurant() {
             placeholder={"Description"}
           />
         </View>
+        {/* Render input fields for food items */}
         <View style={{width: "80%"}}>
           <View style={{flexDirection: "row"}}>
             <View style={{width: "60%"}}>
@@ -208,12 +223,13 @@ function EditRestaurant() {
                 style={{color: COLORS[theme].primary}}
               />
             </View>
+            {/* Render button to submit edited restaurant details */}
             <View style={[styles.buttonContainer]}>
               <Button title="Save" onPress={handleEditRestaurant} />
             </View>
           </View>
         </View>
-
+        {/* Render status message */}
         <View style={styles.statusMsgContainer}>
           <Text
             style={{

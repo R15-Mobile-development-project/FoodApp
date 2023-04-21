@@ -10,7 +10,9 @@ import {GetToken} from "./components/Token";
 import axios from "./components/axios";
 import {useNavigation} from "@react-navigation/native";
 
+// Define AddRestaurant component
 function AddRestaurant() {
+  // Initialize state variables and context
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
@@ -23,6 +25,7 @@ function AddRestaurant() {
   const [image, setImage] = useState("");
   const navigation = useNavigation();
 
+  // Define handleAddFood function
   const handleAddFood = () => {
     const newFoodItem = {name: foodName, price: price};
     setFoodItems([...foodItems, newFoodItem]);
@@ -30,6 +33,8 @@ function AddRestaurant() {
     setPrice("");
     setNumInputs(numInputs + 1);
   };
+
+  // Define handleAddRestaurant function
   const handleAddRestaurant = async () => {
     const token = await GetToken();
     const headers = {headers: {Authorization: `Bearer ${token}`}};
@@ -37,6 +42,7 @@ function AddRestaurant() {
       return;
     }
 
+    // Create restaurant object
     const restaurantDetails = {
       name: name,
       address: address,
@@ -45,6 +51,8 @@ function AddRestaurant() {
       menus: foodItems,
     };
     console.log(restaurantDetails);
+
+    // Send post request to add restaurant
     axios
       .post("/restaurant/add", restaurantDetails, headers)
       .then(response => {
@@ -58,6 +66,8 @@ function AddRestaurant() {
         setFoodName("");
         setPrice("");
         setNumInputs(1);
+
+        // Redirect to restaurant page is restaurant is added successfully
         if (response.status === 200) {
           setTimeout(() => {
             navigation.navigate("Restaurant");
@@ -70,6 +80,7 @@ function AddRestaurant() {
       });
   };
 
+  // Define handleDeleteFood function
   const handleDeleteFood = () => {
     const newFoodItems = [...foodItems];
     newFoodItems.pop();
@@ -77,6 +88,7 @@ function AddRestaurant() {
     setNumInputs(numInputs - 1);
   };
 
+  // Return JSX
   return (
     <ScrollView style={{backgroundColor: COLORS[theme].quaternary}}>
       <KeyboardAvoidingView
@@ -84,6 +96,7 @@ function AddRestaurant() {
           styles.containerRestaurant,
           {backgroundColor: COLORS[theme].quaternary},
         ]}>
+        {/* Restaurant Name, Address, Image, Description */}
         <View style={styles.inputContainer}>
           <InputRestaurant
             label={"Restaurant Name"}
@@ -110,6 +123,8 @@ function AddRestaurant() {
             placeholder={"Description"}
           />
         </View>
+
+        {/* Food Name, Price inputs*/}
         <View style={{width: "80%"}}>
           <View style={{flexDirection: "row"}}>
             <View style={{width: "60%"}}>
@@ -150,6 +165,8 @@ function AddRestaurant() {
               </View>
             </View>
           ))}
+
+          {/* Add and Delete Buttons */}
           <View>
             <View style={{marginRight: 10, flexDirection: "row"}}>
               <Icon
@@ -165,12 +182,15 @@ function AddRestaurant() {
                 style={{color: COLORS[theme].primary}}
               />
             </View>
+
+            {/* Add Button */}
             <View style={[styles.buttonContainer]}>
               <Button title="Add" onPress={handleAddRestaurant} />
             </View>
           </View>
         </View>
 
+        {/* Status Message */}
         <View style={styles.statusMsgContainer}>
           <Text
             style={{

@@ -14,15 +14,19 @@ import CheckoutPage from "../CheckoutPage";
 import {ThemeContext} from "../components/ThemeContext";
 import {COLORS} from "../conts/colors";
 
+// Create a Stack navigator using createStackNavigator function
 const Stack = createStackNavigator();
 
+// Define the MyStack component
 const MyStack = () => {
+  // Use useState and useEffect hooks to check if the user is logged in
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const {theme} = useContext(ThemeContext);
 
   useEffect(() => {
     setIsLoading(true);
+    // Check the user's token to see if they are logged in
     const CheckToken = async () => {
       const token = await GetToken();
 
@@ -50,10 +54,12 @@ const MyStack = () => {
     CheckToken();
   }, []);
 
+  // If still loading, don't show anything
   if (isLoading) {
     return <></>;
   }
 
+  // Render the Stack navigator component with screens and props
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>

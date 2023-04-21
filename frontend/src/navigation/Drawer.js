@@ -13,9 +13,13 @@ import jwt_decode from "jwt-decode";
 import {GetToken} from "../components/Token";
 import RestaurantHistoryPage from "../RestaurantHistory";
 
+// Create a Drawer navigator using createDrawerNavigator function
 const Drawer = createDrawerNavigator();
 
+// Define the MyDrawer component
 const MyDrawer = () => {
+  // Use useState and useEffect hooks to fetch and decode a token stored in the user's device
+  // and extract the userType property from the decoded token
   const [userType, setUserType] = useState(0);
   useEffect(() => {
     const CheckToken = async () => {
@@ -28,7 +32,10 @@ const MyDrawer = () => {
     CheckToken();
   }, []);
 
+  // Use the useContext hook to access the theme chosen by the user
   const {theme} = useContext(ThemeContext);
+
+  // Render the Drawer navigator component with screens and props
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -45,6 +52,7 @@ const MyDrawer = () => {
       <Drawer.Screen name="Profile" component={ProfilePage} />
       <Drawer.Screen name="Settings" component={SettingsPage} />
       <Drawer.Screen name="Order History" component={HistoryPage} />
+      {/* Conditionally render the Restaurant screen if the user is a restaurant owner */}
       {userType ? (
         <Drawer.Screen name="Restaurant" component={Restaurant} />
       ) : null}

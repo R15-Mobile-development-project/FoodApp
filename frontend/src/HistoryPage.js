@@ -8,11 +8,14 @@ import {ThemeContext} from "./components/ThemeContext";
 import {ScrollView} from "react-native-gesture-handler";
 import {GetToken} from "./components/Token";
 
+// Define the HistoryPage component
 function HistoryPage() {
+  // Define the states
   const [arrayCount, setArrayCount] = useState([]);
   const navigation = useNavigation();
   const {theme} = useContext(ThemeContext);
 
+  // Fetch the order history
   useEffect(() => {
     const FetchOrder = async () => {
       const token = await GetToken();
@@ -37,6 +40,7 @@ function HistoryPage() {
     });
   }, [navigation]);
 
+  // If there are no orders, display a message
   if (
     arrayCount === null ||
     arrayCount === undefined ||
@@ -55,6 +59,7 @@ function HistoryPage() {
     );
   }
 
+  // Display the order history
   return (
     <>
       <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
