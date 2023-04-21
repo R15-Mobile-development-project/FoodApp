@@ -11,6 +11,7 @@ import {useContext, useEffect, useState} from "react";
 import Restaurant from "../Restaurant";
 import jwt_decode from "jwt-decode";
 import {GetToken} from "../components/Token";
+import RestaurantHistoryPage from "../RestaurantHistory";
 
 // Create a Drawer navigator using createDrawerNavigator function
 const Drawer = createDrawerNavigator();
@@ -54,6 +55,9 @@ const MyDrawer = () => {
       {/* Conditionally render the Restaurant screen if the user is a restaurant owner */}
       {userType ? (
         <Drawer.Screen name="Restaurant" component={Restaurant} />
+      ) : null}
+      {userType ? (
+        <Drawer.Screen name="History" component={RestaurantHistoryPage} />
       ) : null}
       <Drawer.Screen name="Log out" component={LogoutPage} />
     </Drawer.Navigator>

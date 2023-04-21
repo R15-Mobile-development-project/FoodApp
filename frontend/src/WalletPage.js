@@ -2,11 +2,11 @@ import Button from "./components/Button";
 import styles from "./conts/Styles";
 import {View, Text, KeyboardAvoidingView} from "react-native";
 import axios from "./components/axios";
-import EncryptedStorage from "react-native-encrypted-storage";
 import {useNavigation} from "@react-navigation/native";
 import React, {useState, useEffect, useContext} from "react";
 import {ThemeContext} from "./components/ThemeContext";
 import {COLORS} from "./conts/colors";
+import {GetToken} from "./components/Token";
 
 // Define WalletPage component
 function WalletPage() {
@@ -20,30 +20,26 @@ function WalletPage() {
   // useEffect hook to fetch user balance when the component is mounted or focused
   useEffect(() => {
     const FetchBalance = async () => {
-      try {
-        // Get token from encrypted storage
-        const _token = await EncryptedStorage.getItem("token");
+      // Get token from encrypted storage
+      const _token = await GetToken();
 
-        if (_token !== undefined) {
-          setToken(_token);
+      if (_token !== undefined) {
+        setToken(_token);
 
-          // Set headers for API request
-          const headers = {headers: {Authorization: `Bearer ${_token}`}};
+        // Set headers for API request
+        const headers = {headers: {Authorization: `Bearer ${_token}`}};
 
-          // Make API request to get user balance
-          axios
-            .get("/user", headers)
-            .then(response => {
-              setBalance(response.data.balance);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        } else {
-          console.log("No jwt found");
-        }
-      } catch (error) {
-        console.log(error);
+        // Make API request to get user balance
+        axios
+          .get("/user", headers)
+          .then(response => {
+            setBalance(response.data.balance);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        console.log("No jwt found");
       }
     };
 
@@ -99,7 +95,6 @@ function WalletPage() {
   return (
     <KeyboardAvoidingView
       style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
-      {/* Display balance header */}
       <View style={styles.buttonContainer}>
         <Text style={[styles.text, {color: COLORS[theme].primary}]}>
           Balance

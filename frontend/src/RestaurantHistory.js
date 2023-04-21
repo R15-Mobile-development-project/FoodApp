@@ -1,38 +1,39 @@
 import {View, Text} from "react-native";
 import {Card} from "@rneui/themed";
 import axios from "./components/axios";
+import EncryptedStorage from "react-native-encrypted-storage";
 import React, {useState, useEffect, useContext} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {COLORS} from "./conts/colors";
 import {ThemeContext} from "./components/ThemeContext";
 import {ScrollView} from "react-native-gesture-handler";
-import {GetToken} from "./components/Token";
 
-// Define the HistoryPage component
-function HistoryPage() {
-  // Define the states
+function RestaurantHistoryPage() {
   const [arrayCount, setArrayCount] = useState([]);
   const navigation = useNavigation();
   const {theme} = useContext(ThemeContext);
 
-  // Fetch the order history
   useEffect(() => {
     const FetchOrder = async () => {
-      const token = await GetToken();
+      try {
+        const token = await EncryptedStorage.getItem("token");
 
-      if (token !== undefined) {
-        const headers = {headers: {Authorization: `Bearer ${token}`}};
+        if (token !== undefined) {
+          const headers = {headers: {Authorization: `Bearer ${token}`}};
 
-        axios
-          .get("/order", headers)
-          .then(response => {
-            setArrayCount(response.data);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      } else {
-        console.log("No token found");
+          axios
+            .get("/restaurant/orders", headers)
+            .then(response => {
+              setArrayCount(response.data);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          console.log("No token found");
+        }
+      } catch (error) {
+        console.log(error);
       }
     };
     navigation.addListener("focus", () => {
@@ -40,7 +41,6 @@ function HistoryPage() {
     });
   }, [navigation]);
 
-  // If there are no orders, display a message
   if (
     arrayCount === null ||
     arrayCount === undefined ||
@@ -58,8 +58,7 @@ function HistoryPage() {
       </View>
     );
   }
-
-  // Display the order history
+  console.log(arrayCount);
   return (
     <>
       <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
@@ -74,7 +73,7 @@ function HistoryPage() {
             }}>
             <Card.Title>
               <Text style={{color: COLORS[theme].quaternary}}>
-                {item.restaurant_name}
+                {new Date(item.date).toLocaleString("en", {hour12: false})}
               </Text>
             </Card.Title>
             <Card.Divider
@@ -104,4 +103,4 @@ function HistoryPage() {
   );
 }
 
-export default HistoryPage;
+export default RestaurantHistoryPage;
