@@ -1,26 +1,26 @@
-import {View, Text} from "react-native";
-import {Card, Button} from "@rneui/themed";
+import { View, Text } from "react-native";
+import { Card, Button } from "@rneui/themed";
 import axios from "./components/axios";
-import React, {useState, useEffect, useContext} from "react";
-import {useNavigation} from "@react-navigation/native";
-import {COLORS} from "./conts/colors";
-import {ThemeContext} from "./components/ThemeContext";
-import {ScrollView} from "react-native-gesture-handler";
-import {LogBox} from "react-native";
-import {GetToken} from "./components/Token";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { COLORS } from "./conts/colors";
+import { ThemeContext } from "./components/ThemeContext";
+import { ScrollView } from "react-native-gesture-handler";
+import { LogBox } from "react-native";
+import { GetToken } from "./components/Token";
 
 LogBox.ignoreLogs([
   "Non-serializable values were found in the navigation state",
 ]);
 
-function CheckoutPage({route}) {
+function CheckoutPage({ route }) {
   const navigation = useNavigation();
 
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
 
-  const {theme} = useContext(ThemeContext);
-  const {restaurant_id, cartItems} = route.params;
+  const { theme } = useContext(ThemeContext);
+  const { restaurant_id, cartItems } = route.params;
 
   useEffect(() => {
     setCart(cartItems);
@@ -35,7 +35,7 @@ function CheckoutPage({route}) {
 
   const CreateOrder = async () => {
     const token = await GetToken();
-    const headers = {headers: {Authorization: `Bearer ${token}`}};
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
 
     axios
       .post(`/restaurant/${restaurant_id}/order`, headers)
@@ -51,7 +51,7 @@ function CheckoutPage({route}) {
 
   return (
     <>
-      <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
+      <ScrollView style={[{ backgroundColor: COLORS[theme].quaternary }]}>
         {cart.map((item, index) => (
           <Card
             key={index}
@@ -61,23 +61,20 @@ function CheckoutPage({route}) {
               borderRadius: 5,
               borderColor: COLORS[theme].primary,
             }}>
-            <Card.Title>
-              <Text style={{color: COLORS[theme].quaternary}}>{item.name}</Text>
-            </Card.Title>
-            <Card.Divider
-              style={{
-                borderBottomColor: COLORS[theme].quaternary,
-                borderBottomWidth: 1,
-              }}
-            />
-            <View>
-              <Text style={{color: COLORS[theme].quaternary}}>
-                {item.price}€
+            <View style={{ flexDirection: "row", padding: 5 }}>
+              <Text>
+                <Text style={{ color: COLORS[theme].quaternary, fontSize: 20, fontWeight: 'bold' }}>{item.name}</Text>
               </Text>
+
+              <View style={{ alignItems: "flex-end", flex: 1, justifyContent: "center" }}>
+                <Text style={{ color: COLORS[theme].quaternary, fontSize: 20 }}>
+                  {item.price}€
+                </Text>
+              </View>
             </View>
           </Card>
         ))}
-      </ScrollView>
+      </ScrollView >
 
       <View
         style={{
@@ -87,29 +84,31 @@ function CheckoutPage({route}) {
           paddingBottom: 10,
           paddingTop: 10,
         }}>
-        <Text style={{color: COLORS[theme].primary, fontSize: 30}}>
+        <Text style={{ color: COLORS[theme].primary, fontSize: 30 }}>
           Total: {total.toFixed(2)} €
         </Text>
       </View>
-
-      <Button
-        title="PAY"
-        buttonStyle={{
-          backgroundColor: COLORS[theme].secondary,
-          justifyContent: "center",
-          alignItems: "center",
-          paddingTop: 20,
-          paddingBottom: 20,
-        }}
-        titleStyle={{
-          color: COLORS[theme].quaternary,
-          fontSize: 20,
-          fontWeight: "bold",
-        }}
-        onPress={() => {
-          CreateOrder();
-        }}
-      />
+      <View style={{ backgroundColor: COLORS[theme].quaternary }}>
+        <Button
+          title="PAY"
+          buttonStyle={{
+            backgroundColor: COLORS[theme].primary,
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: 20,
+            paddingBottom: 20,
+            borderRadius: 5,
+          }}
+          titleStyle={{
+            color: COLORS[theme].quaternary,
+            fontSize: 20,
+            fontWeight: "bold",
+          }}
+          onPress={() => {
+            CreateOrder();
+          }}
+        />
+      </View>
     </>
   );
 }

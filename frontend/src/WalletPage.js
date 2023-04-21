@@ -1,15 +1,15 @@
 import Button from "./components/Button";
 import styles from "./conts/Styles";
-import {View, Text, KeyboardAvoidingView} from "react-native";
+import { View, Text, KeyboardAvoidingView } from "react-native";
 import axios from "./components/axios";
-import {useNavigation} from "@react-navigation/native";
-import React, {useState, useEffect, useContext} from "react";
-import {ThemeContext} from "./components/ThemeContext";
-import {COLORS} from "./conts/colors";
-import {GetToken} from "./components/Token";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "./components/ThemeContext";
+import { COLORS } from "./conts/colors";
+import { GetToken } from "./components/Token";
 
 function WalletPage() {
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const [balance, setBalance] = useState("");
   const [token, setToken] = useState(null);
   const navigation = useNavigation();
@@ -21,7 +21,7 @@ function WalletPage() {
       if (_token !== undefined) {
         setToken(_token);
 
-        const headers = {headers: {Authorization: `Bearer ${_token}`}};
+        const headers = { headers: { Authorization: `Bearer ${_token}` } };
 
         axios
           .get("/user", headers)
@@ -48,7 +48,7 @@ function WalletPage() {
 
     axios
       .put("/user/balance", payload, {
-        headers: {Authorization: `Bearer ${token}`},
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
         setStatusMsg(response.data.message);
@@ -67,7 +67,7 @@ function WalletPage() {
 
     axios
       .put("/user/balance", payload, {
-        headers: {Authorization: `Bearer ${token}`},
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
         setStatusMsg(response.data.message);
@@ -80,9 +80,9 @@ function WalletPage() {
 
   return (
     <KeyboardAvoidingView
-      style={[styles.container, {backgroundColor: COLORS[theme].quaternary}]}>
+      style={[styles.container, { backgroundColor: COLORS[theme].quaternary }]}>
       <View style={styles.buttonContainer}>
-        <Text style={[styles.text, {color: COLORS[theme].primary}]}>
+        <Text style={[styles.text, { color: COLORS[theme].primary }]}>
           Balance
         </Text>
       </View>
