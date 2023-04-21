@@ -7,7 +7,7 @@ const orders = {
     // Query the database to select all orders related to the given user ID
     // and join with the restaurants table to include the restaurant name
     return db.query(
-      "select orders.*, restaurants.name as restaurant_name from orders join restaurants on restaurants.restaurant_id = orders.restaurant_id where orders.user_id = ?;",
+      "select o.*, m.name from orders o join order_menus om on om.order_id = o.order_id join menus m on m.menu_id = om.menu_id where o.user_id = 1;",
       [id],
       cb
     );

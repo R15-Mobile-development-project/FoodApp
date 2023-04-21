@@ -73,9 +73,7 @@ function HistoryPage() {
               borderColor: COLORS[theme].primary,
             }}>
             <Card.Title>
-              <Text style={{color: COLORS[theme].quaternary}}>
-                {item.restaurant_name}
-              </Text>
+              <Text style={{color: COLORS[theme].quaternary}}>{item.name}</Text>
             </Card.Title>
             <Card.Divider
               style={{
@@ -87,7 +85,7 @@ function HistoryPage() {
               <View>
                 <Text
                   style={{color: COLORS[theme].quaternary, textAlign: "left"}}>
-                  {item.order_id}
+                  {new Date(item.date).toLocaleString("en", {hour12: false})}
                 </Text>
               </View>
               <View style={{flex: 1}}>
