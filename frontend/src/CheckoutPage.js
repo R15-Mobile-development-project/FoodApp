@@ -49,7 +49,10 @@ function CheckoutPage({route}) {
       })
       .catch(err => {
         // on error show error msg
-        console.log(err);
+        if (err.response.status === 400) {
+          console.log(err.response.data.message);
+          ToastAndroid.show(err.response.data.message, ToastAndroid.SHORT);
+        }
       });
   };
 
