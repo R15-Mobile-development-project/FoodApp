@@ -85,13 +85,26 @@ function HistoryPage() {
               <View>
                 <Text
                   style={{color: COLORS[theme].quaternary, textAlign: "left"}}>
-                  {new Date(item.date).toLocaleString("en", {hour12: false})}
+                  {new Intl.DateTimeFormat("en-US", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                    timeZone: "UTC",
+                    hour12: false,
+                  }).format(
+                    new Date(item.date).setHours(
+                      new Date(item.date).getHours() - 1,
+                    ),
+                  )}
                 </Text>
               </View>
               <View style={{flex: 1}}>
                 <Text
                   style={{color: COLORS[theme].quaternary, textAlign: "right"}}>
-                  {item.price}€
+                  {item.item_price}€
                 </Text>
               </View>
             </View>
