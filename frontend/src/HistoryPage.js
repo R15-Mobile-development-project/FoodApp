@@ -110,39 +110,31 @@ function HistoryPage() {
                   marginBottom: -10,
                 }}>
                 <ListItem.Content>
-                  <View>
-                    <ListItem.Title
-                      style={{
-                        color: COLORS[theme].quaternary,
-                      }}>
-                      {item.name}
-                    </ListItem.Title>
-                  </View>
-                  <View>
-                    <ListItem.Subtitle
-                      style={{
-                        color: COLORS[theme].quaternary,
-                      }}>
-                      {item.item_price}€
-                    </ListItem.Subtitle>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}>
+                    <View style={{flex: 1}}>
+                      <ListItem.Title
+                        style={{
+                          color: COLORS[theme].quaternary,
+                        }}>
+                        {item.name}
+                      </ListItem.Title>
+                    </View>
+                    <View>
+                      <ListItem.Subtitle
+                        style={{
+                          color: COLORS[theme].quaternary,
+                        }}>
+                        {item.item_price}€
+                      </ListItem.Subtitle>
+                    </View>
                   </View>
                 </ListItem.Content>
               </ListItem>
             ))}
-            {/* <View style={{flexDirection: "row"}}>
-              <View>
-                <Text
-                  style={{color: COLORS[theme].quaternary, textAlign: "left"}}>
-                  {order.name}
-                </Text>
-              </View>
-              <View style={{flex: 1}}>
-                <Text
-                  style={{color: COLORS[theme].quaternary, textAlign: "right"}}>
-                  {order.item_price}€
-                </Text>
-              </View>
-            </View> */}
           </Card>
         ))}
       </ScrollView>
