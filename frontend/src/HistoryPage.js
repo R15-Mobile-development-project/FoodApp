@@ -7,6 +7,7 @@ import {COLORS} from "./conts/colors";
 import {ThemeContext} from "./components/ThemeContext";
 import {ScrollView} from "react-native-gesture-handler";
 import {GetToken} from "./components/Token";
+import {ListItem} from "react-native-elements";
 
 // Define the HistoryPage component
 function HistoryPage() {
@@ -63,7 +64,7 @@ function HistoryPage() {
   return (
     <>
       <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
-        {arrayCount.map((item, index) => (
+        {arrayCount.map((order, index) => (
           <Card
             key={index}
             containerStyle={{
@@ -73,7 +74,26 @@ function HistoryPage() {
               borderColor: COLORS[theme].primary,
             }}>
             <Card.Title>
-              <Text style={{color: COLORS[theme].quaternary}}>{item.name}</Text>
+              <Text style={{color: COLORS[theme].quaternary}}>
+                {order.restaurant_name}
+                {"\n"}
+              </Text>
+              <Text style={{color: COLORS[theme].quaternary}}>
+                {new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                  timeZone: "UTC",
+                  hour12: false,
+                }).format(
+                  new Date(order.date).setHours(
+                    new Date(order.date).getHours() - 1,
+                  ),
+                )}
+              </Text>
             </Card.Title>
             <Card.Divider
               style={{
@@ -81,33 +101,48 @@ function HistoryPage() {
                 borderBottomWidth: 1,
               }}
             />
-            <View style={{flexDirection: "row"}}>
+            {order.items.map((item, itemIndex) => (
+              <ListItem
+                key={itemIndex}
+                containerStyle={{
+                  backgroundColor: COLORS[theme].primary,
+                  marginTop: -10,
+                  marginBottom: -10,
+                }}>
+                <ListItem.Content>
+                  <View>
+                    <ListItem.Title
+                      style={{
+                        color: COLORS[theme].quaternary,
+                      }}>
+                      {item.name}
+                    </ListItem.Title>
+                  </View>
+                  <View>
+                    <ListItem.Subtitle
+                      style={{
+                        color: COLORS[theme].quaternary,
+                      }}>
+                      {item.item_price}€
+                    </ListItem.Subtitle>
+                  </View>
+                </ListItem.Content>
+              </ListItem>
+            ))}
+            {/* <View style={{flexDirection: "row"}}>
               <View>
                 <Text
                   style={{color: COLORS[theme].quaternary, textAlign: "left"}}>
-                  {new Intl.DateTimeFormat("en-US", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                    timeZone: "UTC",
-                    hour12: false,
-                  }).format(
-                    new Date(item.date).setHours(
-                      new Date(item.date).getHours() - 1,
-                    ),
-                  )}
+                  {order.name}
                 </Text>
               </View>
               <View style={{flex: 1}}>
                 <Text
                   style={{color: COLORS[theme].quaternary, textAlign: "right"}}>
-                  {item.item_price}€
+                  {order.item_price}€
                 </Text>
               </View>
-            </View>
+            </View> */}
           </Card>
         ))}
       </ScrollView>
