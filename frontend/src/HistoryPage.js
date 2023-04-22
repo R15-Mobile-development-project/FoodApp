@@ -135,6 +135,18 @@ function HistoryPage() {
                 </ListItem.Content>
               </ListItem>
             ))}
+            <Card.Divider
+              style={{
+                borderBottomColor: COLORS[theme].quaternary,
+                borderBottomWidth: 1,
+                marginTop: 10,
+              }}
+            />
+            <View>
+              <Text style={{color: COLORS[theme].quaternary, fontSize: 16}}>
+                Total: {order.price}€
+              </Text>
+            </View>
           </Card>
         ))}
       </ScrollView>
