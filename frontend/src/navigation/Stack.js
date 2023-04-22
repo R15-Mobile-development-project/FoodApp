@@ -110,7 +110,7 @@ const MyStack = () => {
           component={OrderPage}
           options={{
             headerShown: true,
-            headerTitle: "Order Page",
+            headerTitle: "Menu",
             headerStyle: {backgroundColor: COLORS[theme].primary},
             headerTintColor: COLORS[theme].quaternary,
           }}
