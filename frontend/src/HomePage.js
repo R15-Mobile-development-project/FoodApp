@@ -111,24 +111,6 @@ function HomePage() {
     );
   }
 
-  if (isLoading) {
-    return (
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          flex: 1,
-          backgroundColor: COLORS[theme].quaternary,
-        }}>
-        <ActivityIndicator
-          style={[styles.noDataText, {marginBottom: 40}]}
-          color={COLORS[theme].primary}
-          size="large"
-        />
-      </View>
-    );
-  }
-
   // Render the component
   return (
     <ScrollView
@@ -183,6 +165,15 @@ function HomePage() {
           </View>
         </Card>
       ))}
+      {isLoading ? (
+        <ActivityIndicator
+          style={[styles.noDataText, {marginBottom: 40}]}
+          color={COLORS[theme].primary}
+          size="large"
+        />
+      ) : (
+        <></>
+      )}
     </ScrollView>
   );
 }

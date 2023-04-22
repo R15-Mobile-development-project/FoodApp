@@ -104,14 +104,9 @@ function HistoryPage() {
                   day: "2-digit",
                   hour: "2-digit",
                   minute: "2-digit",
-                  second: "2-digit",
-                  timeZone: "UTC",
+                  timeZone: "Europe/Helsinki",
                   hour12: false,
-                }).format(
-                  new Date(order.date).setHours(
-                    new Date(order.date).getHours() - 1,
-                  ),
-                )}
+                }).format(new Date(order.date))}
               </Text>
             </Card.Title>
             <Card.Divider
