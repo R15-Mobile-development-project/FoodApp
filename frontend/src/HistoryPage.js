@@ -1,4 +1,4 @@
-import {View, Text} from "react-native";
+import {View, Text, ActivityIndicator} from "react-native";
 import {Card} from "@rneui/themed";
 import axios from "./components/axios";
 import React, {useState, useEffect, useContext} from "react";
@@ -8,11 +8,14 @@ import {ThemeContext} from "./components/ThemeContext";
 import {ScrollView} from "react-native-gesture-handler";
 import {GetToken} from "./components/Token";
 import {ListItem} from "react-native-elements";
+import styles from "./conts/Styles";
 
 // Define the HistoryPage component
 function HistoryPage() {
   // Define the states
   const [arrayCount, setArrayCount] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const navigation = useNavigation();
   const {theme} = useContext(ThemeContext);
 
@@ -28,9 +31,11 @@ function HistoryPage() {
           .get("/order", headers)
           .then(response => {
             setArrayCount(response.data);
+            setIsLoading(false);
           })
           .catch(err => {
             console.log(err);
+            setIsLoading(false);
           });
       } else {
         console.log("No token found");
@@ -42,11 +47,7 @@ function HistoryPage() {
   }, [navigation]);
 
   // If there are no orders, display a message
-  if (
-    arrayCount === null ||
-    arrayCount === undefined ||
-    arrayCount.length === 0
-  ) {
+  if (arrayCount.length === 0 && !isLoading) {
     return (
       <View
         style={{
@@ -56,6 +57,24 @@ function HistoryPage() {
           backgroundColor: COLORS[theme].quaternary,
         }}>
         <Text style={{color: COLORS[theme].primary}}>No orders found</Text>
+      </View>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          backgroundColor: COLORS[theme].quaternary,
+        }}>
+        <ActivityIndicator
+          style={[styles.noDataText, {marginBottom: 40}]}
+          color={COLORS[theme].primary}
+          size="large"
+        />
       </View>
     );
   }
