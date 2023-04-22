@@ -47,8 +47,11 @@ const getOrders = (req, res) => {
         item_price,
       });
     });
-    console.log(Array.from(orderMap.values()));
-    return res.status(200).json(Array.from(orderMap.values()));
+
+    const orderVals = Array.from(orderMap.values());
+    const formattedOrders = orderVals.sort((a, b) => b.order_id - a.order_id);
+    console.log(formattedOrders);
+    return res.status(200).json(formattedOrders);
   });
 };
 
