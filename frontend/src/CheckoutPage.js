@@ -1,4 +1,4 @@
-import {View, Text, Alert} from "react-native";
+import {View, Text, Alert, ToastAndroid} from "react-native";
 import {Card, Button} from "@rneui/themed";
 import axios from "./components/axios";
 import React, {useState, useEffect, useContext} from "react";
@@ -44,7 +44,7 @@ function CheckoutPage({route}) {
       .post(`/restaurant/${restaurant_id}/order`, cartIds, headers)
       .then(response => {
         navigation.navigate("Home");
-        Alert.alert("Success", "Order placed successfully");
+        ToastAndroid.show("Order placed successfully", ToastAndroid.SHORT);
         console.log(response.data);
       })
       .catch(err => {
