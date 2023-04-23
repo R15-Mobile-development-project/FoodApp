@@ -39,11 +39,11 @@ mysql -u root -p <foodapp.sql
 
 Your app should open and look like this and then just choose register. There you can choose if you are a restaurant owner.
 
-!["Login page"](./images/Login.png)
+<img src="./images/Login.png" alt="Login page" width="300">
 
 After logging in you see the home page where you can order food from restaurants after adding money in the wallet page. In settings you can switch to dark mode or delete your account.
 
-!["Settings page"](./images/Settings.png)
+<img src="./images/Settings.png" alt="Settings page" width="300">
 
 ---
 
