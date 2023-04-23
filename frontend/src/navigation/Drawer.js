@@ -1,16 +1,16 @@
-import {createDrawerNavigator} from "@react-navigation/drawer";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import SettingsPage from "../SettingsPage";
 import HomePage from "../HomePage";
 import CustomDrawer from "../components/CustomDrawer";
 import ProfilePage from "../ProfilePage";
 import HistoryPage from "../HistoryPage";
 import LogoutPage from "../LogoutPage.js";
-import {COLORS} from "../conts/colors";
-import {ThemeContext} from "../components/ThemeContext";
-import {useContext, useEffect, useState} from "react";
+import { COLORS } from "../conts/colors";
+import { ThemeContext } from "../components/ThemeContext";
+import { useContext, useEffect, useState } from "react";
 import Restaurant from "../Restaurant";
 import jwt_decode from "jwt-decode";
-import {GetToken} from "../components/Token";
+import { GetToken } from "../components/Token";
 import RestaurantHistoryPage from "../RestaurantHistory";
 
 // Create a Drawer navigator using createDrawerNavigator function
@@ -33,16 +33,16 @@ const MyDrawer = () => {
   }, []);
 
   // Use the useContext hook to access the theme chosen by the user
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   // Render the Drawer navigator component with screens and props
   return (
     <Drawer.Navigator
       screenOptions={{
-        drawerStyle: {backgroundColor: COLORS[theme].quaternary, width: 240},
+        drawerStyle: { backgroundColor: COLORS[theme].quaternary, width: 240 },
         headerTintColor: COLORS[theme].quaternary,
-        headerTitleStyle: {color: COLORS[theme].quaternary},
-        headerStyle: {backgroundColor: COLORS[theme].primary},
+        headerTitleStyle: { color: COLORS[theme].quaternary },
+        headerStyle: { backgroundColor: COLORS[theme].primary },
         drawerActiveBackgroundColor: COLORS[theme].primary,
         drawerActiveTintColor: COLORS[theme].quaternary,
         drawerInactiveTintColor: COLORS[theme].primary,
@@ -57,7 +57,7 @@ const MyDrawer = () => {
         <Drawer.Screen name="Restaurant" component={Restaurant} />
       ) : null}
       {userType ? (
-        <Drawer.Screen name="History" component={RestaurantHistoryPage} />
+        <Drawer.Screen name="Orders" component={RestaurantHistoryPage} />
       ) : null}
       <Drawer.Screen name="Log out" component={LogoutPage} />
     </Drawer.Navigator>
