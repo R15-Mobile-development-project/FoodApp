@@ -76,7 +76,7 @@ const restaurant = {
 
   getOrders: function (user_id, callback) {
     db.query(
-      "select o.* from restaurants r join orders o on o.restaurant_id = r.restaurant_id where r.user_id = ?",
+      "select o.order_id, o.date, o.price as price, m.name as item_name, m.price as item_price, r.name as restaurant_name, concat(u.fname, ' ', u.lname) as customer from restaurants r join menus m on m.restaurant_id = r.restaurant_id join order_menus om on om.menu_id = m.menu_id join orders o on o.order_id = om.order_id join users u on u.user_id = o.user_id where r.user_id = ? order by o.order_id desc;",
       [user_id],
       callback
     );
