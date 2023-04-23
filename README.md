@@ -84,6 +84,8 @@ After the order is placed, it's shown in the order history page
 
 <img src="./images/OrderHistory.png" alt="OrderHistory" width="300">
 
+---
+
 Restaurant owners can add their own restaurant to the app
 
 <img src="./images/AddRestaurant.png" alt="AddRestaurant" width="300">
@@ -91,6 +93,7 @@ Restaurant owners can add their own restaurant to the app
 <img src="./images/AddRestaurantEdit.png" alt="AddRestaurantEdit" width="300">
 
 After they have added a restaurant they can choose to edit it or delete it
+
 <img src="./images/EditDeleteRestaurant.png" alt="EditDeleteRestaurant" width="300">
 
 ---
