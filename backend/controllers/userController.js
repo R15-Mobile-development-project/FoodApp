@@ -235,9 +235,8 @@ const updateBalance = (req, res) => {
     userId: req.userId,
   };
 
-  // Call the updateBalanceById function in the user model
-  user.updateBalanceById(data, (err, results) => {
-    // If there's an error, log it and respond with a 500 status code and error message
+  // Function to update a user's balance
+  user.updateBalance(data, (err, results) => {
     if (err) {
       console.log(err);
       return res.status(500).json({

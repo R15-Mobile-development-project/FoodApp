@@ -24,5 +24,10 @@ router.get(
   restaurantController.restaurantCountByUserId
 );
 router.get("/:restaurant_id/menu", restaurantController.getRestaurantMenu);
+router.post(
+  "/:restaurant_id/order",
+  jwt.verifyToken,
+  restaurantController.restaurantOrder
+);
 
 module.exports = router;

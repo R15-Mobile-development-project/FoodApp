@@ -1,5 +1,6 @@
 // Import the restaurant model and load environment variables
 const restaurant = require("../models/restaurantModel");
+const user = require("../models/userModel");
 require("dotenv").config();
 
 // Controller function to add a new restaurant
@@ -353,6 +354,94 @@ const getRestaurantMenu = (req, res) => {
   });
 };
 
+const restaurantOrder = (req, res) => {
+  console.log(req.body);
+  const orderArray = req.body;
+  if (orderArray.length === 0) {
+    return res.status(400).json({
+      message: "Please provide an order",
+    });
+  }
+
+  if (orderArray.every(Number.isInteger) === false) {
+    return res.status(400).json({
+      message: "Please provide a valid order",
+    });
+  }
+
+  restaurant.restaurantMenu(req.params.restaurant_id, (err, menus) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Error occurred",
+        console: err,
+      });
+    }
+
+    const order = menus.filter((item) => orderArray.includes(item.menu_id));
+    if (order.length === 0) {
+      return res.status(400).json({
+        message: "Invalid order",
+      });
+    }
+    const orderSum = order.reduce((sum, item) => sum + item.price, 0);
+
+    user.getById(req.userId, (err, results) => {
+      if (err) {
+        return res.status(500).json({
+          message: "Error occurred",
+          console: err,
+        });
+      }
+      const userBalance = results[0].balance;
+
+      if (userBalance < orderSum) {
+        return res.status(400).json({
+          message: "Insufficient funds",
+        });
+      }
+
+      restaurant.addOrder(
+        req.userId,
+        req.params.restaurant_id,
+        orderSum,
+        (err, results) => {
+          if (err) {
+            return res.status(500).json({
+              message: "Error occurred",
+              console: err,
+            });
+          }
+          const orderMenus = order.map((item) => [
+            results.insertId,
+            item.menu_id,
+          ]);
+          restaurant.addOrderMenus(orderMenus, (err, results) => {
+            if (err) {
+              return res.status(500).json({
+                message: "Error occurred",
+                console: err,
+              });
+            }
+            const newBalance = userBalance - orderSum;
+            const data = { userId: req.userId, balance: newBalance };
+            user.updateBalance(data, (err, results) => {
+              if (err) {
+                return res.status(500).json({
+                  message: "Error occurred",
+                  console: err,
+                });
+              }
+              return res.status(200).json({
+                message: "Order placed",
+              });
+            });
+          });
+        }
+      );
+    });
+  });
+};
+
 module.exports = {
   restaurantAdd,
   restaurantGetByUserId,
@@ -360,7 +449,9 @@ module.exports = {
   restaurantList,
   restaurantDelete,
   restaurantCountByUserId,
+  getRestaurantMenu,
   restaurantByPage,
   getOrders,
   getRestaurantMenu,
+  restaurantOrder,
 };

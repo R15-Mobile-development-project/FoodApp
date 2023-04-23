@@ -95,6 +95,22 @@ function HomePage() {
       });
   };
 
+  if (arrayCount.length === 0 && !isLoading) {
+    return (
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          backgroundColor: COLORS[theme].quaternary,
+        }}>
+        <Text style={{color: COLORS[theme].primary}}>
+          There aren't any restaurants
+        </Text>
+      </View>
+    );
+  }
+
   // Render the component
   return (
     <ScrollView
@@ -155,13 +171,6 @@ function HomePage() {
           color={COLORS[theme].primary}
           size="large"
         />
-      ) : (
-        <></>
-      )}
-      {arrayCount.length === 0 && !isLoading ? (
-        <Text style={[styles.noDataText, {color: COLORS[theme].primary}]}>
-          There aren't any restaurants.
-        </Text>
       ) : (
         <></>
       )}

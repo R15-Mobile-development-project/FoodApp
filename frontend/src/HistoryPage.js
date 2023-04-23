@@ -1,4 +1,4 @@
-import {View, Text} from "react-native";
+import {View, Text, ActivityIndicator} from "react-native";
 import {Card} from "@rneui/themed";
 import axios from "./components/axios";
 import React, {useState, useEffect, useContext} from "react";
@@ -7,11 +7,15 @@ import {COLORS} from "./conts/colors";
 import {ThemeContext} from "./components/ThemeContext";
 import {ScrollView} from "react-native-gesture-handler";
 import {GetToken} from "./components/Token";
+import {ListItem} from "react-native-elements";
+import styles from "./conts/Styles";
 
 // Define the HistoryPage component
 function HistoryPage() {
   // Define the states
   const [arrayCount, setArrayCount] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const navigation = useNavigation();
   const {theme} = useContext(ThemeContext);
 
@@ -27,9 +31,11 @@ function HistoryPage() {
           .get("/order", headers)
           .then(response => {
             setArrayCount(response.data);
+            setIsLoading(false);
           })
           .catch(err => {
             console.log(err);
+            setIsLoading(false);
           });
       } else {
         console.log("No token found");
@@ -41,11 +47,7 @@ function HistoryPage() {
   }, [navigation]);
 
   // If there are no orders, display a message
-  if (
-    arrayCount === null ||
-    arrayCount === undefined ||
-    arrayCount.length === 0
-  ) {
+  if (arrayCount.length === 0 && !isLoading) {
     return (
       <View
         style={{
@@ -59,11 +61,29 @@ function HistoryPage() {
     );
   }
 
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          backgroundColor: COLORS[theme].quaternary,
+        }}>
+        <ActivityIndicator
+          style={[styles.noDataText, {marginBottom: 40}]}
+          color={COLORS[theme].primary}
+          size="large"
+        />
+      </View>
+    );
+  }
+
   // Display the order history
   return (
     <>
       <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
-        {arrayCount.map((item, index) => (
+        {arrayCount.map((order, index) => (
           <Card
             key={index}
             containerStyle={{
@@ -74,7 +94,19 @@ function HistoryPage() {
             }}>
             <Card.Title>
               <Text style={{color: COLORS[theme].quaternary}}>
-                {item.restaurant_name}
+                {order.restaurant_name}
+                {"\n"}
+              </Text>
+              <Text style={{color: COLORS[theme].quaternary}}>
+                {new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  timeZone: "Europe/Helsinki",
+                  hour12: false,
+                }).format(new Date(order.date))}
               </Text>
             </Card.Title>
             <Card.Divider
@@ -83,19 +115,51 @@ function HistoryPage() {
                 borderBottomWidth: 1,
               }}
             />
-            <View style={{flexDirection: "row"}}>
-              <View>
-                <Text
-                  style={{color: COLORS[theme].quaternary, textAlign: "left"}}>
-                  {item.order_id}
-                </Text>
-              </View>
-              <View style={{flex: 1}}>
-                <Text
-                  style={{color: COLORS[theme].quaternary, textAlign: "right"}}>
-                  {item.price}€
-                </Text>
-              </View>
+            {order.items.map((item, itemIndex) => (
+              <ListItem
+                key={itemIndex}
+                containerStyle={{
+                  backgroundColor: COLORS[theme].primary,
+                  marginTop: -10,
+                  marginBottom: -10,
+                }}>
+                <ListItem.Content>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}>
+                    <View style={{flex: 1}}>
+                      <ListItem.Title
+                        style={{
+                          color: COLORS[theme].quaternary,
+                        }}>
+                        {item.name}
+                      </ListItem.Title>
+                    </View>
+                    <View>
+                      <ListItem.Subtitle
+                        style={{
+                          color: COLORS[theme].quaternary,
+                        }}>
+                        {item.item_price}€
+                      </ListItem.Subtitle>
+                    </View>
+                  </View>
+                </ListItem.Content>
+              </ListItem>
+            ))}
+            <Card.Divider
+              style={{
+                borderBottomColor: COLORS[theme].quaternary,
+                borderBottomWidth: 1,
+                marginTop: 10,
+              }}
+            />
+            <View>
+              <Text style={{color: COLORS[theme].quaternary, fontSize: 16}}>
+                Total: {order.price}€
+              </Text>
             </View>
           </Card>
         ))}

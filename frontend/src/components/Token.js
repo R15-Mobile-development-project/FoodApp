@@ -12,7 +12,7 @@ const GetToken = async () => {
       return null;
     }
   } catch (error) {
-    console.log("Error on fetchin token from storage");
+    console.log("Error on fetching token from storage");
     console.log(error);
     return null;
   }
@@ -66,7 +66,7 @@ const GetMode = async () => {
       return null;
     }
   } catch (error) {
-    console.log("Error on fetchin mode from storage");
+    console.log("Error on fetching mode from storage");
     console.log(error);
     return null;
   }
