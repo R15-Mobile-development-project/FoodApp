@@ -1,14 +1,14 @@
-import React, {useState, useContext, useEffect} from "react";
-import {View, Text, KeyboardAvoidingView, ScrollView} from "react-native";
-import {Input3, InputRestaurant, InputRestaurant2} from "./components/Input";
+import React, { useState, useContext, useEffect } from "react";
+import { View, Text, KeyboardAvoidingView, ScrollView } from "react-native";
+import { Input3, InputRestaurant, InputRestaurant2 } from "./components/Input";
 import Button from "./components/Button";
-import {COLORS} from "./conts/colors";
-import {ThemeContext} from "./components/ThemeContext";
+import { COLORS } from "./conts/colors";
+import { ThemeContext } from "./components/ThemeContext";
 import styles from "./conts/Styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import {GetToken} from "./components/Token";
+import { GetToken } from "./components/Token";
 import axios from "./components/axios";
-import {useNavigation} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 // Define EditRestaurant component
 function EditRestaurant() {
@@ -22,7 +22,7 @@ function EditRestaurant() {
   const [foodItems, setFoodItems] = useState([]);
   const [numInputs, setNumInputs] = useState(1);
   const [image, setImage] = useState("");
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const navigation = useNavigation();
 
   // Fetch the restaurant profile when the screen is focused
@@ -31,13 +31,14 @@ function EditRestaurant() {
       const token = await GetToken();
 
       if (token !== undefined) {
-        const headers = {headers: {Authorization: `Bearer ${token}`}};
+        const headers = { headers: { Authorization: `Bearer ${token}` } };
 
         axios
-          .get("/restaurant", headers)
+          .get("/restaurant/me", headers)
           .then(response => {
-            const res = response.data.results[0];
-            const {name, description, address, image} = res;
+            console.log(JSON.stringify(response.data) + "asdasd");
+            const res = response.data[0];
+            const { name, description, address, image } = res;
             const menus = res.menus;
 
             setName(name);
@@ -63,7 +64,7 @@ function EditRestaurant() {
 
   // Function to add a new food item to the foodItems array
   const handleAddFood = () => {
-    const newFoodItem = {name: foodName, price: price};
+    const newFoodItem = { name: foodName, price: price };
     setFoodItems([...foodItems, newFoodItem]);
     setFoodName("");
     setPrice("");
@@ -73,7 +74,7 @@ function EditRestaurant() {
   // Function to handle the submission of the edited restaurant details
   const handleEditRestaurant = async () => {
     const token = await GetToken();
-    const headers = {headers: {Authorization: `Bearer ${token}`}};
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
     if (!token) {
       return;
     }
@@ -92,7 +93,7 @@ function EditRestaurant() {
       .put("/restaurant/update", restaurantDetails, headers)
       .then(response => {
         console.log(response);
-        setStatusMsg("Restaurant Added Successfully");
+        setStatusMsg("Restaurant Updated Successfully");
         setName("");
         setAddress("");
         setDescription("");
@@ -122,11 +123,11 @@ function EditRestaurant() {
 
   // Render EditRestaurant JSX
   return (
-    <ScrollView style={{backgroundColor: COLORS[theme].quaternary}}>
+    <ScrollView style={{ backgroundColor: COLORS[theme].quaternary }}>
       <KeyboardAvoidingView
         style={[
           styles.containerRestaurant,
-          {backgroundColor: COLORS[theme].quaternary},
+          { backgroundColor: COLORS[theme].quaternary },
         ]}>
         {/* Render input fields for restaurant details */}
         <View style={styles.inputContainer}>
@@ -156,45 +157,45 @@ function EditRestaurant() {
           />
         </View>
         {/* Render input fields for food items */}
-        <View style={{width: "80%"}}>
-          <View style={{flexDirection: "row"}}>
-            <View style={{width: "60%"}}>
-              <Text style={[styles.label, {color: COLORS[theme].primary}]}>
+        <View style={{ width: "80%" }}>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ width: "60%" }}>
+              <Text style={[styles.label, { color: COLORS[theme].primary }]}>
                 Food Name
               </Text>
             </View>
-            <View style={{width: "40%"}}>
-              <Text style={[styles.label, {color: COLORS[theme].primary}]}>
+            <View style={{ width: "40%" }}>
+              <Text style={[styles.label, { color: COLORS[theme].primary }]}>
                 Price
               </Text>
             </View>
           </View>
-          {Array.from({length: numInputs}).map((_, index) => (
-            <View key={index} style={{flexDirection: "row", marginVertical: 5}}>
-              <View style={{width: "50%"}}>
+          {Array.from({ length: numInputs }).map((_, index) => (
+            <View key={index} style={{ flexDirection: "row", marginVertical: 5 }}>
+              <View style={{ width: "50%" }}>
                 <Input3
                   value={foodItems[index]?.name || ""}
                   onChangeText={text => {
                     const newFoodItems = [...foodItems];
-                    newFoodItems[index] = {...newFoodItems[index], name: text};
+                    newFoodItems[index] = { ...newFoodItems[index], name: text };
                     setFoodItems(newFoodItems);
                   }}
                   placeholder={"Food Name"}
                 />
               </View>
-              <View style={{width: "40%"}}>
+              <View style={{ width: "40%" }}>
                 <Input3
                   value={foodItems[index]?.price?.toString() || ""}
                   onChangeText={text => {
                     const newFoodItems = [...foodItems];
-                    newFoodItems[index] = {...newFoodItems[index], price: text};
+                    newFoodItems[index] = { ...newFoodItems[index], price: text };
                     setFoodItems(newFoodItems);
                   }}
                   keyboardType={"numeric"}
                   placeholder={"Price"}
                 />
               </View>
-              <View style={{width: "10%", justifyContent: "center"}}>
+              <View style={{ width: "10%", justifyContent: "center" }}>
                 <Icon
                   name="minus-circle-outline"
                   size={30}
@@ -209,18 +210,18 @@ function EditRestaurant() {
                       return;
                     }
                   }}
-                  style={{color: COLORS[theme].primary}}
+                  style={{ color: COLORS[theme].primary }}
                 />
               </View>
             </View>
           ))}
           <View>
-            <View style={{marginRight: 10}}>
+            <View style={{ marginRight: 10 }}>
               <Icon
                 name="plus-circle-outline"
                 size={30}
                 onPress={handleAddFood}
-                style={{color: COLORS[theme].primary}}
+                style={{ color: COLORS[theme].primary }}
               />
             </View>
             {/* Render button to submit edited restaurant details */}
