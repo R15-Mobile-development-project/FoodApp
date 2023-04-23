@@ -5,7 +5,7 @@
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 
 
-This is a 2nd year OAMK mobile project that uses React Native for frontend and Node.js and MySQL for backend. Restaurant owners can list their restaurant on it. Normal users can order food the restaurants.
+This is a 2nd year OAMK mobile project that uses React Native for frontend and Node.js and MySQL for backend. Restaurant owners can list their restaurant on it. Normal users can order food from the restaurants.
 
 ---
 
