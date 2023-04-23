@@ -7,14 +7,14 @@ export const ThemeContext = createContext({});
 // Create a new component that provides the context to its children
 export const ThemeProvider = ({children}) => {
   // Define a state variable to hold the current theme
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
 
   // Load the user's preferred mode from storage on component mount
   useEffect(() => {
     const loadMode = async () => {
       const mode = await GetMode();
-      if (mode === "dark") {
-        setTheme("dark");
+      if (mode === "light") {
+        setTheme("light");
       }
     };
     loadMode();
