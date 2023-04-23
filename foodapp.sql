@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `foodapp`.`restaurants` (
   CONSTRAINT `FK_users_restaurants`
     FOREIGN KEY (`user_id`)
     REFERENCES `foodapp`.`users` (`user_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -69,12 +69,12 @@ CREATE TABLE IF NOT EXISTS `foodapp`.`orders` (
   CONSTRAINT `FK_restaurants_orders`
     FOREIGN KEY (`restaurant_id`)
     REFERENCES `foodapp`.`restaurants` (`restaurant_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_users_orders`
     FOREIGN KEY (`user_id`)
     REFERENCES `foodapp`.`users` (`user_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `foodapp`.`menus` (
   CONSTRAINT `FK_restaurants_menus`
     FOREIGN KEY (`restaurant_id`)
     REFERENCES `foodapp`.`restaurants` (`restaurant_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -112,12 +112,12 @@ CREATE TABLE IF NOT EXISTS `foodapp`.`order_menus` (
   CONSTRAINT `fk_orders_menus`
     FOREIGN KEY (`order_id`)
     REFERENCES `foodapp`.`orders` (`order_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_menus_orders`
     FOREIGN KEY (`menu_id`)
     REFERENCES `foodapp`.`menus` (`menu_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
