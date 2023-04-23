@@ -9,6 +9,7 @@ This is a 2nd year OAMK mobile project that uses React Native for frontend and N
 ### Installation
 
 - Clone the project
+
   ```
   git clone https://github.com/R15-Mobile-development-project/FoodApp.git
   ```
