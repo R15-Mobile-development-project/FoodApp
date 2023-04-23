@@ -23,7 +23,7 @@ const getOrders = (req, res) => {
         status,
         restaurant_id,
         user_id,
-        name,
+        item_name,
         item_price,
         restaurant_name,
       } = entry;
@@ -43,7 +43,7 @@ const getOrders = (req, res) => {
 
       const order = orderMap.get(order_id);
       order.items.push({
-        name,
+        item_name,
         item_price,
       });
     });

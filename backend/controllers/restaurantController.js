@@ -309,6 +309,7 @@ const restaurantByPage = (req, res) => {
 };
 
 const getOrders = (req, res) => {
+  const orderMap = new Map();
   restaurant.getOrders(req.userId, (err, results) => {
     if (err) {
       return res.status(500).json({
@@ -320,8 +321,40 @@ const getOrders = (req, res) => {
         message: "No order data was found for that restaurant",
       });
     }
-    console.log(results);
-    return res.json(results);
+
+    results.forEach((entry) => {
+      const {
+        order_id,
+        date,
+        price,
+        item_name,
+        item_price,
+        restaurant_name,
+        customer,
+      } = entry;
+
+      if (!orderMap.has(order_id)) {
+        orderMap.set(order_id, {
+          order_id,
+          date,
+          price,
+          restaurant_name,
+          customer,
+          items: [],
+        });
+      }
+
+      orderMap.get(order_id).items.push({
+        item_name,
+        item_price,
+      });
+    });
+
+    orders = Array.from(orderMap.values());
+    return res.status(200).json(orders);
+
+    // console.log(results);
+    // return res.json(results);
   });
 };
 
