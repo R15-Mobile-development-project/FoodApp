@@ -6,6 +6,7 @@ import React, {useState, useEffect, useContext} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {COLORS} from "./conts/colors";
 import {ThemeContext} from "./components/ThemeContext";
+import {ListItem} from "react-native-elements";
 import {ScrollView} from "react-native-gesture-handler";
 
 function RestaurantHistoryPage() {
@@ -62,7 +63,7 @@ function RestaurantHistoryPage() {
   return (
     <>
       <ScrollView style={[{backgroundColor: COLORS[theme].quaternary}]}>
-        {arrayCount.map((item, index) => (
+        {arrayCount.map((order, index) => (
           <Card
             key={index}
             containerStyle={{
@@ -73,7 +74,19 @@ function RestaurantHistoryPage() {
             }}>
             <Card.Title>
               <Text style={{color: COLORS[theme].quaternary}}>
-                {new Date(item.date).toLocaleString("en", {hour12: false})}
+                {order.customer}
+                {"\n"}
+              </Text>
+              <Text style={{color: COLORS[theme].quaternary}}>
+                {new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  timeZone: "Europe/Helsinki",
+                  hour12: false,
+                }).format(new Date(order.date))}
               </Text>
             </Card.Title>
             <Card.Divider
@@ -82,19 +95,51 @@ function RestaurantHistoryPage() {
                 borderBottomWidth: 1,
               }}
             />
-            <View style={{flexDirection: "row"}}>
-              <View>
-                <Text
-                  style={{color: COLORS[theme].quaternary, textAlign: "left"}}>
-                  {item.order_id}
-                </Text>
-              </View>
-              <View style={{flex: 1}}>
-                <Text
-                  style={{color: COLORS[theme].quaternary, textAlign: "right"}}>
-                  {item.price}€
-                </Text>
-              </View>
+            {order.items.map((item, itemIndex) => (
+              <ListItem
+                key={itemIndex}
+                containerStyle={{
+                  backgroundColor: COLORS[theme].primary,
+                  marginTop: -10,
+                  marginBottom: -10,
+                }}>
+                <ListItem.Content>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}>
+                    <View style={{flex: 1}}>
+                      <ListItem.Title
+                        style={{
+                          color: COLORS[theme].quaternary,
+                        }}>
+                        {item.item_name}
+                      </ListItem.Title>
+                    </View>
+                    <View>
+                      <ListItem.Subtitle
+                        style={{
+                          color: COLORS[theme].quaternary,
+                        }}>
+                        {item.item_price}€
+                      </ListItem.Subtitle>
+                    </View>
+                  </View>
+                </ListItem.Content>
+              </ListItem>
+            ))}
+            <Card.Divider
+              style={{
+                borderBottomColor: COLORS[theme].quaternary,
+                borderBottomWidth: 1,
+                marginTop: 10,
+              }}
+            />
+            <View>
+              <Text style={{color: COLORS[theme].quaternary, fontSize: 16}}>
+                Total: {order.price}€
+              </Text>
             </View>
           </Card>
         ))}

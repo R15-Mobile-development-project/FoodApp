@@ -134,7 +134,7 @@ function HistoryPage() {
                         style={{
                           color: COLORS[theme].quaternary,
                         }}>
-                        {item.name}
+                        {item.item_name}
                       </ListItem.Title>
                     </View>
                     <View>
