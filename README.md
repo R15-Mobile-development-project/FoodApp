@@ -1,6 +1,11 @@
 # Foodapp
 
-This is a 2nd year OAMK mobile project that uses React Native for frontend and Node.js and MySQL for backend. Users can list their restaurant on it and order food from other restaurants.
+![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+
+
+This is a 2nd year OAMK mobile project that uses React Native for frontend and Node.js and MySQL for backend. Restaurant owners can list their restaurant on it. Normal users can order food the restaurants.
 
 ---
 
@@ -53,14 +58,18 @@ This is a 2nd year OAMK mobile project that uses React Native for frontend and N
 
 The app should open and look like this. Click on register, there you can choose to be a restaurant owner or a customer.
 
-<img src="./images/Login.png" alt="Login page" width="300">
 <img src="./images/Register.png" alt="Register page" width="300">
+<img src="./images/Login.png" alt="Login page" width="300">
 
 After logging in you see the home page where you can order food from restaurants after adding money in the wallet page.
 
 <img src="./images/Home.png" alt="Home" width="300">
 <img src="./images/Drawer.png" alt="Drawer" width="300">
 <img src="./images/Wallet.png" alt="Wallet" width="300">
+
+In profile page user can change their profile data and password
+
+<img src="./images/Profile.png" alt="Profile page" width="300">
 
 In settings you can switch to dark mode or delete your account.
 
@@ -75,6 +84,15 @@ After the order is placed, it's shown in the order history page
 
 <img src="./images/OrderHistory.png" alt="OrderHistory" width="300">
 
+Restaurant owners can add their own restaurant to the app
+
+<img src="./images/AddRestaurant.png" alt="AddRestaurant" width="300">
+
+<img src="./images/AddRestaurantEdit.png" alt="AddRestaurantEdit" width="300">
+
+After they have added a restaurant they can choose to edit it or delete it
+<img src="./images/EditDeleteRestaurant.png" alt="EditDeleteRestaurant" width="300">
+
 ---
 
-## Creators Joni Pahikainen, Lasse Suomela, Tomi Laine, Hilppa Huhtanen and Juha-Pekka Kesonen
+### Creators Joni Pahikainen, Lasse Suomela, Tomi Laine, Hilppa Huhtanen and Juha-Pekka Kesonen
